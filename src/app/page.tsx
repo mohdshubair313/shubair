@@ -1,103 +1,78 @@
+import React from "react";
+import { Metadata } from "next";
+import { cn } from "@/lib/utils";
+import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import Image from "next/image";
+import image from "./assets/image.jpg"
+import { Bot } from "lucide-react";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Hi👋, I am Shubair",
+};
+
+const Home = () => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen items-center">
+        {/* Left Section - Text Content */}
+        <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden bg-background px-6">
+          <div className="flex flex-col items-center text-center space-y-4">
+            <h1 className="text-4xl font-bold tracking-wide">
+              Hey 👋, I am Shubair!
+            </h1>
+            <span className="text-xl text-muted-foreground">
+              How&#8217;s it going?
+            </span>
+            <p className="max-w-md text-lg leading-relaxed">
+              I’m crafting dynamic web apps or exploring AI-driven possibilities,
+              turning ideas into reality—one line of code at a time! 🚀
+            </p>
+          </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          {/* Fancy Background Effect */}
+          <InteractiveGridPattern
+            className={cn(
+              "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
+              "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
+            )}
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+
+        {/* Right Section - Stylish Image */}
+        <div className="flex justify-center items-center">
           <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+            src={image}
+            alt="Shubair"
+            width={450}
+            height={450}
+            className="rounded-full max-w-full h-auto object-cover transition-all 
+                        opacity-80 hover:opacity-100 scale-100 hover:scale-105 
+                        blur-sm hover:blur-none grayscale hover:grayscale-0 
+                        sepia hover:sepia-0 shadow-2xl drop-shadow-2xl hover:drop-shadow-3xl 
+                        duration-500 ease-in-out sm: mt-16 cursor-pointer
+
+                        /* Light Mode - Classic Shadow */
+                        shadow-black/30 
+
+                        /* Dark Mode - Glow Effect */
+                        dark:border dark:border-blue-500 dark:hover:border-cyan-400
+                        dark:ring-2 dark:ring-blue-600 dark:hover:ring-cyan-400"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        </div>
+      </div>
+      <div className="mt-28 mb-20 flex flex-col items-center text-center">
+            <h1 className="text-3xl font-bold max-w-2xl">
+                Want to uncover who I am and explore my projects? 🚀 ..
+            </h1>
+            <h3 className="mt-4 max-w-xl">
+                Click the <Bot className="inline pb-1 cursor-pointer" /> icon in the top bar and let the AI spill the secrets! 🤖✨
+            </h3>
+            <h3 className="mt-2 max-w-lg">
+                Prefer the old-school way? Feel free to browse through the site at your own pace—<strong>the choice is yours!</strong>
+            </h3>
+        </div>
+    </>
   );
-}
+};
+
+export default Home;
