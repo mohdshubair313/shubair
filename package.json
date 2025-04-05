@@ -28,7 +28,7 @@
     "dotenv": "^16.4.7",
     "framer-motion": "^12.6.2",
     "groq-sdk": "^0.18.0",
-    "langchain": "^0.3.19",
+    "langchain": "^0.3.20",
     "lucide-react": "^0.484.0",
     "motion": "^12.6.2",
     "next": "15.2.4",

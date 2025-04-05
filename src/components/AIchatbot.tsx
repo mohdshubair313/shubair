@@ -24,7 +24,7 @@ const AIchatbot = ({open, onClose}: ChatbotProps) => {
       initialMessages: [
         { id: "1" , role: "assistant", content: "hello"},
       ],
-      streamProtocol: "data",
+      streamProtocol: "text",
     })
 
     const lastMessageByUser = messages[messages.length - 1]?.role === "user";
@@ -45,9 +45,10 @@ const AIchatbot = ({open, onClose}: ChatbotProps) => {
             </button>
           </div>
           <div className="flex-1 overflow-y-auto p-3 space-y-3 text-white">
-            {messages.map((msg, index) => (
-              <ChatMessage message={msg} key={msg.id || index} />
-            ))}
+            {messages.map((msg, index) => {
+              console.log("Message debug:", msg);
+              return <ChatMessage message={msg} key={msg.id || index} />;
+            })}
             {isLoading && lastMessageByUser && <p className="text-gray-400"> Texting ... </p>}
             {error && <p className="text-red-500">{error.message}</p>}
             {!error && messages.length === 0 && (
@@ -78,7 +79,10 @@ interface ChatMessageprops {
 }
 
 function ChatMessage({message:{role, content}}: ChatMessageprops) {
+  console.log("Rendiering content", content);
   const isMessage = role === "assistant";
+
+  const parsedContent = typeof content === 'string' ? content : JSON.stringify(content);
 
   return <div className={cn("mb-3 flex items-center", isMessage ? "justify-start" : "justify-end")}>
     {isMessage && <BotIcon className='mr-2 h-6 w-6 text-gray-500' />}
@@ -102,7 +106,7 @@ function ChatMessage({message:{role, content}}: ChatMessageprops) {
           ),
         }}            
       >
-      {content}
+      {parsedContent}
       </ReactMarkdown>
     </div>
   </div>

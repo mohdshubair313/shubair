@@ -28,12 +28,12 @@ export async function getvectorStore() {
 }
 
 export async function getEmbeddingsCollection() {
-    const { ASTRA_DB_API_ENDPOINT: endpoint, ASTRA_DB_APPLICATION_TOKEN: token } =
+    const { ASTRA_DB_ENDPOINT: endpoint, ASTRA_DB_APPLICATION: token } =
     process.env; 
 
   if (!token || !endpoint) {
     throw new Error(
-      "Environment variables ASTRA_DB_API_ENDPOINT and ASTRA_DB_APPLICATION_TOKEN must be defined.",
+      "Environment variables ASTRA_DB_ENDPOINT and ASTRA_DB_APPLICATION must be defined.",
     );
   }
 
