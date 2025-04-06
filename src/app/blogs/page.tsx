@@ -22,7 +22,7 @@ const page = () => {
                             🚀 Coming Soon!
                         </h1>
                         <p className="mt-4 text-lg sm:text-xl">
-                            We're working on something amazing. Stay tuned!
+                            We are working on something amazing. Stay tuned!
                         </p>
                     </motion.div>
                 </AspectRatio.Root>
