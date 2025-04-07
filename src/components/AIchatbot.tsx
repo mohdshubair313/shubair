@@ -3,7 +3,7 @@ import { cn } from "../lib/utils"
 import { BotIcon, SendHorizonal, Trash2Icon, XCircle } from "lucide-react";
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
-// import { TextShine } from './ui/TextShine';
+import { TextShine } from './ui/TextShine';
 import { motion } from 'framer-motion';
 
 interface ChatbotProps {
@@ -37,7 +37,7 @@ const AIchatbot = ({open, onClose}: ChatbotProps) => {
         transition={{ duration: 0.4, ease: "easeOut" }}
         className={`fixed bottom-20 right-10 z-[60] w-full max-w-[400px] p-2 ${open ? "block" : "hidden"}  cursor-pointer`}
       >
-        <div className="flex h-[500px] flex-col rounded-xl bg-gray-900 shadow-2xl border border-gray-700">
+        <div className="flex h-[500px] flex-col rounded-xl bg-gray-900 shadow-2xl border border-gray-700 cursor-pointer">
           <div className="flex items-center justify-between bg-gray-800 p-3 rounded-t-xl">
             <h3 className="text-white font-semibold">AI Chatbot</h3>
             <button onClick={onClose} className="text-gray-400 hover:text-red-500 cursor-pointer">
@@ -49,7 +49,7 @@ const AIchatbot = ({open, onClose}: ChatbotProps) => {
               console.log("Message debug:", msg);
               return <ChatMessage message={msg} key={msg.id || index} />;
             })}
-            {isLoading && lastMessageByUser && <p className="text-gray-400"> Texting ... </p>}
+            {isLoading && lastMessageByUser && <TextShine />}
             {error && <p className="text-red-500">{error.message}</p>}
             {!error && messages.length === 0 && (
               <p className="text-gray-400 text-center">Start a conversation with the AI assistant.</p>

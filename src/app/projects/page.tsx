@@ -3,25 +3,26 @@ import React from "react";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import ZoomBlurCard from "@/components/ui/zoom-blur-card";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const projects = [
   {
     title: "Friends AI",
     description: "AI-based virtual friend that understands emotions.",
     imageUrl: "/pro1.png",
-    Link: "https://friends-ai-sunf.vercel.app/"
+    link: "https://friends-ai-sunf.vercel.app/"
   },
   {
     title: "Next Stripe",
     description: "Purchase your premium subscription with stripe payment gateway",
     imageUrl: "/pro2.png",
-    Link: "https://next-stripe-smoky.vercel.app/"
+    link: "https://next-stripe-smoky.vercel.app/"
   },
   {
     title: "IphoneLandingPage",
     description: "A landing page for iPhone 14 Pro Max",
     imageUrl: "/pro3.png",
-    Link: "https://apple3-d-page-sepia.vercel.app/"
+    link: "https://apple3-d-page-sepia.vercel.app/"
   },
 ];
 
@@ -39,7 +40,7 @@ const ProjectsPage = () => {
         animate={{ opacity: 1, y: 0 }}
         className="text-5xl mt-24 md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 my-10"
       >
-        My Projects <br /> Have a look! 
+        My Projects !
       </motion.h1>
 
       {/* ✅ Project Cards Grid */}
@@ -50,12 +51,14 @@ const ProjectsPage = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
           >
+            <Link href={project.link}>
             <ZoomBlurCard
               title={project.title}
               description={project.description}
               imageUrl={project.imageUrl}
-              link={project.Link}
+              link={project.link}
             />
+            </Link>
           </motion.div>
         ))}
       </div>
