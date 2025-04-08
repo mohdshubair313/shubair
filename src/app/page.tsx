@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import SuperImage from "@/components/SuperImage";
 import { Bot } from "lucide-react";
+import AttentionArrow from "@/components/AttentionArrow";
 
 export const metadata: Metadata = {
   title: "Hi👋, I am Shubair",
@@ -71,6 +72,11 @@ const Home = () => {
           Prefer the old-school way? Feel free to browse through the site at
           your own pace—<strong>the choice is yours!</strong>
         </h3>
+      </div>
+
+
+      <div className="flex flex-col">
+      <AttentionArrow />
       </div>
       </div>
     </>
