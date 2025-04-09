@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
-import SuperImage from "@/components/SuperImage";
+import SuperImage from "@/components/SuperImage"; 
 import { Bot } from "lucide-react";
 import AttentionArrow from "@/components/AttentionArrow";
 
