@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { NavbarDemo } from "./pages/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: {
@@ -61,6 +62,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
        <NavbarDemo />
         {children}
+        <Analytics />
         </ThemeProvider>
       </body>
     </html>
