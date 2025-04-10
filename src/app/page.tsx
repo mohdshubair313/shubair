@@ -2,8 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
-import SuperImage from "@/components/SuperImage"; 
-import { Bot } from "lucide-react";
+import SuperImage from "@/components/SuperImage";
 
 export const metadata: Metadata = {
   title: "Hi👋, I am Shubair",
@@ -48,33 +47,7 @@ const Home = () => {
 
         {/* Stylish Image */}
         <SuperImage />
-        </div>
-      {/* Closing the parent div */}
-      <div className="relative grid grid-cols-1 lg:grid-cols-2 min-h-screen items-center overflow-hidden bg-background">
-        {/* Gradii Background */}
-        <div className="absolute inset-0 -z-10">
-          {/* Light Mode Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-orange-100 to-blue-100 blur-2xl opacity-60 dark:opacity-0"></div>
-
-          {/* Dark Mode Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#273962] via-[#1e293b] to-[#30425c] blur-2xl opacity-0 dark:opacity-50"></div>
-        </div>
-      <div className="flex flex-col items-center text-center">
-        <h1 className="text-3xl font-bold">
-          Want to uncover who I am and explore my projects? 🚀 ..
-        </h1>
-        <h3 className="mt-4">
-          Click the <Bot className="inline cursor-pointer" /> icon in the
-          top bar and let the AI spill the secrets! 🤖✨
-        </h3>
-        <h3 className="mt-2 max-w-lg">
-          Prefer the old-school way? Feel free to browse through the site at
-          your own pace—<strong>the choice is yours!</strong>
-        </h3>
-      </div>
-
-      <div className="flex flex-col">
-      </div>
+          
       </div>
     </>
   );

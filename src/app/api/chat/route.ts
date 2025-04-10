@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
         "If you refer to something on the site, try giving a markdown-formatted link." +
         "Remeber only answer the question what is asked only no extra thing but answer in interactive way" +
         "whenever anyone asked about what model you are?, simply answer that you are shubair's assistant only not any llm model!" +
+        "**Here is some relevant context:**\n{context}"+
         "Format all answers in markdown.\n\n"
       ],
       new MessagesPlaceholder("chatHistory"),
