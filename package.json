@@ -16,6 +16,7 @@
     "@google/generative-ai": "^0.24.0",
     "@heroui/react": "^2.7.6-beta.2",
     "@langchain/community": "^0.3.39",
+    "@langchain/core": "^0.3.44",
     "@langchain/google-genai": "^0.2.2",
     "@langchain/groq": "^0.2.1",
     "@langchain/openai": "^0.5.2",

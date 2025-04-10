@@ -8,8 +8,6 @@ import { Message as VercelChatMessage } from "@ai-sdk/react";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 
-export const runtime = "edge"; // 
-
 export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
