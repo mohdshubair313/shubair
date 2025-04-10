@@ -28,9 +28,10 @@ const projects = [
 
 const ProjectsPage = () => {
   return (
-    <div className="relative w-full flex flex-col items-center justify-center bg-black/[0.96] antialiased overflow-hidden">
+    <div className="inset-0 -z-10 w-full flex flex-col items-center justify-center pb-10 antialiased overflow-hidden">
       {/* ✅ Spotlight Background */}
-      <div className="absolute w-full h-full overflow-hidden">
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-gradient-to-br from-pink-100 via-orange-100 to-blue-100 blur-3xl opacity-60 dark:opacity-0">
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3a4f81] via-[#1e293b] to-[#334155] blur-2xl opacity-0 dark:opacity-50"></div>
         <Spotlight />
       </div>
 
@@ -38,13 +39,13 @@ const ProjectsPage = () => {
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-5xl mt-24 md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 my-10"
+        className="text-5xl mt-24 md:text-7xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-900 mb-12"
       >
         My Projects !
       </motion.h1>
 
       {/* ✅ Project Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 w-full max-w-5xl px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 w-full max-w-5xl px-4">
         {projects.map((project, index) => (
           <motion.div
             key={index}

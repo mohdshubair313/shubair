@@ -62,7 +62,7 @@ function Navbar({ className }: { className?: string }) {
           <ThemeToggle />
           <div className="md:hidden">
             <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-6 h-6 cursor-pointer" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -76,7 +76,7 @@ function Navbar({ className }: { className?: string }) {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden mt-2 bg-white/90 dark:bg-black/80 rounded-xl p-4 shadow-xl"
+            className="md:hidden mt-2 bg-white/90 dark:bg-black/80 rounded-xl p-4 shadow-xl curosr-pointer"
           >
             <ul className="space-y-3">
               {navItems.map((item, index) => (
@@ -84,7 +84,7 @@ function Navbar({ className }: { className?: string }) {
                   <Link
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block text-lg font-medium text-black dark:text-white"
+                    className="block text-lg font-medium text-black dark:text-white cursor-pointer"
                   >
                     {item.name}
                   </Link>

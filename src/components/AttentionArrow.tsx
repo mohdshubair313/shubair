@@ -1,14 +1,12 @@
 "use client";
 import React from 'react';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import Lottie from "lottie-react";
+import AnimationData from "./Arrow.json"
+
 
 const AttentionArrow = () => {
   return (
-    <DotLottieReact
-      src="https://lottie.host/754eebe2-a135-462e-8423-eaf19776147d/30wqAZpdFc.lottie"
-      loop
-      autoplay
-    />
+    <Lottie animationData={AnimationData} loop autoplay />
   );
 };
 

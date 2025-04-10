@@ -64,8 +64,8 @@ const Home = () => {
         <h1 className="text-3xl font-bold">
           Want to uncover who I am and explore my projects? 🚀 ..
         </h1>
-        <h3 className="mt-4 ">
-          Click the <Bot className="inline pb-1 cursor-pointer" /> icon in the
+        <h3 className="mt-4">
+          Click the <Bot className="inline cursor-pointer" /> icon in the
           top bar and let the AI spill the secrets! 🤖✨
         </h3>
         <h3 className="mt-2 max-w-lg">
@@ -73,7 +73,6 @@ const Home = () => {
           your own pace—<strong>the choice is yours!</strong>
         </h3>
       </div>
-
 
       <div className="flex flex-col">
       <AttentionArrow />
