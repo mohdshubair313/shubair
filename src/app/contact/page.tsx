@@ -33,7 +33,7 @@ const Page: React.FC = () => {
         initial={{ opacity: 0, y: 60 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full max-w-md rounded-3xl p-6 backdrop-blur-md border bg-white/70 dark:bg-white/5 dark:border-white/10 shadow-md dark:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
+        className="w-full max-w-md rounded-3xl p-6 backdrop-blur-md bg-white/70 dark:bg-white/5 dark:border-white/10 shadow-md dark:shadow-[0_0_30px_rgba(255,255,255,0.05)]"
       >
         <CardHeader className="text-center">
           <CardTitle className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white">

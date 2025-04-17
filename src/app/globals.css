@@ -67,5 +67,5 @@
 }
 .custom-scroll::-webkit-scrollbar-thumb {
   background: #333;
-  border-radius: 6px;
+  border-radius: 4px;
 }

@@ -12,7 +12,6 @@ import {
   FaGithub,
   FaLinkedin,
   FaTwitter,
-  FaInstagram,
   FaEnvelope,
 } from "react-icons/fa";
 import Link from "next/link";
@@ -36,13 +35,8 @@ const socialLinks = [
     bgColor: "bg-[#1DA1F2]",
   },
   {
-    icon: <FaInstagram size={22} />,
-    href: "https://instagram.com",
-    bgColor: "bg-gradient-to-tr from-[#feda75] via-[#d62976] to-[#962fbf]",
-  },
-  {
     icon: <FaEnvelope size={22} />,
-    href: "mailto:shubair@example.com",
+    href: "mailto:shubair313@gmail.com",
     bgColor: "bg-[#EA4335]",
   },
   {

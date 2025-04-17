@@ -30,7 +30,7 @@ export default function Page() {
         transition={{ duration: 0.8 }}
         className="max-w-5xl mx-auto text-center"
       >
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">📝 My Blog</h1>
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4 mt-8">📝 My Blog</h1>
         <p className="text-zinc-400 text-lg sm:text-xl max-w-2xl mx-auto">
           A space where I write about web dev, AI, and everything I’m building. Stay inspired 🚀
         </p>

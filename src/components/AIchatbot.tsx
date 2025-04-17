@@ -37,9 +37,13 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
       initial={{ opacity: 0, scale: 0.8, y: 50 }}
       animate={open ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.8, y: 50 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`fixed bottom-20 right-10 z-[9999] w-full max-w-[420px] ${open ? "block" : "hidden"}`}
-    >
-      <div className="flex h-[500px] flex-col rounded-2xl bg-[#0f0f0f] border border-gray-800 shadow-2xl overflow-hidden">
+      className={cn(
+        "fixed z-[9999]",
+        "bottom-4 right-4 sm:bottom-6 sm:right-6 md:bottom-10 md:right-10",
+        "w-[95vw] sm:w-[360px] md:w-[420px]",
+        open ? "block" : "hidden"
+      )} >
+      <div className="flex h-[80vh] sm:h-[500px] flex-col rounded-2xl bg-[#0f0f0f] border border-gray-800 shadow-2xl overflow-hidden">
         <div className="flex items-center justify-between px-4 py-3 bg-[#181818] border-b border-gray-700">
           <h3 className="text-white font-semibold text-lg">AI Chatbot</h3>
           <button onClick={onClose} className="text-gray-400 hover:text-red-500 transition-all duration-200">
@@ -74,7 +78,7 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
             value={input}
             onChange={handleInputChange}
             placeholder="Ask something..."
-            className="flex-1 bg-[#1f1f1f] text-white p-2 rounded-lg outline-none border border-transparent focus:border-blue-500 transition-all duration-150"
+            className="flex-grow bg-[#1f1f1f] text-white p-2 rounded-lg outline-none border border-transparent focus:border-blue-500 transition-all duration-150"
           />
           <button
             type="submit"
