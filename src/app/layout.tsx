@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "./assets/image.jpg", // Add an actual OG image URL
+        url: "./assets/image.jpg",
         width: 1200,
         height: 630,
         alt: "Mohd Shubair Portfolio",
