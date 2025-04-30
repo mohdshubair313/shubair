@@ -1,14 +1,28 @@
+"use client";
+
 import React from "react";
-import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import SuperImage from "@/components/SuperImage";
+import BubbleButton from "@/components/emoji-button";
+import { FileCheck2Icon } from "lucide-react";
+import Link from "next/link";
+import { getCalApi } from "@calcom/embed-react";
+import { useEffect } from "react";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 
-export const metadata: Metadata = {
-  title: "Hi👋, I am Shubair",
-};
+// export const metadata: Metadata = {
+//   title: "Hi👋, I am Shubair",
+// };
 
 const Home = () => {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: "30min" });
+      cal("ui", { hideEventTypeDetails: false, layout: "month_view" });
+    })();
+  }, []);
+
   return (
     <>
       <div className="relative grid grid-cols-1 lg:grid-cols-2 min-h-screen items-center overflow-hidden bg-background">
@@ -34,7 +48,34 @@ const Home = () => {
               possibilities, turning ideas into reality—one line of code at a
               time! 🚀
             </p>
+
+            {/* resume button */}
+            <Link href="https://drive.google.com/file/d/16kHpo6bQ8VsfCfMOq62gfvyQEdnZtnUU/view?usp=sharing">
+              <div className="flex md:flex-row flex-col items-center gap-16 md:py-8 cursor-pointer">
+                <BubbleButton
+                  icon={<FileCheck2Icon className="w-3 h-3 fill-current" />}
+                  emergingInterval={80}
+                  color={"#ff8243"}
+                >
+                  <div className="flex items-center gap-2 w-full h-full">
+                    <div className="group-hover:animate-[heartbeat_0.8s_ease-in-out_infinite] transition duration-300">
+                      <FileCheck2Icon className="w-5 h-5 fill-current" />
+                    </div>
+                    <span>My Resume</span>
+                  </div>
+                </BubbleButton>
+              </div>
+            </Link>
           </div>
+
+          {/* cal button */}
+          <InteractiveHoverButton>
+          <button data-cal-namespace="30min"
+            data-cal-link="mohd-shubair-vj3g5t/30min"
+            data-cal-config='{"layout":"month_view"}' >
+            book a call
+          </button>
+          </InteractiveHoverButton>
 
           {/* Fancy Background Effect */}
           <InteractiveGridPattern
@@ -47,7 +88,6 @@ const Home = () => {
 
         {/* Stylish Image */}
         <SuperImage />
-          
       </div>
     </>
   );
