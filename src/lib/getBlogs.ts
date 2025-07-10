@@ -1,35 +1,20 @@
-// lib/getBlogs.ts
-import { promises as fs } from "fs";
+import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-type BlogMeta = {
-  title: string;
-  publishedAt: string;
-  summary: string;
-  slug: string;
-};
+const blogsDir = path.join(process.cwd(), "src/content/blogs");
 
-export async function getAllBlogs(): Promise<BlogMeta[]> {
-  const blogDir = path.join(process.cwd(), "src/blogs");
-  const files = await fs.readdir(blogDir);
+export async function getAllBlogs() {
+  const files = fs.readdirSync(blogsDir);
 
-  const blogs = await Promise.all(
-    files
-      .filter((file) => file.endsWith(".mdx"))
-      .map(async (file) => {
-        const filePath = path.join(blogDir, file);
-        const source = await fs.readFile(filePath, "utf-8");
-        const { data } = matter(source);
+  return files.map((filename) => {
+    const filePath = path.join(blogsDir, filename);
+    const fileContent = fs.readFileSync(filePath, "utf-8");
+    const { data } = matter(fileContent); // Extract frontMatter
 
-        return {
-          title: data.title || "Untitled",
-          publishedAt: data.publishedAt || "Unknown Date",
-          summary: data.summary || "No summary available.",
-          slug: file.replace(/\.mdx$/, ""),
-        };
-      })
-  );
-
-  return blogs;
+    return {
+      ...data,
+      slug: filename.replace(".mdx", ""),
+    };
+  });
 }

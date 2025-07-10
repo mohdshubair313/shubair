@@ -2,10 +2,21 @@
 
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { Sun, Moon } from "lucide-react"; // Better icons
+import { Sun, Moon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Prevent mismatch during SSR
+    return <div className="w-12 h-12" />;
+  }
 
   return (
     <motion.button
@@ -16,9 +27,8 @@ export default function ThemeToggle() {
                  hover:scale-110 transition-all duration-300 cursor-pointer"
       whileTap={{ scale: 0.9 }}
     >
-      {/* Animated Icons */}
       {theme === "dark" ? (
-        <Sun className="lucide lucide-sun w-6 h-6 text-yellow-500 animate-pulse" />
+        <Sun className="w-6 h-6 text-yellow-500 animate-pulse" />
       ) : (
         <Moon className="w-6 h-6 text-gray-700 dark:text-gray-300 animate-pulse" />
       )}

@@ -57,9 +57,9 @@ const Home = () => {
                   emergingInterval={80}
                   color={"#ff8243"}
                 >
-                  <div className="flex items-center gap-2 w-full h-full">
+                  <div className="flex items-center gap-2 w-full h-full cursor-pointer">
                     <div className="group-hover:animate-[heartbeat_0.8s_ease-in-out_infinite] transition duration-300">
-                      <FileCheck2Icon className="w-5 h-5 fill-current" />
+                      <FileCheck2Icon className="w-5 h-5 fill-current cursor-pointer" />
                     </div>
                     <span>My Resume</span>
                   </div>
@@ -70,11 +70,12 @@ const Home = () => {
 
           {/* cal button */}
           <InteractiveHoverButton>
-          <button data-cal-namespace="30min"
+          <div data-cal-namespace="30min"
+            className="cursor-pointer"
             data-cal-link="mohd-shubair-vj3g5t/30min"
             data-cal-config='{"layout":"month_view"}' >
             book a call
-          </button>
+          </div>
           </InteractiveHoverButton>
 
           {/* Fancy Background Effect */}

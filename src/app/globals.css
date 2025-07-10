@@ -69,3 +69,13 @@
   background: #333;
   border-radius: 4px;
 }
+
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
