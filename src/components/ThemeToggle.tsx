@@ -28,7 +28,7 @@ export default function ThemeToggle() {
       whileTap={{ scale: 0.9 }}
     >
       {theme === "dark" ? (
-        <Sun className="w-6 h-6 text-yellow-500 animate-pulse" />
+        <Sun className="lucide lucide-sun w-6 h-6 text-yellow-500 animate-pulse" />
       ) : (
         <Moon className="w-6 h-6 text-gray-700 dark:text-gray-300 animate-pulse" />
       )}

@@ -1,14 +1,13 @@
 import { getMdxContent } from "@/lib/MdxtoHtml";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
-interface BlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
+export default async function BlogPostPage({
+  params
+}: {
+  params: Promise<{ slug: string }> 
+}) {
+  const { slug } = await params;
 
-export default async function BlogPostPage(props: { params: BlogPostPageProps["params"] }) {
-  const slug = props.params.slug;
   const { frontMatter, mdxSource } = await getMdxContent(slug);
 
   return (
@@ -18,3 +17,5 @@ export default async function BlogPostPage(props: { params: BlogPostPageProps["p
     </article>
   );
 }
+// Note: Ensure that `getMdxContent` is correctly implemented to fetch the MDX content based on the slug.
+// The `frontMatter` should contain the metadata like title, date, etc., and `mdxSource` should be the actual MDX content ready to be rendered by `MDXRemote`.

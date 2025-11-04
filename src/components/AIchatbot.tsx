@@ -20,17 +20,18 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
     handleInputChange,
     handleSubmit,
     setMessages,
-    isLoading,
     error,
+    status,  // ✅ Use status instead of isLoading!
   } = useChat({
     api: '/api/chat/',
     initialMessages: [
-      { id: "1", role: "assistant", content: "Hello! How can I assist you today?" },
+      { id: "1", role: "assistant", content: "Hey How its going! Please ask something related about Shubair" },
     ],
     streamProtocol: "text",
   });
-
+  
   const lastMessageByUser = messages[messages.length - 1]?.role === "user";
+  const isLoading = status === "submitted" || status === "streaming";  // ✅ Derive loading state
 
   return (
     <motion.div
