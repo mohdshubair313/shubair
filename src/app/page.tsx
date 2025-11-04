@@ -4,16 +4,9 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import SuperImage from "@/components/SuperImage";
-import BubbleButton from "@/components/emoji-button";
-import { FileCheck2Icon } from "lucide-react";
-import Link from "next/link";
 import { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
 import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
-
-// export const metadata: Metadata = {
-//   title: "Hi👋, I am Shubair",
-// };
 
 const Home = () => {
   useEffect(() => {
@@ -48,24 +41,6 @@ const Home = () => {
               possibilities, turning ideas into reality—one line of code at a
               time! 🚀
             </p>
-
-            {/* resume button */}
-            <Link href="https://drive.google.com/file/d/16kHpo6bQ8VsfCfMOq62gfvyQEdnZtnUU/view?usp=sharing">
-              <div className="flex md:flex-row flex-col items-center gap-16 md:py-8 cursor-pointer">
-                <BubbleButton
-                  icon={<FileCheck2Icon className="w-3 h-3 fill-current" />}
-                  emergingInterval={80}
-                  color={"#ff8243"}
-                >
-                  <div className="flex items-center gap-2 w-full h-full cursor-pointer">
-                    <div className="group-hover:animate-[heartbeat_0.8s_ease-in-out_infinite] transition duration-300">
-                      <FileCheck2Icon className="w-5 h-5 fill-current cursor-pointer" />
-                    </div>
-                    <span>My Resume</span>
-                  </div>
-                </BubbleButton>
-              </div>
-            </Link>
           </div>
 
           {/* cal button */}
