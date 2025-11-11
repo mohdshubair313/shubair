@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   description:
     "Explore Mohd Shubair's portfolio - a skilled Full Stack Developer & AI enthusiast. Discover my projects, skills, AI-powered chatbot, and more!",
   keywords: [
+    "Shaikh Mohd Shubair",
     "Mohd Shubair",
     "Full Stack Developer",
     "AI Developer",
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "./assets/image.jpg",
+        url: "./OgImage.png",
         width: 1200,
         height: 630,
         alt: "Mohd Shubair Portfolio",
