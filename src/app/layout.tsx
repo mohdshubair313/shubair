@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Inter } from 'next/font/google'
 import { NavbarDemo } from "./pages/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react"
+
+const inter = Inter({subsets: ["latin"]})
 
 export const metadata: Metadata = {
   title: {
@@ -59,7 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={``}>
+      <body className={inter.className}>
         <ThemeProvider attribute="class">
        <NavbarDemo />
         {children}
