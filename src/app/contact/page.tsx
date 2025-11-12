@@ -12,6 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import SocialDock from "@/components/SocialDock";
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Social Accounts"
+}
 
 const Page: React.FC = () => {
   return (

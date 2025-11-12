@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     default: "Mohd Shubair | Full Stack Developer & AI Enthusiast",
   },
   description:
-    "Explore Mohd Shubair's portfolio - a skilled Full Stack Developer & AI enthusiast. Discover my projects, skills, AI-powered chatbot, and more!",
+    "Wanted to know about me? so lets dive in to my intro and my project..",
   keywords: [
     "Shaikh Mohd Shubair",
     "Mohd Shubair",

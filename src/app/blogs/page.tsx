@@ -2,6 +2,11 @@ import Link from 'next/link'
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "My Blogs"
+}
 
 export default function BlogsPage() {
   const contentDir = path.join(process.cwd(), 'src/content/blogs')
