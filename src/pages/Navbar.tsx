@@ -58,7 +58,7 @@ function Navbar({ className }: { className?: string }) {
         </div>
 
         {/* ✅ Theme Toggle and Mobile Menu Toggle */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 pointer-cursor">
           <ThemeToggle />
           <div className="md:hidden">
             <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>

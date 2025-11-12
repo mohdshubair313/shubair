@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "./OgImage.png",
+        url: "./opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "Mohd Shubair Portfolio",
@@ -46,12 +46,12 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "./opengraph-image.png",
     site: "https://x.com/Shubair313", 
     title: "Mohd Shubair | Full Stack Developer & AI Enthusiast",
     description:
       "Explore Mohd Shubair's portfolio showcasing AI projects, full-stack development skills, and innovative solutions.",
-    images: ["https://x.com/Shubair313/photo"], 
+    images: ["./opengraph-image.png"], 
   },
 };
 

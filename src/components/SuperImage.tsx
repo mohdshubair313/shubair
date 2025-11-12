@@ -1,5 +1,4 @@
 import Image from "next/image";
-import image from "../app/assets/image.jpg"
 import BubbleButton from "@/components/emoji-button";
 import { FileCheck2Icon } from "lucide-react";
 import Link from "next/link";
@@ -18,7 +17,7 @@ export default function SuperImage() {
       <div className="relative z-10 w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 rounded-full overflow-hidden shadow-2xl border-4 
                       border-white dark:border-neutral-800 bg-white dark:bg-black">
         <Image
-          src={image}
+          src='/image.jpg'
           alt="Shubair"
           width={450}
           height={450}
