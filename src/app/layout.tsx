@@ -8,6 +8,9 @@ import { Analytics } from "@vercel/analytics/react"
 const inter = Inter({subsets: ["latin"]})
 
 export const metadata: Metadata = {
+   metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  ),
   title: {
     template: "%s | Mohd Shubair - Full Stack Developer & AI Enthusiast",
     default: "Mohd Shubair | Full Stack Developer & AI Enthusiast",
@@ -46,7 +49,7 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "./opengraph-image.png",
+    card: "summary_large_image",
     site: "https://x.com/Shubair313", 
     title: "Mohd Shubair | Full Stack Developer & AI Enthusiast",
     description:
@@ -63,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
        <NavbarDemo />
         {children}
         <Analytics />

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -42,7 +43,7 @@ function Navbar({ className }: { className?: string }) {
         transition-all duration-300"
       >
         {/* ✅ Logo or Site Title (Optional) */}
-        <div className="text-xl font-bold dark:text-white text-black">Shubair</div>
+        <div className="text-xl font-bold dark:text-white text-black cursor-pointer">Shubair</div>
 
         {/* ✅ Desktop Nav Links */}
         <div className="hidden md:flex space-x-6">

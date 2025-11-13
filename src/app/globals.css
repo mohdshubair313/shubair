@@ -1,9 +1,6 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 /* @custom-variant dark (&:is(.dark *)); */
-
-
 
 @layer base {
   :root {
@@ -70,12 +67,51 @@
   border-radius: 4px;
 }
 
-
-@keyframes gradient-x {
-  0%, 100% {
-    background-position: 0% 50%;
+@layer utilities {
+  .animate-blob {
+    animation: blob 7s infinite;
   }
-  50% {
-    background-position: 100% 50%;
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
   }
 }
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+/* Smooth theme transitions */
+* {
+  @apply transition-colors duration-300;
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 dark:bg-slate-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-700 rounded-full hover:bg-slate-400 dark:hover:bg-slate-600;
+}
+
+

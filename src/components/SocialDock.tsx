@@ -60,7 +60,7 @@ const socialLinks = [
   {
     icon: <Image width="24" height="24" src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/external-level-up-your-coding-skills-and-quickly-land-a-job-logo-color-tal-revivo.png" alt="external-level-up-your-coding-skills-and-quickly-land-a-job-logo-color-tal-revivo"/>,
     href: "https://leetcode.com/mohd_shubair",
-    bgColor: "bg-[#FFA500]",
+    bgColor: "bg-[#1a1a1a]",
     label: "Leetcode"
   }
 ] as const;

@@ -1,37 +1,40 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { Sun, Moon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { FiSun, FiMoon } from "react-icons/fi";
 
 export default function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    // Prevent mismatch during SSR
-    return <div className="w-12 h-12" />;
-  }
+  if (!mounted) return null;
 
   return (
     <motion.button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="relative flex items-center justify-center w-12 h-12 
-                 bg-white dark:bg-gray-900 shadow-lg dark:shadow-md 
-                 rounded-full backdrop-blur-md border border-gray-200 dark:border-gray-700
-                 hover:scale-110 transition-all duration-300 cursor-pointer"
-      whileTap={{ scale: 0.9 }}
+      className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/10 dark:bg-slate-800/50 backdrop-blur-md border border-cyan-200/20 dark:border-slate-700/50 shadow-lg hover:shadow-xl transition-all duration-300"
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label="Toggle theme"
     >
-      {theme === "dark" ? (
-        <Sun className="lucide lucide-sun w-6 h-6 text-yellow-500 animate-pulse" />
-      ) : (
-        <Moon className="w-6 h-6 text-gray-700 dark:text-gray-300 animate-pulse" />
-      )}
+      <motion.div
+        initial={false}
+        animate={{
+          rotate: theme === "dark" ? 180 : 0,
+        }}
+        transition={{ duration: 0.5, type: "spring" }}
+      >
+        {theme === "dark" ? (
+          <FiMoon className="w-5 h-5 text-cyan-400" />
+        ) : (
+          <FiSun className="w-5 h-5 text-amber-500" />
+        )}
+      </motion.div>
     </motion.button>
   );
 }
