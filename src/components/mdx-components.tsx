@@ -18,7 +18,7 @@ export const mdxComponents = {
     ),
     h2: ({ className, ...props }: HeadingProps) => (
         <h2
-            className={`mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0 ${className}`}
+            className={`mt-10 scroll-m-20 border-b border-gray-200/80 dark:border-white/10 pb-1 text-3xl font-semibold tracking-tight first:mt-0 ${className}`}
             {...props}
         />
     ),
@@ -119,15 +119,17 @@ export const mdxComponents = {
             {...props}
         />
     ),
+    // 💡 FIX: Theme-aware background for block code
     pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
         <pre
-            className={`mb-4 mt-6 overflow-x-auto rounded-lg border bg-black py-4 ${className}`}
+            className={`mb-4 mt-6 overflow-x-auto rounded-lg border bg-gray-100 dark:bg-black py-4 ${className}`}
             {...props}
         />
     ),
+    // 💡 FIX: Explicit light mode colors for inline code
     code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
         <code
-            className={`relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold ${className}`}
+            className={`relative rounded bg-gray-200 text-gray-800 dark:bg-gray-800 dark:text-gray-100 px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold ${className}`}
             {...props}
         />
     ),
