@@ -5,10 +5,10 @@ import { NavbarDemo } from "../pages/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react"
 
-const inter = Inter({subsets: ["latin"]})
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-   metadataBase: new URL(
+  metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
   ),
   title: {
@@ -50,11 +50,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "https://x.com/Shubair313", 
+    site: "https://x.com/Shubair313",
     title: "Mohd Shubair | Full Stack Developer & AI Enthusiast",
     description:
       "Explore Mohd Shubair's portfolio showcasing AI projects, full-stack development skills, and innovative solutions.",
-    images: ["./opengraph-image.png"], 
+    images: ["./opengraph-image.png"],
   },
 };
 
@@ -67,9 +67,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-       <NavbarDemo />
-        {children}
-        <Analytics />
+          <NavbarDemo />
+          <main className="pt-24 pb-20 px-4 min-h-screen">
+            {children}
+          </main>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
