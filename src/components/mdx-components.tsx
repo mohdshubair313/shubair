@@ -122,7 +122,7 @@ export const mdxComponents = {
     // 💡 FIX: Theme-aware background for block code
     pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
         <pre
-            className={`mb-4 mt-6 overflow-x-auto rounded-lg border bg-gray-100 dark:bg-black py-4 ${className}`}
+            className={`mb-4 mt-6 overflow-x-auto rounded-lg border-gray-100 bg-gray-100 dark:bg-black py-4 ${className}`}
             {...props}
         />
     ),
