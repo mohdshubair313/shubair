@@ -23,6 +23,12 @@ const projects = [
     imageUrl: "/pro3.png",
     link: "https://apple3-d-page-sepia.vercel.app/",
   },
+  {
+    title: "Chaty AI",
+    description: "Chaty AI helps you with your research papers or improving your resume. You can also roast your resume",
+    imageUrl: "",
+    link: ""
+  }
 ];
 
 // Animation variants for staggered effect
@@ -62,14 +68,14 @@ const ProjectsPage = () => {
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-slate-50 via-cyan-50 to-slate-100 dark:from-slate-950 dark:via-slate-800 dark:to-slate-550">
         {/* Light Mode Animated gradient orbs - UNCHANGED */}
         <div className="absolute top-0 -left-4 w-72 h-72 bg-gradient-to-br from-cyan-200/40 to-blue-300/30 dark:from-cyan-900/30 dark:to-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-70 dark:opacity-40 animate-blob"></div>
-        
+
         <div className="absolute top-0 -right-4 w-72 h-72 bg-gradient-to-br from-slate-200/40 to-cyan-200/30 dark:from-slate-800/30 dark:to-cyan-800/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-70 dark:opacity-40 animate-blob animation-delay-2000"></div>
-        
+
         <div className="absolute -bottom-8 left-20 w-72 h-72 bg-gradient-to-br from-blue-200/40 to-slate-200/30 dark:from-indigo-900/30 dark:to-slate-800/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-70 dark:opacity-40 animate-blob animation-delay-4000"></div>
 
         {/* ✅ DARK MODE - Additional stunning gradient overlays - UNCHANGED */}
         <div className="absolute inset-0 dark:bg-gradient-to-t dark:from-cyan-950/20 dark:via-transparent dark:to-slate-950/20 opacity-0 dark:opacity-100 transition-opacity duration-500"></div>
-        
+
         {/* Animated gradient mesh for dark mode - UNCHANGED */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-indigo-500/10 dark:from-cyan-600/5 dark:via-blue-600/5 dark:to-indigo-600/5 rounded-full filter blur-3xl opacity-0 dark:opacity-60 animate-pulse"></div>
       </div>
