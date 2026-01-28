@@ -1,18 +1,63 @@
-import { getMdxContent } from '@/lib/getMdxContent'
+import { BlogContent } from "@/components/blog/BlogContent";
+import { getMdxContent, getAllBlogSlugs } from "@/lib/getMdxContent";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-export default async function BlogPage({
-  params
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-  const { frontMatter, mdxSource } = await getMdxContent(slug)
+interface BlogPageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  return (
-    <article className="prose dark:prose-invert max-w-4xl mx-auto pt-32 pb-10 px-4">
-      <h1>{frontMatter.title}</h1>
-      <p className="text-gray-600">{frontMatter.summary}</p>
-      {mdxSource}
-    </article>
-  )
+// Generate static params for all blog posts
+export async function generateStaticParams() {
+  const slugs = getAllBlogSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
+
+// Generate metadata for each blog post
+export async function generateMetadata({
+  params,
+}: BlogPageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  try {
+    const { frontMatter } = await getMdxContent(slug);
+    return {
+      title: `${frontMatter.title} | Mohd Shubair`,
+      description: frontMatter.summary,
+      openGraph: {
+        title: frontMatter.title,
+        description: frontMatter.summary,
+        type: "article",
+        publishedTime: frontMatter.publishedAt,
+      },
+    };
+  } catch {
+    return {
+      title: "Blog Post | Mohd Shubair",
+      description: "Read this blog post",
+    };
+  }
+}
+
+export default async function BlogPage({ params }: BlogPageProps) {
+  const { slug } = await params;
+
+  try {
+    const { frontMatter, mdxSource, toc } = await getMdxContent(slug);
+
+    return (
+      <BlogContent
+        title={frontMatter.title}
+        summary={frontMatter.summary}
+        publishedAt={frontMatter.publishedAt}
+        readingTime={frontMatter.readingTime}
+        author={frontMatter.author || "Mohd Shubair"}
+        tocItems={toc}
+      >
+        {mdxSource}
+      </BlogContent>
+    );
+  } catch {
+    notFound();
+  }
 }

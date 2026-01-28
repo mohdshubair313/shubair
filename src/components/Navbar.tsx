@@ -25,6 +25,7 @@ function Navbar({ className }: { className?: string }) {
 
   const navItems = [
     { name: "Home", href: "/" },
+    { name: "Experience", href: "/experience" },
     { name: "Projects", href: "/projects" },
     { name: "Contact", href: "/contact" },
     { name: "Blogs", href: "/blogs" },

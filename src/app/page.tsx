@@ -30,13 +30,13 @@ const Home = () => {
         {/* Left Section - Text Content */}
         <div className="relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden bg-background px-6">
           <div className="flex flex-col items-center text-center space-y-4">
-            <h1 className="text-4xl font-bold tracking-wide">
-              Hey 👋, I am Shubair!
+            <h1 className="text-4xl font-bold tracking-wide mb-10">
+              Hey, I am Shubair!
             </h1>
             <span className="text-xl text-muted-foreground">
               How&#8217;s it going?
             </span>
-            <p className="max-w-md text-lg leading-relaxed">
+            <p className="max-w-md text-xl leading-relaxed mt-7">
               I’m crafting dynamic web apps or exploring AI-driven
               possibilities, turning ideas into reality—one line of code at a
               time! 🚀
