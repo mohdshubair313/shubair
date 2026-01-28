@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from 'next/font/google'
-import { NavbarDemo } from "../components/Navbar";
+import { NavbarDemo } from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react"
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Mohd Shubair | Full Stack Developer & AI Enthusiast",
     description:
-      "Discover Mohd Shubair’s portfolio showcasing AI-driven projects, full-stack development skills, and innovative solutions.",
+      "Discover Mohd Shubair's portfolio showcasing AI-driven projects, full-stack development skills, and innovative solutions.",
     url: "https://shubair.vercel.app/",
     type: "website",
     images: [
@@ -70,6 +71,7 @@ export default function RootLayout({
           <NavbarDemo />
           {children}
           <Analytics />
+          <Toaster position="top-center" richColors />
         </ThemeProvider>
       </body>
     </html>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { AnimatedSubscribeButton } from "@/components/magicui/animated-subscribe-button";
 import {
   CardContent,
@@ -12,8 +13,61 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import SocialDock from "@/components/SocialDock";
+import { toast } from "sonner";
 
 const Page: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validation
+    if (!email.trim()) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    if (!message.trim()) {
+      toast.error("Please enter your feedback message");
+      return;
+    }
+
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, message }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success("Message sent successfully! I'll get back to you soon.");
+        setEmail("");
+        setMessage("");
+      } else {
+        toast.error(data.error || "Failed to send message. Please try again.");
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again later.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="relative flex items-center justify-center min-h-screen px-4 sm:px-6 md:px-8 overflow-hidden bg-background text-foreground">
       <div className="absolute inset-0 -z-10">
@@ -59,7 +113,7 @@ const Page: React.FC = () => {
         </CardHeader>
 
         <CardContent>
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* ✅ Enhanced Email Input with Better Border */}
             <div className="flex flex-col gap-2">
               <Label htmlFor="email" className="text-gray-700 dark:text-white">
@@ -69,6 +123,8 @@ const Page: React.FC = () => {
                 id="email"
                 type="email"
                 placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="
                   bg-white/80 dark:bg-black/30 
                   text-black dark:text-white 
@@ -98,6 +154,8 @@ const Page: React.FC = () => {
               <textarea
                 id="message"
                 placeholder="I would say You have to do is ..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 className="
                   w-full h-36 px-4 py-2 
                   text-black dark:text-white 
@@ -119,17 +177,25 @@ const Page: React.FC = () => {
                 "
               />
             </div>
+
+            <CardFooter className="mt-4 flex justify-center px-0">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full sm:w-44"
+              >
+                <AnimatedSubscribeButton className="w-full">
+                  <span className="group inline-flex items-center">
+                    {isLoading ? "Sending..." : "Send"}
+                  </span>
+                  <span className="group inline-flex items-center">
+                    Your valuable feedback is sent to Shubair
+                  </span>
+                </AnimatedSubscribeButton>
+              </button>
+            </CardFooter>
           </form>
         </CardContent>
-
-        <CardFooter className="mt-4 flex justify-center">
-          <AnimatedSubscribeButton className="w-full sm:w-44">
-            <span className="group inline-flex items-center">Send</span>
-            <span className="group inline-flex items-center">
-              Your valuable feedback is sent to Shubair
-            </span>
-          </AnimatedSubscribeButton>
-        </CardFooter>
       </motion.div>
 
       <SocialDock />

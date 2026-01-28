@@ -42,11 +42,20 @@ const projects = [
     description:
       "Intelligent research assistant that helps with papers, resume improvements, and even resume roasting with AI humor.",
     imageUrl: "",
-    link: "#",
-    github: "#",
+    link: "https://chaty-ai.vercel.app/",
+    github: "https://github.com/mohdshubair313/ChatyBackend/",
     tags: ["Chatbot", "RAG", "LangChain", "AI"],
     color: "from-emerald-500 to-teal-500",
   },
+  {
+    title: "Trade AI",
+    description: "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
+    imageUrl: "",
+    link: "https://trade-opportunity-by-ai.vercel.app/",
+    github: "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
+    tags: ["FastAPI", "AI", "Market Analysis", "Trading"],
+    color: "from-yellow-500 to-amber-500",
+  }
 ];
 
 const containerVariants = {
