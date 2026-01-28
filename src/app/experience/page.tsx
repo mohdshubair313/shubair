@@ -36,7 +36,7 @@ const experiences: Experience[] = [
     startDate: "Dec 2025",
     endDate: "Current",
     location: "Remote",
-    description: "Developed and deployed multiple client projects, implemented CI/CD pipelines, and optimized application performance.",
+    description: "Developed and deployed multiple client projects with different technologies, implemented CI/CD pipelines, and optimized application performance.",
     skills: ["Next.js", "TypeScript", "PostgreSQL", "Docker"],
     color: "from-cyan-500 to-blue-500",
   },
