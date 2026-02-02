@@ -1,5 +1,5 @@
 import { AstraDBVectorStore } from "@langchain/community/vectorstores/astradb";
-import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { OpenAIEmbeddings } from "@langchain/openai";
 import { DataAPIClient } from "@datastax/astra-db-ts";
 
 const endpoint = process.env.ASTRA_DB_ENDPOINT || "";
@@ -10,16 +10,18 @@ if (!token || !endpoint || !collection) {
     throw new Error("Astra DB credentials are not set in the environment variables.");
 }
 
-export async function getvectorStore() {
+export async function getVectorStore() {
     return AstraDBVectorStore.fromExistingIndex(
-        new GoogleGenerativeAIEmbeddings({ model: "text-embedding-004", }),
+        new OpenAIEmbeddings({ 
+            model: "text-embedding-3-small",
+        }),
         {
             token,
             endpoint,
             collection,
             collectionOptions: {
                 vector: {
-                    dimension: 768,
+                    dimension: 1536, // text-embedding-3-small has dimension 1536
                     metric: "cosine"
                 }
             }
@@ -47,4 +49,3 @@ export async function getEmbeddingsCollection() {
 
   return database;
 }
-

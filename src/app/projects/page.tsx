@@ -10,7 +10,7 @@ const projects = [
   {
     title: "Friends AI",
     description:
-      "AI-based virtual friend that understands emotions and provides meaningful conversations powered by advanced language models.",
+      "AI-based virtual friend that understands emotions and provides meaningful conversations powered by advanced language models. User can interact with voice and live chat mode in premium sectio ",
     imageUrl: "/pro1.png",
     link: "https://friends-ai-sunf.vercel.app/",
     github: "#",
@@ -33,7 +33,7 @@ const projects = [
       "Stunning 3D landing page for iPhone 14 Pro Max featuring smooth animations and interactive product showcase.",
     imageUrl: "/pro3.png",
     link: "https://apple3-d-page-sepia.vercel.app/",
-    github: "#",
+    github: "https://github.com/mohdshubair313/Apple3DPage",
     tags: ["3D", "GSAP", "Three.js", "Animations"],
     color: "from-cyan-500 to-blue-500",
   },
@@ -41,7 +41,7 @@ const projects = [
     title: "Chaty AI",
     description:
       "Intelligent research assistant that helps with papers, resume improvements, and even resume roasting with AI humor.",
-    imageUrl: "",
+    imageUrl: "/pro5.png",
     link: "https://chaty-ai.vercel.app/",
     github: "https://github.com/mohdshubair313/ChatyBackend/",
     tags: ["Chatbot", "RAG", "LangChain", "AI"],
@@ -50,11 +50,20 @@ const projects = [
   {
     title: "Trade AI",
     description: "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
-    imageUrl: "",
+    imageUrl: "/pro6.png",
     link: "https://trade-opportunity-by-ai.vercel.app/",
     github: "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
     tags: ["FastAPI", "AI", "Market Analysis", "Trading"],
     color: "from-yellow-500 to-amber-500",
+  },
+  {
+    title: "Travelbook",
+    description: `Ever noticed how a 'relaxing vacation' starts with weeks of stressful planning? Between the endless scrolling for flights, the hunt for a budget hotel that doesn't look like a basement, and the struggle to find decent veg/non-veg food—your holiday feels like a second job. Stop planning, start tripping. Introducing Travelbook: The only travel partner you’ll ever need. We handle the tickets, the stays, and the meals, all tailored to your budget. And for our Premium Tribe, our AI-powered Chatbot acts as your personal concierge—analyzing thousands of options to handpick the perfect experience for you. You just pack the bags; we’ll handle the rest`,
+    imageUrl: "/pro4.png",
+    link: "this is under development",
+    github: "https://github.com/mohdshubair313/Travelbook",
+    tags: ["AI", "Travel", "Next.js", "Chatbot"],
+    color: "from-amber-500 to-orange-500",
   }
 ];
 
