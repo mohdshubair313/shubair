@@ -122,7 +122,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed lg:hidden right-0 top-0 h-full w-72 z-50
+            className="fixed lg:hidden right-0 top-[72px] h-[calc(100vh-72px)] w-72 z-50
             bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl
             border-l border-gray-200 dark:border-white/10 overflow-y-auto"
           >

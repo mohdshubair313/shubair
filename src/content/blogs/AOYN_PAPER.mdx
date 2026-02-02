@@ -1,167 +1,143 @@
 ---
 title: "Attention Is All You Need - The Complete Story"
 publishedAt: "2026-01-28"
-summary: "What is this AISYN really about?? lets deep dive!!."
+summary: "A deep dive into the most important paper in AI history. Learn how the Transformer architecture changed everything."
 readingTime: "30 minutes"
 ---
 
-## Ek Paper Jo Duniya Badal Di: AI Ki Sabse Important Kahani
+## The Paper That Changed the World: AI's Most Important Story
 
 ---
 
 # 📚 Table of Contents
 
-1. [Technical Terms - Simple Definitions](#-technical-terms-ki-dictionary-pehle-padho)
-2. [The Story Before Transformers](#-kahani-shuru-karte-hain-2017-se-pehle-ki-duniya)
-3. [Problems Engineers Faced](#-ml-engineers-ki-problems-real-pain-points)
-4. [The Revolutionary Paper](#-2017-the-game-changer-paper)
-5. [How Transformer Works](#-transformer-kaise-kaam-karta-hai)
-6. [Modern LLMs & Advanced Techniques](#-aaj-ke-llms-claude-gpt-gemini-deepseek)
-7. [Code Examples: Old vs New](#-code-comparison-old-vs-new)
-8. [Future of AI](#-future-kya-hai)
+1. [Technical Terms Dictionary](#-technical-terms-dictionary-read-this-first)
+2. [The Story Before Transformers](#-the-story-before-transformers)
+3. [Problems Engineers Faced](#-problems-engineers-faced)
+4. [The Revolutionary Paper](#-the-revolutionary-paper-2017)
+5. [How Transformer Works](#-how-transformer-works)
+6. [Modern LLMs & Advanced Techniques](#-modern-llms--advanced-techniques)
+7. [Code Examples: Old vs New](#-code-examples-old-vs-new)
+8. [Future of AI](#-future-of-ai)
 
 ---
 
-# 📖 Technical Terms Ki Dictionary (Pehle Padho!)
+# 📖 Technical Terms Dictionary (Read This First!)
 
-Bhai, pehle ye simple definitions samajh lo. Baad me article easy lagega:
+Hey, first understand these simple definitions. It will make the article much easier to follow:
 
-| Term | Simple Explanation (Ek Line Me) |
+| Term | Simple Explanation (One Line) |
 |------|-------------------------------|
-| **Neural Network** | Computer ka "brain" jo examples dekh ke seekhta hai, jaise bachcha sikta hai |
-| **Backpropagation (Backprop)** | Galti pata lagake peeche jaake weights fix karna - jaise teacher red pen se mistake dikhaye |
-| **Gradient** | Slope/steepness jo bataye ki kis direction me jaana hai better answer ke liye |
-| **Vanishing Gradient** | Jab gradient itna chhota ho jaye (almost 0) ki model seekhna band kar de |
-| **Exploding Gradient** | Jab gradient itna bada ho jaye ki model pagal ho jaye |
-| **RNN (Recurrent Neural Network)** | Network jo ek-ek word lete hue yaad rakhta hai pichle words |
-| **LSTM (Long Short-Term Memory)** | Better RNN jo lamba yaad rakh sake, lekin phir bhi slow |
-| **Sequence** | Words ki line - "Main ghar ja raha hoon" = 5 words ka sequence |
-| **Encoder** | Input ko samajhne wala part - padhne wala |
-| **Decoder** | Output generate karne wala part - likhne wala |
-| **Attention** | Model ko batana ki "yahan dhyan do" - like highlighter pen |
-| **Self-Attention** | Ek sentence ke words aapas me ek dusre ko dekhte hain |
-| **Token** | Word ya word ka piece - "playing" = ["play", "ing"] |
-| **Embedding** | Word ko numbers me convert karna jo meaning capture kare |
-| **Parameters** | Model ke "settings" jo training me adjust hote hain - GPT-4 me 1 trillion+ hain |
-| **BLEU Score** | Translation quality measure karne ka tarika (0-100, jyada = better) |
-| **Epoch** | Pura dataset ek baar dekhna training me |
-| **Batch** | Ek saath kitne examples process karne hain |
-| **Inference** | Trained model se answer lena (not training) |
-| **Fine-tuning** | Pre-trained model ko specific task ke liye aur train karna |
-| **Pre-training** | Pehle general knowledge seekhna, phir specific tasks |
-| **Softmax** | Numbers ko probabilities me convert karna (sab ka sum = 1) |
-| **Layer Normalization** | Values ko stable range me rakhna - training smooth hoti hai |
-| **Residual Connection** | Shortcut path jo input ko directly output se jodta hai - gradient flow easy hota hai |
-| **Positional Encoding** | Word ki position batana (pehla, doosra, teesra...) |
-| **Multi-Head Attention** | Multiple attention ek saath - different aspects dekhte hain |
-| **Feed-Forward Network** | Simple neural network layer - attention ke baad processing |
-| **Context Window** | Kitne tokens ek saath dekh sakta hai model (GPT-4 = 128K tokens) |
-| **Latency** | Response aane me kitna time laga |
-| **Throughput** | Kitne requests per second handle ho sakti hain |
+| **Neural Network** | Computer's "brain" that learns from examples, just like a child learns |
+| **Backpropagation (Backprop)** | Finding mistakes and going back to fix weights - like a teacher marking errors with red pen |
+| **Gradient** | Slope/steepness that tells which direction to go for better answers |
+| **Vanishing Gradient** | When gradient becomes so small (almost 0) that the model stops learning |
+| **Exploding Gradient** | When gradient becomes so large that the model goes crazy |
+| **RNN (Recurrent Neural Network)** | Network that remembers previous words while reading one by one |
+| **LSTM (Long Short-Term Memory)** | Better RNN that can remember longer, but still slow |
+| **Sequence** | Line of words - "I am going home" = 5 words sequence |
+| **Encoder** | Part that understands input - the reader |
+| **Decoder** | Part that generates output - the writer |
+| **Attention** | Telling the model "focus here" - like a highlighter pen |
+| **Self-Attention** | Words in a sentence look at each other |
+| **Token** | Word or piece of word - "playing" = ["play", "ing"] |
+| **Embedding** | Converting words to numbers that capture meaning |
+| **Parameters** | Model's "settings" adjusted during training - GPT-4 has 1 trillion+ |
+| **BLEU Score** | Way to measure translation quality (0-100, higher = better) |
+| **Epoch** | Seeing entire dataset once during training |
+| **Batch** | How many examples to process together |
+| **Inference** | Getting answers from trained model (not training) |
+| **Fine-tuning** | Training pre-trained model more for specific tasks |
+| **Pre-training** | First learning general knowledge, then specific tasks |
+| **Softmax** | Converting numbers to probabilities (sum = 1) |
+| **Layer Normalization** | Keeping values in stable range - training becomes smooth |
+| **Residual Connection** | Shortcut path connecting input directly to output - gradient flows easily |
+| **Positional Encoding** | Telling word position (first, second, third...) |
+| **Multi-Head Attention** | Multiple attentions together - looking at different aspects |
+| **Feed-Forward Network** | Simple neural network layer - processing after attention |
+| **Context Window** | How many tokens model can see at once (GPT-4 = 128K tokens) |
+| **Latency** | Time taken for response to come |
+| **Throughput** | How many requests per second can be handled |
 
 ---
 
-# 🕰️ Kahani Shuru Karte Hain: 2017 Se Pehle Ki Duniya
+# 🕰️ The Story Before Transformers
 
 ## The Dark Ages of NLP (2010-2017)
 
-Bhai, imagine kar 2016 me tu ML engineer hai aur tujhe Google Translate banana hai:
+Hey, imagine it's 2016 and you're an ML engineer who needs to build Google Translate:
 
-### 🔴 Purana Tarika: RNN/LSTM Ka Raaj
+### 🔴 Old Method: RNN/LSTM Era
 
 ```
-PROBLEM: "Main ghar ja raha hoon" → "I am going home"
+PROBLEM: "I am going home" → Translation
 
 HOW RNN WORKED:
-Step 1: "Main" padho → Brain me store karo → Hidden State 1
-Step 2: "ghar" padho + Pichla yaad → Hidden State 2  
-Step 3: "ja" padho + Pichla yaad → Hidden State 3
-Step 4: "raha" padho + Pichla yaad → Hidden State 4
-Step 5: "hoon" padho + Pichla yaad → Hidden State 5
+Step 1: Read "I" → Store in brain → Hidden State 1
+Step 2: Read "am" + Remember previous → Hidden State 2  
+Step 3: Read "going" + Remember previous → Hidden State 3
+Step 4: Read "home" + Remember previous → Hidden State 4
 
-FINALLY: Ab output generate karo "I" → "am" → "going" → "home"
+FINALLY: Now generate output word by word
 ```
 
-### 🤯 Samajh Isko Simply:
+### 🤯 Understand Simply:
 
-**RNN = Ek aadmi jo ek haath se ek ek book uthata hai**
+**RNN = One person lifting books one by one with one hand**
 
 ```
-Soch: Tu 100 books uthana chahta hai
+Imagine: You want to lift 100 books
 
 RNN WAY:
-Book 1 uthao → haath me rakho
-Book 2 uthao → haath me rakho (Book 1 ka weight bhi feel ho raha)
-Book 3 uthao → haath me rakho (Ab 1+2 ka weight)
+Lift Book 1 → hold in hand
+Lift Book 2 → hold in hand (feeling weight of Book 1)
+Lift Book 3 → hold in hand (now weight of 1+2)
 ...
-Book 50 tak aate aate → Haath dard karne laga
-Book 100 → Book 1 ki memory almost gayab!
+By Book 50 → Hand starts hurting
+By Book 100 → Memory of Book 1 almost gone!
 
-YE HAI "VANISHING GRADIENT" PROBLEM! 🎯
+THIS IS THE "VANISHING GRADIENT" PROBLEM! 🎯
 ```
 
-**Transformer = 10 aadmi jo 10-10 books ek saath uthate hain (PARALLEL)**
+**Transformer = 10 people lifting 10 books each at the same time (PARALLEL)**
 
 ```
 TRANSFORMER WAY:
-Person 1: Books 1-10 (Ek saath)
-Person 2: Books 11-20 (Ek saath)  
+Person 1: Books 1-10 (All together)
+Person 2: Books 11-20 (All together)  
 ...
-Person 10: Books 91-100 (Ek saath)
+Person 10: Books 91-100 (All together)
 
-SAB EK SAATH! FAST! 🚀
+ALL AT ONCE! FAST! 🚀
 ```
 
 ---
 
-## 🖼️ Visual Samjho: Sequential vs Parallel
+## 🖼️ Visual: Sequential vs Parallel
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                    OLD WAY (RNN/LSTM)                         ║
-║                                                               ║
-║   Word1 ──► Word2 ──► Word3 ──► Word4 ──► Word5              ║
-║     │         │         │         │         │                 ║
-║     ▼         ▼         ▼         ▼         ▼                 ║
-║   Step1    Step2     Step3     Step4     Step5                ║
-║                                                               ║
-║   ⏱️ Time: 5 Steps (Sequential - Ek ke baad ek)               ║
-║   🐢 SLOW!                                                    ║
-╚═══════════════════════════════════════════════════════════════╝
-
-╔═══════════════════════════════════════════════════════════════╗
-║                   NEW WAY (TRANSFORMER)                       ║
-║                                                               ║
-║        Word1   Word2   Word3   Word4   Word5                  ║
-║          │       │       │       │       │                    ║
-║          └───────┴───────┼───────┴───────┘                    ║
-║                          ▼                                    ║
-║                 [PARALLEL PROCESSING]                         ║
-║                          │                                    ║
-║                          ▼                                    ║
-║                       OUTPUT                                  ║
-║                                                               ║
-║   ⏱️ Time: 1 Step (Parallel - Sab ek saath!)                  ║
-║   🚀 FAST!                                                    ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Aspect | Old Way (RNN/LSTM) | New Way (Transformer) |
+|--------|-------------------|----------------------|
+| **Processing** | Word1 → Word2 → Word3 → Word4 → Word5 | Word1 + Word2 + Word3 + Word4 + Word5 |
+| **Steps** | 5 Steps (Sequential - One after another) | 1 Step (Parallel - All together!) |
+| **Speed** | 🐢 SLOW! | 🚀 FAST! |
+| **Memory** | Forgets early words | Remembers all words |
 
 ---
 
-# 😫 ML Engineers Ki Problems (Real Pain Points)
+# 😫 Problems Engineers Faced
 
-## Problem 1: Training Time - Zindagi Nikal Jaati Thi
+## Problem 1: Training Time - Life Would Pass By
 
 ```python
-# 2016 me typical scenario:
+# Typical scenario in 2016:
 
 Dataset: 10 million sentence pairs (English-Hindi)
 Model: LSTM-based Seq2Seq  
 Hardware: 8 NVIDIA GPUs (expensive!)
 Training time: 2-3 WEEKS! 😱
 
-# Agar hyperparameter galat hua?
-# Phir se 2-3 weeks wait karo! 
+# If hyperparameter was wrong?
+# Wait another 2-3 weeks! 
 # Total experiments: 50+
 # Total time: 6 months+ just for one model!
 ```
@@ -173,20 +149,20 @@ SENTENCE: "The cat, which was sitting on the mat that my
           grandmother bought from the market last week, 
           was sleeping peacefully."
 
-QUESTION: "was sleeping" kiske baare me hai?
+QUESTION: What is "was sleeping" about?
 
-RNN KA PROBLEM:
-- "cat" aur "was sleeping" ke beech 20 words hain
-- Jab tak "was sleeping" tak pahunche, "cat" ki memory weak ho gayi
-- Model confuse: "market was sleeping"? "grandmother was sleeping"?
+RNN PROBLEM:
+- 20 words between "cat" and "was sleeping"
+- By the time we reach "was sleeping", memory of "cat" is weak
+- Model confused: "market was sleeping"? "grandmother was sleeping"?
 
-INFORMATION LEAK HO GAYI BEECH ME! 💧
+INFORMATION LEAKED IN BETWEEN! 💧
 ```
 
 ## Problem 3: Vanishing Gradient - Technical Explanation
 
 ```
-BACKPROPAGATION ME KYA HOTA THA:
+WHAT HAPPENED IN BACKPROPAGATION:
 
 Forward Pass:
 Word1 → Word2 → Word3 → ... → Word100 → OUTPUT
@@ -195,54 +171,41 @@ Backward Pass (Learning):
 Word100 ← Word99 ← Word98 ← ... ← Word1
 
 GRADIENT CALCULATION:
-- Word100 ka gradient = 0.9 (strong)
-- Word50 ka gradient = 0.9^50 = 0.005 (weak)
-- Word1 ka gradient = 0.9^100 = 0.0000000003 (almost ZERO!)
+- Word100 gradient = 0.9 (strong)
+- Word50 gradient = 0.9^50 = 0.005 (weak)
+- Word1 gradient = 0.9^100 = 0.0000000003 (almost ZERO!)
 
-RESULT: Early words seekhte hi nahi! 😢
+RESULT: Early words don't learn! 😢
 ```
 
 ## Problem 4: GPU Utilization Waste
 
-```
-╔══════════════════════════════════════════════════════════╗
-║                 GPU UTILIZATION                          ║
-╠══════════════════════════════════════════════════════════╣
-║  RNN/LSTM:                                               ║
-║  ████░░░░░░░░░░░░░░░░ 20% utilized                       ║
-║  (Baaki 80% GPU idle baitha hai!)                        ║
-║                                                          ║
-║  TRANSFORMER:                                            ║
-║  ██████████████████ 90%+ utilized                        ║
-║  (Full power use!)                                       ║
-╚══════════════════════════════════════════════════════════╝
+| Model Type | GPU Usage | Details |
+|------------|-----------|---------|
+| **RNN/LSTM** | ████░░░░░░░░░░░░░░ 20% | 80% GPU sits idle! |
+| **Transformer** | ██████████████████ 90%+ | Full power use! |
 
-REASON: RNN sequential hai, GPU parallel processing ke liye bana hai!
-        Transformer parallel hai, GPU ka full use hota hai!
-```
+**Why?** RNN is sequential, GPU is built for parallel processing! Transformer is parallel, so GPU is fully utilized!
 
 ---
 
-# 💡 2017: The Game-Changer Paper
+# 💡 The Revolutionary Paper (2017)
 
 ## Paper Details
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║  📄 PAPER: "Attention Is All You Need"                        ║
-╠═══════════════════════════════════════════════════════════════╣
-║  📅 Published: June 2017 (arXiv), NeurIPS 2017                ║
-║  🏢 Authors: Google Brain + Google Research                   ║
-║  📝 Pages: 15 (Concise but revolutionary!)                    ║
-║  🎯 Core Idea: Remove RNN, use ONLY Attention                 ║
-║  🎵 Title Reference: Beatles song "All You Need Is Love"      ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Attribute | Details |
+|-----------|---------|
+| **📄 Paper** | "Attention Is All You Need" |
+| **📅 Published** | June 2017 (arXiv), NeurIPS 2017 |
+| **🏢 Authors** | Google Brain + Google Research |
+| **📝 Pages** | 15 (Concise but revolutionary!) |
+| **🎯 Core Idea** | Remove RNN, use ONLY Attention |
+| **🎵 Title Reference** | Beatles song "All You Need Is Love" |
 
 ## The 8 Authors - Legends! 🌟
 
-| Author | Role | Baad Me Kya Kiya |
-|--------|------|------------------|
+| Author | Role | What They Did Later |
+|--------|------|---------------------|
 | **Ashish Vaswani** | First author, main architecture | AI Research Leader |
 | **Noam Shazeer** | Scaled dot-product attention, multi-head | Gemini team at Google |
 | **Niki Parmar** | Model variants, tuning | Google Research |
@@ -253,78 +216,50 @@ REASON: RNN sequential hai, GPU parallel processing ke liye bana hai!
 | **Illia Polosukhin** | First transformer models | **Founded NEAR Protocol** (Blockchain!) |
 
 ### Fun Fact: 
-> Paper ka naam "Transformers: Iterative Self-Attention" rakhna tha initially, aur team ne Transformers movie ke characters ki photos bhi daali thi internal docs me! 😄
+> The paper was initially going to be named "Transformers: Iterative Self-Attention" and the team even put Transformers movie characters' photos in internal docs! 😄
 
 ---
 
-# 🔧 Transformer Kaise Kaam Karta Hai?
+# 🔧 How Transformer Works
 
 ## The Architecture - Simple Breakdown
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                    TRANSFORMER ARCHITECTURE                   ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║    INPUT: "Main ghar ja raha hoon"                           ║
-║              │                                                ║
-║              ▼                                                ║
-║    ┌─────────────────────┐                                   ║
-║    │  INPUT EMBEDDING    │  ← Words → Numbers                ║
-║    │  + POSITIONAL       │  ← Position info add              ║
-║    │    ENCODING         │                                   ║
-║    └─────────────────────┘                                   ║
-║              │                                                ║
-║              ▼                                                ║
-║    ┌─────────────────────┐                                   ║
-║    │     ENCODER         │  × 6 Layers                       ║
-║    │  ┌───────────────┐  │                                   ║
-║    │  │ Self-Attention│  │  ← Words look at each other       ║
-║    │  └───────────────┘  │                                   ║
-║    │  ┌───────────────┐  │                                   ║
-║    │  │ Feed-Forward  │  │  ← Process the info               ║
-║    │  └───────────────┘  │                                   ║
-║    └─────────────────────┘                                   ║
-║              │                                                ║
-║              ▼                                                ║
-║    ┌─────────────────────┐                                   ║
-║    │     DECODER         │  × 6 Layers                       ║
-║    │  ┌───────────────┐  │                                   ║
-║    │  │Masked Self-Att│  │  ← Can't see future words         ║
-║    │  └───────────────┘  │                                   ║
-║    │  ┌───────────────┐  │                                   ║
-║    │  │Cross-Attention│  │  ← Look at encoder output         ║
-║    │  └───────────────┘  │                                   ║
-║    │  ┌───────────────┐  │                                   ║
-║    │  │ Feed-Forward  │  │                                   ║
-║    │  └───────────────┘  │                                   ║
-║    └─────────────────────┘                                   ║
-║              │                                                ║
-║              ▼                                                ║
-║    OUTPUT: "I am going home"                                 ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Component | Function |
+|-----------|----------|
+| **Input** | "I am going home" |
+| **Input Embedding + Positional Encoding** | Words → Numbers + Position info |
+| **Encoder (× 6 Layers)** | Self-Attention + Feed-Forward |
+| **Decoder (× 6 Layers)** | Masked Self-Attention + Cross-Attention + Feed-Forward |
+| **Output** | Translated text |
+
+### Encoder Details:
+- **Self-Attention**: Words look at each other
+- **Feed-Forward**: Process the information
+
+### Decoder Details:
+- **Masked Self-Attention**: Can't see future words
+- **Cross-Attention**: Look at encoder output
+- **Feed-Forward**: Process the information
 
 ---
 
 ## 🎯 Self-Attention: The Magic Sauce
 
-### Real Example - "it" Ka Matlab Kya Hai?
+### Real Example - What does "it" refer to?
 
 ```
 SENTENCE: "The animal didn't cross the street because it was too tired"
 
-QUESTION: "it" = animal? ya street?
+QUESTION: "it" = animal? or street?
 
-SELF-ATTENTION KAISE SOLVE KARTA HAI:
+HOW SELF-ATTENTION SOLVES IT:
 
-Step 1: Har word ke liye 3 vectors banao:
-        - Query (Q): "Main kya dhundh raha hoon?"
-        - Key (K): "Mere paas kya hai?"
-        - Value (V): "Meri actual information"
+Step 1: Create 3 vectors for each word:
+        - Query (Q): "What am I looking for?"
+        - Key (K): "What do I have?"
+        - Value (V): "My actual information"
 
-Step 2: "it" ka Query sabke Keys se compare karo:
+Step 2: Compare "it" Query with all Keys:
 
         "it" ↔ "The"      → Score: 0.05 (low)
         "it" ↔ "animal"   → Score: 0.80 (HIGH! ✓)
@@ -333,89 +268,79 @@ Step 2: "it" ka Query sabke Keys se compare karo:
         "it" ↔ "street"   → Score: 0.08 (low)
         "it" ↔ "tired"    → Score: 0.40 (medium)
 
-Step 3: Softmax se probabilities banao
-Step 4: Values ka weighted sum = "it" ka final meaning
+Step 3: Create probabilities using Softmax
+Step 4: Weighted sum of Values = Final meaning of "it"
 
-RESULT: Model samajh gaya "it" = "animal" 🎉
+RESULT: Model understood "it" = "animal" 🎉
 ```
 
-### Attention Formula (Don't Worry, Simple Hai!)
+### Attention Formula (Don't Worry, It's Simple!)
 
 ```
 Attention(Q, K, V) = softmax(QK^T / √d_k) × V
 
 BREAKDOWN:
-- Q × K^T = Similarity scores (kon kiske jaisa hai?)
-- ÷ √d_k = Scale down (numbers stable rakho)
-- softmax = Probabilities me convert (sum = 1)
-- × V = Weighted combination (important info zyada)
+- Q × K^T = Similarity scores (who is like whom?)
+- ÷ √d_k = Scale down (keep numbers stable)
+- softmax = Convert to probabilities (sum = 1)
+- × V = Weighted combination (important info gets more weight)
 ```
 
 ### Visual: Attention Scores Matrix
 
-```
-                    The  animal didn't cross  the street because  it  was  too tired
-                   ┌────┬──────┬──────┬─────┬────┬──────┬───────┬────┬────┬────┬─────┐
-           The     │0.9 │ 0.1  │ 0.0  │ 0.0 │0.0 │ 0.0  │  0.0  │0.0 │0.0 │0.0 │ 0.0 │
-           animal  │0.1 │ 0.7  │ 0.0  │ 0.1 │0.0 │ 0.0  │  0.0  │0.1 │0.0 │0.0 │ 0.0 │
-           didn't  │0.0 │ 0.2  │ 0.5  │ 0.2 │0.0 │ 0.0  │  0.0  │0.0 │0.1 │0.0 │ 0.0 │
-           cross   │0.0 │ 0.1  │ 0.1  │ 0.6 │0.0 │ 0.2  │  0.0  │0.0 │0.0 │0.0 │ 0.0 │
-QUERY      the     │0.2 │ 0.0  │ 0.0  │ 0.0 │0.3 │ 0.5  │  0.0  │0.0 │0.0 │0.0 │ 0.0 │
-           street  │0.0 │ 0.0  │ 0.0  │ 0.2 │0.3 │ 0.5  │  0.0  │0.0 │0.0 │0.0 │ 0.0 │
-           because │0.0 │ 0.1  │ 0.1  │ 0.0 │0.0 │ 0.0  │  0.6  │0.1 │0.0 │0.0 │ 0.1 │
-           it      │0.0 │ 0.8  │ 0.0  │ 0.0 │0.0 │ 0.0  │  0.0  │0.1 │0.0 │0.0 │ 0.1 │ ← "it" looks at "animal"!
-           was     │0.0 │ 0.1  │ 0.0  │ 0.0 │0.0 │ 0.0  │  0.0  │0.2 │0.5 │0.0 │ 0.2 │
-           too     │0.0 │ 0.0  │ 0.0  │ 0.0 │0.0 │ 0.0  │  0.0  │0.0 │0.1 │0.6 │ 0.3 │
-           tired   │0.0 │ 0.3  │ 0.0  │ 0.0 │0.0 │ 0.0  │  0.0  │0.2 │0.1 │ 0.1│ 0.3 │
-                   └────┴──────┴──────┴─────┴────┴──────┴───────┴────┴────┴────┴─────┘
-                                                KEY
-```
+| Query \ Key | The | animal | didn't | cross | the | street | because | it | was | too | tired |
+|-------------|-----|--------|--------|-------|-----|--------|---------|----|-----|-----|-------|
+| **The** | 0.9 | 0.1 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| **animal** | 0.1 | 0.7 | 0.0 | 0.1 | 0.0 | 0.0 | 0.0 | 0.1 | 0.0 | 0.0 | 0.0 |
+| **didn't** | 0.0 | 0.2 | 0.5 | 0.2 | 0.0 | 0.0 | 0.0 | 0.0 | 0.1 | 0.0 | 0.0 |
+| **cross** | 0.0 | 0.1 | 0.1 | 0.6 | 0.0 | 0.2 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| **the** | 0.2 | 0.0 | 0.0 | 0.0 | 0.3 | 0.5 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| **street** | 0.0 | 0.0 | 0.0 | 0.2 | 0.3 | 0.5 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| **because** | 0.0 | 0.1 | 0.1 | 0.0 | 0.0 | 0.0 | 0.6 | 0.1 | 0.0 | 0.0 | 0.1 |
+| **it** | 0.0 | **0.8** | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.1 | 0.0 | 0.0 | 0.1 |
+| **was** | 0.0 | 0.1 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.2 | 0.5 | 0.0 | 0.2 |
+| **too** | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.1 | 0.6 | 0.3 |
+| **tired** | 0.0 | 0.3 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.2 | 0.1 | 0.1 | 0.3 |
+
+*"it" looks at "animal" with score 0.8!*
 
 ---
 
 ## 🎭 Multi-Head Attention: Multiple Perspectives
 
-```
-SINGLE HEAD = Ek perspective
-MULTI-HEAD = 8 different perspectives (original paper)
+| Head | Focus Area |
+|------|------------|
+| Head 1 | Grammar focus - "subject-verb agreement" |
+| Head 2 | Entity tracking - "who is doing what" |
+| Head 3 | Coreference - "it refers to what" |
+| Head 4 | Negation - "didn't, not, never" |
+| Head 5 | Temporal - "before, after, when" |
+| Head 6 | Spatial - "on, under, near" |
+| Head 7 | Causality - "because, therefore" |
+| Head 8 | Global context - "overall meaning" |
 
-╔═══════════════════════════════════════════════════════════════╗
-║                     MULTI-HEAD ATTENTION                      ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║   HEAD 1: Grammar focus     "subject-verb agreement"          ║
-║   HEAD 2: Entity tracking   "who is doing what"               ║
-║   HEAD 3: Coreference       "it refers to what"               ║
-║   HEAD 4: Negation          "didn't, not, never"              ║
-║   HEAD 5: Temporal          "before, after, when"             ║
-║   HEAD 6: Spatial           "on, under, near"                 ║
-║   HEAD 7: Causality         "because, therefore"              ║
-║   HEAD 8: Global context    "overall meaning"                 ║
-║                                                               ║
-║   SAB HEADS KA OUTPUT CONCAT → Final Understanding           ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+**All heads' output combined → Final Understanding**
 
 ---
 
-## 📍 Positional Encoding: Position Kaise Pata Chale?
+## 📍 Positional Encoding: How to Know Position?
 
 ```
 PROBLEM: 
-  Transformer sab words parallel process karta hai
-  Toh "Main ghar" aur "ghar Main" same lag jayega!
+  Transformer processes all words in parallel
+  So "I home" and "home I" would look the same!
 
-SOLUTION: Position information add karo!
+SOLUTION: Add position information!
 
 FORMULA (Genius!):
   PE(pos, 2i)   = sin(pos / 10000^(2i/d_model))
   PE(pos, 2i+1) = cos(pos / 10000^(2i/d_model))
 
 WHY SINE/COSINE?
-  - Unique "fingerprint" har position ke liye
-  - Relative positions bhi capture (pos 5 - pos 3 = 2)
-  - Extrapolate kar sakta hai (1000+ positions bhi kaam!)
-  - NO LEARNABLE PARAMETERS! Free hai! 🎉
+  - Unique "fingerprint" for each position
+  - Also captures relative positions (pos 5 - pos 3 = 2)
+  - Can extrapolate (works for 1000+ positions!)
+  - NO LEARNABLE PARAMETERS! Free! 🎉
 
 VISUAL:
 Position 0: [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, ...]
@@ -423,122 +348,78 @@ Position 1: [0.8, 0.6, 0.1, 0.9, 0.0, 1.0, ...]
 Position 2: [0.9, -0.4, 0.2, 0.8, 0.0, 1.0, ...]
 ...
 
-Har position ka unique pattern hai!
+Each position has a unique pattern!
 ```
 
 ---
 
-# 📊 Paper Ke Results - Log Shocked The!
+# 📊 Paper Results - People Were Shocked!
 
 ## Translation Quality (BLEU Scores)
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║        WMT 2014 ENGLISH → GERMAN TRANSLATION                  ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║   Previous Best (RNN Ensemble): 25.8 BLEU                    ║
-║   TRANSFORMER (Single Model):   28.4 BLEU  (+2.6!) 🏆        ║
-║                                                               ║
-║   Single model ne ensemble ko beat kar diya!                  ║
-╚═══════════════════════════════════════════════════════════════╝
+### WMT 2014 English → German Translation
 
-╔═══════════════════════════════════════════════════════════════╗
-║        WMT 2014 ENGLISH → FRENCH TRANSLATION                  ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║   Previous Best: 39.0 BLEU                                    ║
-║   TRANSFORMER:   41.8 BLEU  (+2.8!) 🏆                        ║
-║                                                               ║
-║   NEW STATE-OF-THE-ART!                                       ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Model | BLEU Score | Improvement |
+|-------|------------|-------------|
+| Previous Best (RNN Ensemble) | 25.8 | - |
+| **Transformer (Single Model)** | **28.4** | **+2.6** 🏆 |
+
+*Single model beat the ensemble!*
+
+### WMT 2014 English → French Translation
+
+| Model | BLEU Score | Improvement |
+|-------|------------|-------------|
+| Previous Best | 39.0 | - |
+| **Transformer** | **41.8** | **+2.8** 🏆 |
+
+*NEW STATE-OF-THE-ART!*
 
 ## Training Time Comparison
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                    TRAINING TIME                              ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║   RNN-based models:    2-3 WEEKS on 8 GPUs                   ║
-║   TRANSFORMER:         3.5 DAYS on 8 GPUs  🚀                 ║
-║                                                               ║
-║   SPEEDUP: ~6x FASTER!                                        ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Model | Training Time | Hardware |
+|-------|---------------|----------|
+| RNN-based models | 2-3 WEEKS | 8 GPUs |
+| **Transformer** | **3.5 DAYS** | 8 GPUs 🚀 |
+
+**SPEEDUP: ~6x FASTER!**
 
 ---
 
-# 🌟 Aaj Ke LLMs: Claude, GPT, Gemini, DeepSeek
+# 🌟 Modern LLMs: Claude, GPT, Gemini, DeepSeek
 
-## Sab Ka Base Same Hai - Transformer!
+## All Have the Same Base - Transformer!
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                    MODERN AI FAMILY TREE                      ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║                   "Attention Is All You Need"                 ║
-║                          (2017)                               ║
-║                            │                                  ║
-║              ┌─────────────┼─────────────┐                    ║
-║              │             │             │                    ║
-║              ▼             ▼             ▼                    ║
-║         ENCODER       ENCODER-      DECODER                   ║
-║          ONLY         DECODER         ONLY                    ║
-║            │             │             │                      ║
-║            ▼             ▼             ▼                      ║
-║          BERT           T5         GPT Series                 ║
-║        (2018)        (2019)       (2018-2025)                ║
-║            │                          │                       ║
-║   ┌────────┴────────┐        ┌───────┴───────┐               ║
-║   │                 │        │               │               ║
-║ RoBERTa          DeBERTa   GPT-4          Claude             ║
-║ ALBERT           XLNet    Gemini         DeepSeek            ║
-║                           LLaMA          Mistral             ║
-║                           Qwen           Grok                ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Era | Architecture | Models |
+|-----|--------------|--------|
+| 2017 | Transformer Paper | Foundation |
+| 2018 | Encoder Only | BERT (Google) |
+| 2018-2025 | Decoder Only | GPT Series, Claude, Gemini, DeepSeek |
+| 2019 | Encoder-Decoder | T5 (Google) |
 
-## Modern LLMs Ki Timeline
+### Modern Models Family Tree:
 
-```
-2017: Transformer Paper
-      │
-2018: ├── BERT (Google) - Understanding tasks
-      ├── GPT-1 (OpenAI) - 117M parameters
-      │
-2019: ├── GPT-2 (OpenAI) - 1.5B parameters
-      ├── T5 (Google) - Text-to-Text
-      │
-2020: ├── GPT-3 (OpenAI) - 175B parameters! (Few-shot learning)
-      ├── Vision Transformer (ViT) - Images bhi!
-      │
-2021: ├── DALL-E - Text to Image
-      ├── Codex - Code generation
-      │
-2022: ├── ChatGPT - Mass adoption! 🚀
-      ├── Stable Diffusion - Open source image gen
-      │
-2023: ├── GPT-4 - Multimodal (text + images)
-      ├── Claude - Anthropic enters
-      ├── Gemini - Google's answer
-      ├── LLaMA - Meta's open source
-      │
-2024: ├── GPT-4o - Omni (faster, cheaper)
-      ├── Claude 3 - Opus, Sonnet, Haiku
-      ├── Gemini 1.5 - 1M context window!
-      ├── DeepSeek V3 - Open source powerhouse
-      │
-2025: ├── GPT-5 - Reasoning models
-      ├── Claude 4.5 - Opus (YOU'RE TALKING TO ME! 👋)
-      ├── Gemini 3 - Flash, Pro, Deep Think
-      ├── DeepSeek R1 - Open reasoning model
-      └── LLaMA 4 - Maverick with MoE
-```
+| Base | Derived Models |
+|------|----------------|
+| BERT | RoBERTa, ALBERT, DeBERTa, XLNet |
+| GPT | GPT-4, Gemini, LLaMA, Qwen, Grok |
+| T5 | Various text-to-text models |
+
+---
+
+## Modern LLMs Timeline
+
+| Year | Milestone |
+|------|-----------|
+| 2017 | Transformer Paper |
+| 2018 | BERT (Google) - Understanding tasks, GPT-1 (OpenAI) - 117M parameters |
+| 2019 | GPT-2 (OpenAI) - 1.5B parameters, T5 (Google) - Text-to-Text |
+| 2020 | GPT-3 (OpenAI) - 175B parameters! (Few-shot learning), Vision Transformer (ViT) |
+| 2021 | DALL-E - Text to Image, Codex - Code generation |
+| 2022 | ChatGPT - Mass adoption! 🚀, Stable Diffusion - Open source image gen |
+| 2023 | GPT-4 - Multimodal, Claude - Anthropic enters, Gemini - Google's answer, LLaMA - Meta's open source |
+| 2024 | GPT-4o - Omni, Claude 3 - Opus/Sonnet/Haiku, Gemini 1.5 - 1M context!, DeepSeek V3 - Open source powerhouse |
+| 2025 | GPT-5 - Reasoning models, Claude 4.5, Gemini 3, DeepSeek R1, LLaMA 4 |
 
 ---
 
@@ -546,298 +427,177 @@ Har position ka unique pattern hai!
 
 ## 1. Mixture of Experts (MoE) - Smart Routing
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                  MIXTURE OF EXPERTS (MoE)                     ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  PROBLEM: Model bada karo → Computation bhi bada → Expensive  ║
-║                                                               ║
-║  SOLUTION: Sab experts ko mat use karo, sirf relevant ko use  ║
-║                                                               ║
-║                     INPUT TOKEN                               ║
-║                         │                                     ║
-║                         ▼                                     ║
-║                    ┌─────────┐                                ║
-║                    │ ROUTER  │  ← "Kis expert ke paas jao?"   ║
-║                    └─────────┘                                ║
-║                         │                                     ║
-║         ┌───────────────┼───────────────┐                     ║
-║         ▼               ▼               ▼                     ║
-║    ┌─────────┐    ┌─────────┐    ┌─────────┐                 ║
-║    │Expert 1 │    │Expert 2 │    │Expert 8 │                 ║
-║    │  Math   │    │  Code   │    │ Poetry  │  ... (64+)      ║
-║    └─────────┘    └─────────┘    └─────────┘                 ║
-║         │               │                                     ║
-║         └───────────────┘                                     ║
-║                 │                                             ║
-║                 ▼                                             ║
-║              OUTPUT                                           ║
-║                                                               ║
-║  USED BY: DeepSeek V3, Mixtral, Gemini, LLaMA 4 Maverick     ║
-║                                                               ║
-║  BENEFIT: 100B+ total params, but only 10B active at once!   ║
-║           Fast inference, huge capacity! 🚀                   ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Aspect | Details |
+|--------|---------|
+| **Problem** | Bigger model → More computation → Expensive |
+| **Solution** | Don't use all experts, only use relevant ones |
+| **How it works** | Router decides which expert to use for each token |
+| **Used by** | DeepSeek V3, Mixtral, Gemini, LLaMA 4 Maverick |
+| **Benefit** | 100B+ total params, but only 10B active at once! |
 
 ### DeepSeek V3 Example:
-```
-Total Parameters: 671 Billion
-Active Parameters: ~37 Billion (only 5.5% active!)
-Experts: 256 total, 8 active per token
-Router: Top-K selection (K=8)
 
-RESULT: GPT-4 level performance at fraction of cost!
-```
+| Metric | Value |
+|--------|-------|
+| Total Parameters | 671 Billion |
+| Active Parameters | ~37 Billion (only 5.5% active!) |
+| Experts | 256 total, 8 active per token |
+| Router | Top-K selection (K=8) |
+
+**RESULT: GPT-4 level performance at fraction of cost!**
 
 ---
 
 ## 2. RoPE (Rotary Position Embedding) - Better Positions
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                  ROTARY POSITION EMBEDDING                    ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  ORIGINAL (2017): Sinusoidal positional encoding              ║
-║  - Position info ADD hoti thi embeddings me                   ║
-║  - Fixed, extrapolation weak                                  ║
-║                                                               ║
-║  RoPE (2021): Position ko ROTATION se encode karo             ║
-║  - Rotation matrix se multiply                                ║
-║  - Relative positions automatically capture                   ║
-║  - Better extrapolation to longer sequences                   ║
-║                                                               ║
-║  VISUALIZATION:                                               ║
-║                                                               ║
-║  Imagine 2D plane pe:                                         ║
-║                                                               ║
-║       Position 0: ↑ (0°)                                      ║
-║       Position 1: ↗ (45°)                                     ║
-║       Position 2: → (90°)                                     ║
-║       Position 3: ↘ (135°)                                    ║
-║                                                               ║
-║  Distance between positions = Angle difference!               ║
-║                                                               ║
-║  USED BY: LLaMA, Qwen, DeepSeek, Gemini, Mistral             ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Aspect | Original (2017) | RoPE (2021) |
+|--------|-----------------|-------------|
+| Method | Sinusoidal positional encoding | Rotation matrix multiplication |
+| How | Position info ADDED to embeddings | Position encoded via ROTATION |
+| Extrapolation | Weak | Better for longer sequences |
+| Used by | - | LLaMA, Qwen, DeepSeek, Gemini, Mistral |
+
+**Visualization:**
+
+Imagine on a 2D plane:
+- Position 0: ↑ (0°)
+- Position 1: ↗ (45°)
+- Position 2: → (90°)
+- Position 3: ↘ (135°)
+
+Distance between positions = Angle difference!
 
 ---
 
 ## 3. Flash Attention - Memory Efficient
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                     FLASH ATTENTION                           ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  PROBLEM:                                                     ║
-║  Standard Attention: O(n²) memory for n tokens                ║
-║  - 1000 tokens = 1M attention scores to store                 ║
-║  - 100K tokens = 10B scores = GPU memory explode! 💥          ║
-║                                                               ║
-║  SOLUTION: Don't store full attention matrix!                 ║
-║                                                               ║
-║  FLASH ATTENTION TRICK:                                       ║
-║  ┌─────────────────────────────────────────────┐              ║
-║  │ 1. Process attention in BLOCKS (not full)  │              ║
-║  │ 2. Use SRAM (fast cache) instead of HBM    │              ║
-║  │ 3. Recompute during backward pass          │              ║
-║  │ 4. Fuse operations (kernel fusion)         │              ║
-║  └─────────────────────────────────────────────┘              ║
-║                                                               ║
-║  RESULT:                                                      ║
-║  - 2-4x FASTER training                                       ║
-║  - 5-20x LESS memory                                          ║
-║  - Enables 100K+ context windows!                             ║
-║                                                               ║
-║  VERSIONS:                                                    ║
-║  - Flash Attention 1 (2022)                                   ║
-║  - Flash Attention 2 (2023) - 2x faster                       ║
-║  - Flash Attention 3 (2024) - Hopper GPU optimized            ║
-║                                                               ║
-║  USED BY: Every modern LLM!                                   ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Aspect | Details |
+|--------|---------|
+| **Problem** | Standard Attention: O(n²) memory for n tokens |
+| | 1000 tokens = 1M attention scores |
+| | 100K tokens = 10B scores = GPU memory explodes! 💥 |
+| **Solution** | Don't store full attention matrix! |
+| **Flash Attention Trick** | Process in BLOCKS, use fast SRAM, recompute during backward pass |
+| **Result** | 2-4x faster training, 5-20x less memory |
+| **Versions** | v1 (2022), v2 (2023) - 2x faster, v3 (2024) - Hopper GPU optimized |
+| **Used by** | Every modern LLM! |
 
 ---
 
 ## 4. Grouped Query Attention (GQA) - Inference Speed
 
+| Method | Query | Key | Value | Total Sets | Memory |
+|--------|-------|-----|-------|------------|--------|
+| Multi-Head Attention (Original) | 8 | 8 | 8 | 24 | Heavy |
+| Multi-Query Attention (MQA) | 8 | 1 | 1 | 10 | Fast but quality drops |
+| **Grouped-Query Attention (GQA)** | 8 | 2 | 2 | 12 | **Best of both!** |
+
+**Visual:**
 ```
-╔═══════════════════════════════════════════════════════════════╗
-║                 GROUPED QUERY ATTENTION                       ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  MULTI-HEAD ATTENTION (Original):                             ║
-║  - 8 Queries, 8 Keys, 8 Values = 24 sets                      ║
-║  - Memory heavy during inference                              ║
-║                                                               ║
-║  MULTI-QUERY ATTENTION (MQA):                                 ║
-║  - 8 Queries, 1 Key, 1 Value = 10 sets                        ║
-║  - Very fast but quality drops                                ║
-║                                                               ║
-║  GROUPED-QUERY ATTENTION (GQA) - Best of both:                ║
-║  - 8 Queries, 2 Keys, 2 Values = 12 sets                      ║
-║  - Groups of queries share K/V                                ║
-║                                                               ║
-║  VISUAL:                                                      ║
-║                                                               ║
-║  MHA:  Q1-K1-V1  Q2-K2-V2  Q3-K3-V3  Q4-K4-V4                ║
-║  GQA:  Q1─┬─K1─V1  Q3─┬─K2─V2                                 ║
-║        Q2─┘         Q4─┘                                      ║
-║  MQA:  Q1─┬                                                   ║
-║        Q2─┼─K1─V1                                             ║
-║        Q3─┼                                                   ║
-║        Q4─┘                                                   ║
-║                                                               ║
-║  USED BY: LLaMA 2/3, Mistral, Gemini                         ║
-║  BENEFIT: 2-3x faster inference, minimal quality loss         ║
-╚═══════════════════════════════════════════════════════════════╝
+MHA:  Q1-K1-V1  Q2-K2-V2  Q3-K3-V3  Q4-K4-V4
+GQA:  Q1─┬─K1─V1  Q3─┬─K2─V2
+      Q2─┘         Q4─┘
+MQA:  Q1─┬
+      Q2─┼─K1─V1
+      Q3─┼
+      Q4─┘
 ```
+
+**Used by:** LLaMA 2/3, Mistral, Gemini  
+**Benefit:** 2-3x faster inference, minimal quality loss
 
 ---
 
 ## 5. Multi-Head Latent Attention (MLA) - DeepSeek's Innovation
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║            MULTI-HEAD LATENT ATTENTION (MLA)                  ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  PROBLEM: KV Cache bahut memory leta hai                      ║
-║  - GPT-4 level model: 100GB+ just for KV cache!               ║
-║                                                               ║
-║  DEEPSEEK'S SOLUTION:                                         ║
-║  - Compress K and V into "latent" representations             ║
-║  - Store compressed version, decompress when needed           ║
-║                                                               ║
-║  STANDARD:                                                    ║
-║  Q ───► [Attention] ◄─── K                                    ║
-║                      ◄─── V                                   ║
-║                                                               ║
-║  MLA:                                                         ║
-║  Q ───► [Attention] ◄─── Decompress(c_kv)                     ║
-║                │                                              ║
-║         [Latent c_kv]  ← Compressed K,V stored                ║
-║                                                               ║
-║  BENEFIT:                                                     ║
-║  - 93% KV cache compression!                                  ║
-║  - Enables 128K+ context at reasonable cost                   ║
-║                                                               ║
-║  USED BY: DeepSeek V3, DeepSeek R1                           ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Aspect | Details |
+|--------|---------|
+| **Problem** | KV Cache takes too much memory |
+| | GPT-4 level model: 100GB+ just for KV cache! |
+| **Solution** | Compress K and V into "latent" representations |
+| **How** | Store compressed version, decompress when needed |
+| **Benefit** | 93% KV cache compression! |
+| **Used by** | DeepSeek V3, DeepSeek R1 |
 
 ---
 
 ## 6. Thinking/Reasoning Models - New Paradigm (2024-2025)
 
+| Type | Process | Example |
+|------|---------|---------|
+| **Traditional LLM** | Question → Answer (Direct, fast) | "What's 17 × 23?" → "391" (might be wrong) |
+| **Reasoning Model** | Question → Think → Think more → Check → Answer | Shows thinking process, verifies answer |
+
+**Reasoning Model Example:**
 ```
-╔═══════════════════════════════════════════════════════════════╗
-║                    REASONING MODELS                           ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  TRADITIONAL LLM:                                             ║
-║  Question → Answer (Direct, fast)                             ║
-║                                                               ║
-║  REASONING MODEL (o1, R1, Deep Think):                        ║
-║  Question → Think → Think more → Check → Answer               ║
-║                                                               ║
-║  EXAMPLE:                                                     ║
-║  ┌─────────────────────────────────────────────────┐          ║
-║  │ Q: "What's 17 × 23?"                           │          ║
-║  │                                                 │          ║
-║  │ Traditional: "391" (might be wrong)            │          ║
-║  │                                                 │          ║
-║  │ Reasoning Model:                               │          ║
-║  │ <thinking>                                     │          ║
-║  │   17 × 23                                      │          ║
-║  │   = 17 × 20 + 17 × 3                          │          ║
-║  │   = 340 + 51                                   │          ║
-║  │   = 391                                        │          ║
-║  │   Let me verify: 391 ÷ 17 = 23 ✓              │          ║
-║  │ </thinking>                                    │          ║
-║  │ Answer: 391                                    │          ║
-║  └─────────────────────────────────────────────────┘          ║
-║                                                               ║
-║  MODELS:                                                      ║
-║  - OpenAI o1, o3 (September 2024 - April 2025)               ║
-║  - DeepSeek R1 (January 2025) - Open source!                 ║
-║  - Gemini Deep Think (2025)                                   ║
-║                                                               ║
-║  TRAINING: RLVR (Reinforcement Learning with Verifiable       ║
-║            Rewards) - Math problems me answer verify          ║
-╚═══════════════════════════════════════════════════════════════╝
+Q: "What's 17 × 23?"
+
+<thinking>
+  17 × 23
+  = 17 × 20 + 17 × 3
+  = 340 + 51
+  = 391
+  Let me verify: 391 ÷ 17 = 23 ✓
+</thinking>
+Answer: 391
 ```
+
+| Models | Release |
+|--------|---------|
+| OpenAI o1, o3 | Sept 2024 - April 2025 |
+| DeepSeek R1 | Jan 2025 - Open source! |
+| Gemini Deep Think | 2025 |
+
+**Training:** RLVR (Reinforcement Learning with Verifiable Rewards)
 
 ---
 
 ## 7. State Space Models (Mamba) - Beyond Attention
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                  STATE SPACE MODELS (MAMBA)                   ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  ATTENTION PROBLEM:                                           ║
-║  - O(n²) computation for n tokens                             ║
-║  - 1M tokens = 1 Trillion operations!                         ║
-║                                                               ║
-║  MAMBA SOLUTION:                                              ║
-║  - O(n) computation - LINEAR!                                 ║
-║  - Inspired by control theory (State Space Models)            ║
-║  - "Selective" state updates                                  ║
-║                                                               ║
-║  COMPARISON:                                                  ║
-║  ┌─────────────┬─────────────┬─────────────┐                 ║
-║  │   Tokens    │ Transformer │    Mamba    │                 ║
-║  ├─────────────┼─────────────┼─────────────┤                 ║
-║  │   1,000     │  1 Million  │   1,000     │                 ║
-║  │  10,000     │ 100 Million │  10,000     │                 ║
-║  │ 100,000     │ 10 Billion  │ 100,000     │                 ║
-║  └─────────────┴─────────────┴─────────────┘                 ║
-║                                                               ║
-║  USED BY: Falcon Mamba-7B, NVIDIA Nemotron 3                 ║
-║                                                               ║
-║  STATUS: Promising but not yet SOTA for complex reasoning    ║
-║  FUTURE: Hybrid models (Transformer + Mamba layers)          ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Aspect | Transformer | Mamba |
+|--------|-------------|-------|
+| Computation | O(n²) for n tokens | O(n) - LINEAR! |
+| 1M tokens | 1 Trillion operations! | 1 Million operations |
+| Inspired by | Attention mechanism | Control theory (State Space Models) |
+| Status | Current SOTA | Promising but not yet SOTA for complex reasoning |
+| Future | - | Hybrid models (Transformer + Mamba layers) |
+
+**Computation Comparison:**
+
+| Tokens | Transformer | Mamba |
+|--------|-------------|-------|
+| 1,000 | 1 Million | 1,000 |
+| 10,000 | 100 Million | 10,000 |
+| 100,000 | 10 Billion | 100,000 |
+
+**Used by:** Falcon Mamba-7B, NVIDIA Nemotron 3
 
 ---
 
 ## 8. Context Length Evolution
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║              CONTEXT WINDOW EVOLUTION                         ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  2017 (Original Transformer):    512 tokens                   ║
-║  2018 (BERT):                    512 tokens                   ║
-║  2020 (GPT-3):                   2,048 tokens                 ║
-║  2022 (ChatGPT):                 4,096 tokens                 ║
-║  2023 (GPT-4):                   8,192 → 32K → 128K tokens    ║
-║  2024 (Gemini 1.5):              1 MILLION tokens! 📚         ║
-║  2025 (Grok-4):                  2 MILLION tokens! 📚📚       ║
-║                                                               ║
-║  TECHNIQUES THAT ENABLED THIS:                                ║
-║  ✓ Flash Attention                                            ║
-║  ✓ RoPE with NTK-aware scaling                               ║
-║  ✓ YaRN (Yet another RoPE extension)                         ║
-║  ✓ Sliding Window Attention                                   ║
-║  ✓ Ring Attention (distributed)                              ║
-║                                                               ║
-║  1 Million tokens ≈ 750,000 words ≈ 10+ novels! 📖           ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Year | Model | Context Window |
+|------|-------|----------------|
+| 2017 | Original Transformer | 512 tokens |
+| 2018 | BERT | 512 tokens |
+| 2020 | GPT-3 | 2,048 tokens |
+| 2022 | ChatGPT | 4,096 tokens |
+| 2023 | GPT-4 | 8,192 → 32K → 128K tokens |
+| 2024 | Gemini 1.5 | **1 MILLION tokens!** 📚 |
+| 2025 | Grok-4 | **2 MILLION tokens!** 📚📚 |
+
+**Techniques That Enabled This:**
+- ✓ Flash Attention
+- ✓ RoPE with NTK-aware scaling
+- ✓ YaRN (Yet another RoPE extension)
+- ✓ Sliding Window Attention
+- ✓ Ring Attention (distributed)
+
+**1 Million tokens ≈ 750,000 words ≈ 10+ novels!** 📖
 
 ---
 
-# 💻 Code Comparison: Old vs New
+# 💻 Code Examples: Old vs New
 
 ## Python Example: Old Way (2016 - RNN/LSTM)
 
@@ -1230,76 +990,43 @@ outputs = llm.generate(["Hello, my name is"], SamplingParams(temperature=0.8))
 
 ---
 
-# 🔮 Future Kya Hai?
+# 🔮 Future of AI
 
 ## Trends to Watch (2025-2026)
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║                    FUTURE PREDICTIONS                         ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  1. HYBRID ARCHITECTURES                                      ║
-║     Transformer + Mamba + State Space = Best of all worlds    ║
-║                                                               ║
-║  2. TEXT DIFFUSION MODELS                                     ║
-║     Like image diffusion but for text                         ║
-║     Google's "Gemini Diffusion" coming!                       ║
-║                                                               ║
-║  3. LONGER CONTEXT                                            ║
-║     10M+ tokens (entire codebases, book series)               ║
-║                                                               ║
-║  4. MULTIMODAL NATIVE                                         ║
-║     Text + Image + Audio + Video + 3D all together            ║
-║                                                               ║
-║  5. REASONING AS DEFAULT                                      ║
-║     All models will "think" before answering                  ║
-║                                                               ║
-║  6. SMALLER, SMARTER                                          ║
-║     Phone-sized models rivaling GPT-4                         ║
-║     (Gemma 3B, Phi-3, SmolLM)                                ║
-║                                                               ║
-║  7. AGENTIC AI                                                ║
-║     AI that can browse, code, execute tasks autonomously      ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Trend | Description |
+|-------|-------------|
+| **1. Hybrid Architectures** | Transformer + Mamba + State Space = Best of all worlds |
+| **2. Text Diffusion Models** | Like image diffusion but for text. Google's "Gemini Diffusion" coming! |
+| **3. Longer Context** | 10M+ tokens (entire codebases, book series) |
+| **4. Multimodal Native** | Text + Image + Audio + Video + 3D all together |
+| **5. Reasoning as Default** | All models will "think" before answering |
+| **6. Smaller, Smarter** | Phone-sized models rivaling GPT-4 (Gemma 3B, Phi-3, SmolLM) |
+| **7. Agentic AI** | AI that can browse, code, execute tasks autonomously |
 
 ---
 
 # 📝 Key Takeaways
 
-## Ek Summary Me Poora Paper
+## Complete Paper Summary
 
-```
-╔═══════════════════════════════════════════════════════════════╗
-║              ATTENTION IS ALL YOU NEED - SUMMARY              ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  BEFORE (RNN/LSTM):                                           ║
-║  ❌ Sequential processing (slow)                               ║
-║  ❌ Vanishing gradients (can't learn long dependencies)        ║
-║  ❌ Poor GPU utilization                                       ║
-║  ❌ Weeks to train                                             ║
-║                                                               ║
-║  AFTER (TRANSFORMER):                                         ║
-║  ✅ Parallel processing (fast!)                                ║
-║  ✅ Direct connections (no vanishing gradients)                ║
-║  ✅ Excellent GPU utilization                                  ║
-║  ✅ Days to train                                              ║
-║                                                               ║
-║  KEY INNOVATIONS:                                              ║
-║  1. Self-Attention: Words look at each other directly         ║
-║  2. Multi-Head Attention: Multiple perspectives               ║
-║  3. Positional Encoding: Position info without recurrence     ║
-║  4. Parallelization: All tokens processed together            ║
-║                                                               ║
-║  WHY IT MATTERS:                                               ║
-║  Every modern AI - ChatGPT, Claude, Gemini, DeepSeek -        ║
-║  is built on this architecture!                               ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-```
+| Aspect | Before (RNN/LSTM) | After (Transformer) |
+|--------|-------------------|---------------------|
+| **Processing** | ❌ Sequential (slow) | ✅ Parallel (fast!) |
+| **Connections** | ❌ Vanishing gradients | ✅ Direct connections |
+| **GPU Usage** | ❌ Poor utilization | ✅ Excellent utilization |
+| **Training Time** | ❌ Weeks | ✅ Days |
+
+### Key Innovations:
+
+1. **Self-Attention**: Words look at each other directly
+2. **Multi-Head Attention**: Multiple perspectives
+3. **Positional Encoding**: Position info without recurrence
+4. **Parallelization**: All tokens processed together
+
+### Why It Matters:
+
+Every modern AI - ChatGPT, Claude, Gemini, DeepSeek - is built on this architecture!
 
 ---
 
@@ -1309,7 +1036,7 @@ outputs = llm.generate(["Hello, my name is"], SamplingParams(temperature=0.8))
 > 
 > — Vaswani et al., 2017
 
-**Ye ek line ne duniya badal di.** 🌍
+**This one line changed the world.** 🌍
 
 ---
 
@@ -1323,9 +1050,9 @@ outputs = llm.generate(["Hello, my name is"], SamplingParams(temperature=0.8))
 
 ---
 
-*Document created: January 2025*
+*Document created: January 2025*  
 *Last updated with latest 2025 techniques*
 
 ---
 
-**Bhai, ye paper padh le original bhi - sirf 15 pages hai. Har AI engineer ko padhna chahiye! 🚀**
+**Bhai, read the original paper too - it's only 15 pages. Every AI engineer should read it! 🚀**
