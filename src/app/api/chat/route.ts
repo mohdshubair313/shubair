@@ -1,5 +1,5 @@
 import { ChatGroq } from "@langchain/groq";
-import { ChatPromptTemplate, MessagesPlaceholder, PromptTemplate } from "@langchain/core/prompts";
+import { ChatPromptTemplate, MessagesPlaceholder } from "@langchain/core/prompts";
 import { NextRequest, NextResponse } from "next/server";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { getVectorStore } from "@/lib/astradb";
@@ -7,8 +7,6 @@ import { createRetrievalChain } from "langchain/chains/retrieval";
 import { Message as VercelChatMessage } from "@ai-sdk/react";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
-import { StringOutputParser } from "@langchain/core/output_parsers";
-import { RunnablePassthrough, RunnableSequence } from "@langchain/core/runnables";
 
 export const runtime = "edge";
 
@@ -114,10 +112,11 @@ Shubair is a talented developer, and you are here to showcase his work, skills, 
       },
     });
 
-  } catch (error: any) {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
     console.error("Chat API error:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: message },
       { status: 500 }
     );
   }

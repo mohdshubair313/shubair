@@ -64,7 +64,7 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#111]"></div>
             </div>
             <div>
-              <h3 className="text-white font-bold text-base tracking-tight">Shubair's AI</h3>
+              <h3 className="text-white font-bold text-base tracking-tight">Shubair&apos;s AI</h3>
               <p className="text-[10px] text-blue-400 uppercase tracking-widest font-semibold">Online</p>
             </div>
           </div>

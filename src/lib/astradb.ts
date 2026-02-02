@@ -11,36 +11,39 @@ if (!token || !endpoint || !collection) {
 }
 
 export async function getVectorStore() {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const options: any = {
+        token,
+        endpoint,
+        collection,
+        collectionOptions: {
+            vector: {
+                dimension: 768,
+                metric: "cosine"
+            },
+            indexing: {
+                allow: ["metadata"]
+            },
+            lexical: {
+                enabled: true,
+                analyzer: "standard"
+            },
+            rerank: {
+                enabled: true,
+                service: {
+                    provider: "nvidia",
+                    modelName: "nvidia/llama-3.2-nv-rerankqa-1b-v2"
+                }
+            }
+        }
+    };
+
     return AstraDBVectorStore.fromExistingIndex(
         new GoogleGenerativeAIEmbeddings({
             apiKey: process.env.GOOGLE_API_KEY,
             modelName: "text-embedding-004", // Standard Google embedding model
         }),
-        {
-            token,
-            endpoint,
-            collection,
-            collectionOptions: {
-                vector: {
-                    dimension: 768,
-                    metric: "cosine"
-                },
-                indexing: {
-                    allow: ["metadata"]
-                },
-                lexical: {
-                    enabled: true,
-                    analyzer: "standard"
-                },
-                rerank: {
-                    enabled: true,
-                    service: {
-                        provider: "nvidia",
-                        modelName: "nvidia/llama-3.2-nv-rerankqa-1b-v2"
-                    }
-                }
-            } as any
-        }
+        options
     )
 }
 
