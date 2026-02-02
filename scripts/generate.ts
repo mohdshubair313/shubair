@@ -9,10 +9,9 @@ import path from "path";
 import matter from "gray-matter";
 
 async function GenerateEmbeddings() {
-    const vectorStore = await getVectorStore();
     const db = await getEmbeddingsCollection();
     const collection = process.env.ASTRA_DB_COLLECTION || "collectionName";
-    
+
     // Drop existing collection if it exists
     try {
         await db.dropCollection(collection);
@@ -20,6 +19,8 @@ async function GenerateEmbeddings() {
     } catch (error) {
         console.log(`Collection ${collection} does not exist, creating new one`);
     }
+
+    const vectorStore = await getVectorStore();
 
     const documents: Document[] = [];
 
@@ -38,7 +39,7 @@ async function GenerateEmbeddings() {
         {
             title: "Friends AI",
             description: "AI-based virtual friend that understands emotions and provides meaningful conversations powered by advanced language models. User can interact with voice and live chat mode in premium section",
-            tags: ["AI", "Next.js", "OpenAI", "Emotion AI"],
+            tags: ["AI", "Next.js", "Groq", "Emotion AI"],
             link: "https://friends-ai-sunf.vercel.app/"
         },
         {
@@ -137,7 +138,7 @@ async function GenerateEmbeddings() {
         const filePath = path.join(blogDir, file);
         const source = fs.readFileSync(filePath, "utf-8");
         const { content, data } = matter(source);
-        
+
         documents.push(new Document({
             pageContent: content,
             metadata: {

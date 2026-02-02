@@ -14,7 +14,7 @@ const projects = [
     imageUrl: "/pro1.png",
     link: "https://friends-ai-sunf.vercel.app/",
     github: "#",
-    tags: ["AI", "Next.js", "OpenAI", "Emotion AI"],
+    tags: ["AI", "Next.js", "Groq", "Emotion AI"],
     color: "from-pink-500 to-rose-500",
   },
   {

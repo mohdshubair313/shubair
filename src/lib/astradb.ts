@@ -1,5 +1,5 @@
 import { AstraDBVectorStore } from "@langchain/community/vectorstores/astradb";
-import { OpenAIEmbeddings } from "@langchain/openai";
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { DataAPIClient } from "@datastax/astra-db-ts";
 
 const endpoint = process.env.ASTRA_DB_ENDPOINT || "";
@@ -12,8 +12,9 @@ if (!token || !endpoint || !collection) {
 
 export async function getVectorStore() {
     return AstraDBVectorStore.fromExistingIndex(
-        new OpenAIEmbeddings({ 
-            model: "text-embedding-3-small",
+        new GoogleGenerativeAIEmbeddings({
+            apiKey: process.env.GOOGLE_API_KEY,
+            modelName: "text-embedding-004", // Standard Google embedding model
         }),
         {
             token,
@@ -21,31 +22,45 @@ export async function getVectorStore() {
             collection,
             collectionOptions: {
                 vector: {
-                    dimension: 1536, // text-embedding-3-small has dimension 1536
+                    dimension: 768,
                     metric: "cosine"
+                },
+                indexing: {
+                    allow: ["metadata"]
+                },
+                lexical: {
+                    enabled: true,
+                    analyzer: "standard"
+                },
+                rerank: {
+                    enabled: true,
+                    service: {
+                        provider: "nvidia",
+                        modelName: "nvidia/llama-3.2-nv-rerankqa-1b-v2"
+                    }
                 }
-            }
+            } as any
         }
     )
 }
 
 export async function getEmbeddingsCollection() {
     const { ASTRA_DB_ENDPOINT: endpoint, ASTRA_DB_APPLICATION: token } =
-    process.env; 
+        process.env;
 
-  if (!token || !endpoint) {
-    throw new Error(
-      "Environment variables ASTRA_DB_ENDPOINT and ASTRA_DB_APPLICATION must be defined.",
-    );
-  }
+    if (!token || !endpoint) {
+        throw new Error(
+            "Environment variables ASTRA_DB_ENDPOINT and ASTRA_DB_APPLICATION must be defined.",
+        );
+    }
 
-  // Create an instance of the `DataAPIClient` class with your token.
-  const client = new DataAPIClient(token);
+    // Create an instance of the `DataAPIClient` class with your token.
+    const client = new DataAPIClient(token);
 
-  // Get the database specified by your endpoint.
-  const database = client.db(endpoint);
+    // Get the database specified by your endpoint.
+    const database = client.db(endpoint);
 
-  console.log(`Connected to database ${database.id}`);
+    console.log(`Connected to database ${database.id}`);
 
-  return database;
+    return database;
 }

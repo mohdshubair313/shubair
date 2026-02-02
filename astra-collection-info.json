@@ -1,0 +1,26 @@
+{
+  "name": "embeddings",
+  "options": {
+    "vector": {
+      "dimension": 768,
+      "metric": "cosine",
+      "sourceModel": "other"
+    },
+    "indexing": {
+      "allow": [
+        "metadata"
+      ]
+    },
+    "lexical": {
+      "enabled": true,
+      "analyzer": "standard"
+    },
+    "rerank": {
+      "enabled": true,
+      "service": {
+        "provider": "nvidia",
+        "modelName": "nvidia/llama-3.2-nv-rerankqa-1b-v2"
+      }
+    }
+  }
+}
