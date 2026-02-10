@@ -18,7 +18,7 @@ export async function getVectorStore() {
         collection,
         collectionOptions: {
             vector: {
-                dimension: 768,
+                dimension: 3072,
                 metric: "cosine"
             },
             indexing: {
@@ -41,7 +41,7 @@ export async function getVectorStore() {
     return AstraDBVectorStore.fromExistingIndex(
         new GoogleGenerativeAIEmbeddings({
             apiKey: process.env.GOOGLE_API_KEY,
-            modelName: "text-embedding-004", // Standard Google embedding model
+            modelName: "gemini-embedding-001",
         }),
         options
     )

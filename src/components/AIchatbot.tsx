@@ -24,7 +24,7 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
     error,
     status,
   } = useChat({
-    api: '/api/chat/',
+    api: '/api/chat',
     initialMessages: [
       { id: "1", role: "assistant", content: "Hey there! I'm Shubair's AI assistant. How can I help you today? You can ask me about his projects, skills, or anything else on this site!" },
     ],
