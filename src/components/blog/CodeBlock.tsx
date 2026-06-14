@@ -79,11 +79,11 @@ interface CodeBlockProps {
 }
 
 export function CodeBlock({
-  code,
+  code = "",
   language = "text",
   filename,
   showLineNumbers = true,
-  preamble,
+  preamble = "",
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
