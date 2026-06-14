@@ -23,6 +23,15 @@ export function Navbar() {
             {link.label}
           </Link>
         ))}
+        <Link
+          href="/ml-learnings"
+          className="group inline-flex items-center gap-1 text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-neutral-50 transition-colors font-semibold"
+        >
+          <span>my ML learnings</span>
+          <span className="inline-block font-extrabold text-neutral-800 dark:text-neutral-200 group-hover:translate-x-1.5 transition-transform duration-200">
+            →
+          </span>
+        </Link>
       </nav>
       <div className="flex items-center gap-1">
         <MusicToggle />
