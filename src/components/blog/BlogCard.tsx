@@ -46,20 +46,20 @@ export function BlogCard({
     >
       <Link href={`/blogs/${slug}`} className="block">
         <div
-          className="relative overflow-hidden rounded-2xl bg-white/80 dark:bg-slate-900/50 border border-gray-200 dark:border-white/10 backdrop-blur-sm
-          hover:border-cyan-500/30 transition-all duration-500"
+          className="relative overflow-hidden rounded-2xl bg-card border border-border/50
+          hover:border-primary/40 transition-all duration-500 shadow-md"
         >
           {/* Gradient Border Effect on Hover */}
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/0 to-purple-500/0 group-hover:from-cyan-500/10 group-hover:via-cyan-500/5 group-hover:to-purple-500/10 transition-all duration-500 rounded-2xl" />
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/0 to-transparent group-hover:from-primary/10 group-hover:via-primary/5 group-hover:to-transparent transition-all duration-500 rounded-2xl" />
 
           <div className="relative p-6 md:p-8">
             {/* Top Row - Date & Reading Time */}
-            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400 mb-4">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
               <span className="flex items-center gap-1.5">
                 <Calendar className="w-4 h-4" />
                 {formattedDate}
               </span>
-              <span className="w-1 h-1 rounded-full bg-gray-300 dark:bg-slate-600" />
+              <span className="w-1 h-1 rounded-full bg-border" />
               <span className="flex items-center gap-1.5">
                 <Clock className="w-4 h-4" />
                 {readingTime}
@@ -68,23 +68,23 @@ export function BlogCard({
 
             {/* Title */}
             <h2
-              className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-cyan-600 dark:group-hover:text-cyan-400
+              className="font-heading text-xl md:text-2xl font-bold text-foreground mb-3 group-hover:text-primary
               transition-colors duration-300 line-clamp-2"
             >
               {title}
             </h2>
 
             {/* Summary */}
-            <p className="text-gray-600 dark:text-slate-400 leading-relaxed mb-6 line-clamp-2">
+            <p className="text-muted-foreground leading-relaxed mb-6 line-clamp-2 text-sm md:text-base">
               {summary}
             </p>
 
             {/* Read More Link */}
-            <div className="flex items-center text-cyan-600 dark:text-cyan-400 font-medium">
-              <span className="relative text-sm">
+            <div className="flex items-center text-primary font-medium">
+              <span className="relative text-sm font-heading font-semibold">
                 Read Article
                 <span
-                  className="absolute bottom-0 left-0 w-0 h-px bg-cyan-600 dark:bg-cyan-400 
+                  className="absolute bottom-0 left-0 w-0 h-px bg-primary 
                   group-hover:w-full transition-all duration-300"
                 />
               </span>
@@ -96,7 +96,7 @@ export function BlogCard({
           </div>
 
           {/* Hover Glow */}
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-2xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500 -z-10" />
+          <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-amber-500 rounded-2xl opacity-0 group-hover:opacity-10 blur-xl transition-opacity duration-500 -z-10" />
         </div>
       </Link>
     </motion.article>

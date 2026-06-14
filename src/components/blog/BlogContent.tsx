@@ -56,19 +56,15 @@ export function BlogContent({
   };
 
   return (
-    <div className="min-h-screen w-full relative overflow-hidden bg-background">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Light Mode Gradient Orbs */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-cyan-300/30 dark:bg-cyan-500/20 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-purple-300/30 dark:bg-purple-500/20 rounded-full blur-[120px] animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-300/20 dark:bg-blue-500/10 rounded-full blur-[150px]" />
-
-        {/* Grid Pattern */}
+    <div className="min-h-screen w-full relative bg-background">
+      {/* Background Subtle Grid Pattern */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"
-          style={{ opacity: 0.5 }}
+          className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"
+          style={{ opacity: 0.6 }}
         />
+        {/* Subtle top ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
       </div>
 
       <div className="relative z-10">
@@ -82,15 +78,13 @@ export function BlogContent({
           <Link
             href="/blogs"
             className="flex items-center gap-2 px-4 py-2 rounded-full
-            bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm
-            border border-gray-200 dark:border-white/10
-            text-gray-600 dark:text-slate-400
-            hover:text-cyan-600 dark:hover:text-cyan-400
-            hover:border-cyan-300 dark:hover:border-cyan-700
-            transition-all duration-300"
+            bg-card border border-border/50
+            text-muted-foreground hover:text-primary
+            hover:border-primary/30
+            transition-all duration-300 shadow-md cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm font-medium hidden sm:inline">Back to Blogs</span>
+            <ArrowLeft className="w-4 h-4 text-primary" />
+            <span className="text-sm font-heading font-semibold hidden sm:inline">Back to Blogs</span>
           </Link>
         </motion.div>
 
@@ -109,7 +103,7 @@ export function BlogContent({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1, duration: 0.6 }}
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold font-heading text-foreground mb-6 leading-tight tracking-tight"
                 >
                   {title}
                 </motion.h1>
@@ -118,7 +112,7 @@ export function BlogContent({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.6 }}
-                  className="text-lg md:text-xl text-gray-600 dark:text-slate-400 mb-8 leading-relaxed"
+                  className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed"
                 >
                   {summary}
                 </motion.p>
@@ -127,19 +121,19 @@ export function BlogContent({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.6 }}
-                  className="flex flex-wrap items-center gap-6 text-sm text-gray-500 dark:text-slate-400
-                  pb-8 border-b border-gray-200 dark:border-white/10"
+                  className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground
+                  pb-8 border-b border-border/50"
                 >
                   <span className="flex items-center gap-2">
-                    <User className="w-4 h-4" />
+                    <User className="w-4 h-4 text-primary" />
                     {author}
                   </span>
                   <span className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
+                    <Calendar className="w-4 h-4 text-primary" />
                     {formattedDate}
                   </span>
                   <span className="flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
+                    <Clock className="w-4 h-4 text-primary" />
                     {readingTime}
                   </span>
                 </motion.div>
@@ -152,24 +146,24 @@ export function BlogContent({
                 transition={{ delay: 0.4, duration: 0.6 }}
                 className="prose prose-slate dark:prose-invert prose-lg max-w-none
                 prose-headings:scroll-mt-24
-                prose-h1:text-3xl prose-h1:font-bold prose-h1:mb-6 prose-h1:mt-12 prose-h1:text-gray-900 dark:prose-h1:text-white
-                prose-h2:text-2xl prose-h2:font-bold prose-h2:mb-4 prose-h2:mt-10
-                prose-h2:text-cyan-600 dark:prose-h2:text-cyan-400
-                prose-h3:text-xl prose-h3:font-semibold prose-h3:mb-3 prose-h3:mt-8 prose-h3:text-gray-800 dark:prose-h3:text-slate-200
-                prose-p:text-gray-600 dark:prose-p:text-slate-400 prose-p:leading-relaxed prose-p:mb-6
-                prose-a:text-cyan-600 dark:prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:underline
-                prose-strong:text-gray-900 dark:prose-strong:text-white
-                prose-code:text-pink-600 dark:prose-code:text-pink-400 prose-code:bg-gray-100 dark:prose-code:bg-slate-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
+                prose-h1:text-3xl prose-h1:font-bold prose-h1:font-heading prose-h1:mb-6 prose-h1:mt-12 prose-h1:text-foreground
+                prose-h2:text-2xl prose-h2:font-bold prose-h2:font-heading prose-h2:mb-4 prose-h2:mt-10
+                prose-h2:text-primary
+                prose-h3:text-xl prose-h3:font-semibold prose-h3:font-heading prose-h3:mb-3 prose-h3:mt-8 prose-h3:text-foreground
+                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
+                prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-foreground
+                prose-code:text-primary dark:prose-code:text-primary/95 prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none
                 prose-pre:bg-transparent prose-pre:p-0 prose-pre:m-0
-                prose-blockquote:border-l-4 prose-blockquote:border-cyan-500 prose-blockquote:bg-cyan-50 dark:prose-blockquote:bg-cyan-900/20 prose-blockquote:pl-6 prose-blockquote:py-4 prose-blockquote:pr-4 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-gray-700 dark:prose-blockquote:text-slate-300
+                prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-primary/5 prose-blockquote:pl-6 prose-blockquote:py-4 prose-blockquote:pr-4 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-muted-foreground
                 prose-ul:list-disc prose-ul:ml-6 prose-ul:mb-6
                 prose-ol:list-decimal prose-ol:ml-6 prose-ol:mb-6
-                prose-li:text-gray-600 dark:prose-li:text-slate-400 prose-li:mb-2
+                prose-li:text-muted-foreground prose-li:mb-2 prose-li:marker:text-primary
                 prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8
-                prose-hr:border-gray-200 dark:prose-hr:border-white/10 prose-hr:my-12
+                prose-hr:border-border/50 prose-hr:my-12
                 prose-table:w-full prose-table:border-collapse prose-table:my-8
-                prose-th:bg-gray-100 dark:prose-th:bg-slate-800 prose-th:p-3 prose-th:text-left prose-th:font-semibold prose-th:text-gray-900 dark:prose-th:text-white
-                prose-td:p-3 prose-td:border-t prose-td:border-gray-200 dark:prose-td:border-white/10 prose-td:text-gray-600 dark:prose-td:text-slate-400"
+                prose-th:bg-muted prose-th:p-3 prose-th:text-left prose-th:font-semibold prose-th:text-foreground
+                prose-td:p-3 prose-td:border-t prose-td:border-border/50 prose-td:text-muted-foreground"
               >
                 {children}
               </motion.div>
@@ -179,41 +173,39 @@ export function BlogContent({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
-                className="mt-16 pt-8 border-t border-gray-200 dark:border-white/10"
+                className="mt-16 pt-8 border-t border-border/50"
               >
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                <h3 className="text-lg font-bold font-heading text-foreground mb-4">
                   Share this article
                 </h3>
-                <p className="text-gray-600 dark:text-slate-400 mb-4 text-sm">
-                  Hey if you liked this article by me! Please share it with your friends on social media. I would really appreciate it!
+                <p className="text-muted-foreground mb-4 text-sm">
+                  If you found this article helpful, please consider sharing it on your social channels. It helps support my work!
                 </p>
                 <div className="flex gap-3">
                   <button
                     onClick={() => handleShare("twitter")}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg
-                    bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-slate-300
-                    hover:bg-sky-500 hover:text-white
-                    transition-all duration-300 cursor-pointer border border-gray-200 dark:border-white/10"
+                    bg-card text-muted-foreground hover:text-foreground
+                    hover:border-primary/50 transition-all duration-300 cursor-pointer border border-border/50"
                   >
-                    <Twitter className="w-4 h-4" />
-                    <span className="text-sm font-medium">Twitter</span>
+                    <Twitter className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-heading font-semibold">Twitter</span>
                   </button>
                   <button
                     onClick={() => handleShare("linkedin")}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg
-                    bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-slate-300
-                    hover:bg-blue-600 hover:text-white
-                    transition-all duration-300 cursor-pointer border border-gray-200 dark:border-white/10"
+                    bg-card text-muted-foreground hover:text-foreground
+                    hover:border-primary/50 transition-all duration-300 cursor-pointer border border-border/50"
                   >
-                    <Linkedin className="w-4 h-4" />
-                    <span className="text-sm font-medium">LinkedIn</span>
+                    <Linkedin className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-heading font-semibold">LinkedIn</span>
                   </button>
                 </div>
               </motion.div>
             </motion.article>
 
             {/* Sidebar */}
-            <aside className="order-1 lg:order-2">
+            <aside className="order-1 lg:order-2 lg:sticky lg:top-24 lg:self-start h-fit">
               <TableOfContents items={tocItems} />
             </aside>
           </div>

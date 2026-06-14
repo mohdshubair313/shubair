@@ -19,13 +19,15 @@ function generateId(text: string): string {
     .toLowerCase()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-")
-    .substring(0, 50);
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 // Extract table of contents from MDX content
 function extractTOC(content: string): TOCItem[] {
   const toc: TOCItem[] = [];
   const lines = content.split("\n");
+  const slugCounts = new Map<string, number>();
 
   for (const line of lines) {
     // Match headings (h1, h2, h3)
@@ -33,7 +35,16 @@ function extractTOC(content: string): TOCItem[] {
     if (match) {
       const level = match[1].length;
       const text = match[2].trim();
-      const id = generateId(text);
+      let id = generateId(text);
+
+      if (slugCounts.has(id)) {
+        const count = slugCounts.get(id)!;
+        slugCounts.set(id, count + 1);
+        id = `${id}-${count}`;
+      } else {
+        slugCounts.set(id, 1);
+      }
+
       toc.push({ id, text, level });
     }
   }

@@ -69,54 +69,38 @@ const Page: React.FC = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen px-4 sm:px-6 md:px-8 overflow-hidden bg-background text-foreground">
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-pink-100 via-orange-100 to-blue-100 blur-3xl opacity-60 dark:opacity-0 transition-opacity duration-500" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3a4f81] via-[#1e293b] to-[#334155] blur-2xl opacity-0 dark:opacity-50 transition-opacity duration-500" />
+    <div className="relative flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 md:px-8 overflow-hidden bg-background text-foreground py-20">
+      {/* Background Subtle Grid Pattern */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div
+          className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"
+          style={{ opacity: 0.6 }}
+        />
+        {/* Subtle top ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-[100px]" />
       </div>
 
-      <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute w-[500px] h-[500px] bg-[#00ffd5] opacity-10 blur-3xl animate-spin-slow rounded-full left-[-200px] top-[-200px]" />
-        <div className="absolute w-[500px] h-[500px] bg-[#ffcb05] opacity-10 blur-3xl animate-pulse rounded-full right-[-200px] bottom-[-200px]" />
-      </div>
-
-      {/* ✅ Enhanced Card with Better Borders and Shadows */}
+      {/* Enhanced Card with Better Borders and Shadows */}
       <motion.div
-        initial={{ opacity: 0, y: 60 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full max-w-md rounded-3xl p-6 
-          backdrop-blur-lg
-          bg-white/70 dark:bg-white/5 
-          
-          border-2 border-gray-500/50 dark:border-white/10
-          
-          shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.05),0_12px_24px_rgba(0,0,0,0.15)]
-          dark:shadow-[0_0_30px_rgba(255,255,255,0.05)]
-          
-          hover:shadow-[0_0_0_1px_rgba(0,0,0,0.1),0_4px_8px_rgba(0,0,0,0.1),0_16px_32px_rgba(0,0,0,0.2)]
-          dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.08)]
-          
-          transition-all duration-300
-          
-          ring-1 ring-gray-200/60 dark:ring-white/5
-          ring-offset-0
-        "
+        className="w-full max-w-md rounded-3xl p-6 bg-card border border-border/50 shadow-2xl hover:border-primary/30 transition-all duration-300 relative z-10"
       >
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl sm:text-3xl font-semibold text-gray-800 dark:text-white">
+          <CardTitle className="text-2xl sm:text-3xl font-bold font-heading text-foreground">
             Hey there 👋
           </CardTitle>
           <CardDescription className="text-sm text-muted-foreground mt-2">
-            Love to work on your feedback..
+            I would love to hear your feedback or connect with you!
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* ✅ Enhanced Email Input with Better Border */}
+            {/* Email Input */}
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email" className="text-gray-700 dark:text-white">
+              <Label htmlFor="email" className="text-sm font-semibold text-foreground font-heading">
                 Email
               </Label>
               <Input
@@ -126,79 +110,69 @@ const Page: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="
-                  bg-white/80 dark:bg-black/30 
-                  text-black dark:text-white 
-                  placeholder:text-gray-400 dark:placeholder:text-gray-500 
-                  
-                  border-2 border-gray-300 dark:border-white/10
-                  
-                  shadow-sm shadow-gray-200/50 dark:shadow-none
-                  
-                  focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/30
-                  
-                  hover:border-gray-400 dark:hover:border-white/20
-                  
+                  bg-[#1c1c1e] 
+                  text-foreground 
+                  placeholder:text-muted-foreground 
+                  border border-border/50
+                  focus:border-primary focus:ring-2 focus:ring-primary/20
+                  hover:border-border
                   transition-all duration-200
+                  rounded-xl py-5
                 "
               />
             </div>
 
-            {/* ✅ Enhanced Textarea with Better Border */}
+            {/* Message Textarea */}
             <div className="flex flex-col gap-2">
               <Label
                 htmlFor="message"
-                className="text-gray-700 dark:text-white"
+                className="text-sm font-semibold text-foreground font-heading"
               >
                 Your Feedback
               </Label>
               <textarea
                 id="message"
-                placeholder="I would say You have to do is ..."
+                placeholder="Write your message here..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="
-                  w-full h-36 px-4 py-2 
-                  text-black dark:text-white 
-                  placeholder:text-gray-400 dark:placeholder:text-gray-500 
-                  
-                  bg-white/80 dark:bg-black/30 
-                  
-                  border-2 border-gray-300 dark:border-white/10
-                  
-                  shadow-sm shadow-gray-200/50 dark:shadow-none
-                  
-                  focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/30
-                  
-                  hover:border-gray-400 dark:hover:border-white/20
-                  
-                  rounded-md resize-none
-                  
+                  w-full h-36 px-4 py-3
+                  text-foreground 
+                  placeholder:text-muted-foreground
+                  bg-[#1c1c1e] 
+                  border border-border/50
+                  focus:border-primary focus:ring-2 focus:ring-primary/20
+                  hover:border-border
+                  rounded-xl resize-none
                   transition-all duration-200
+                  outline-none text-sm
                 "
               />
             </div>
 
-            <CardFooter className="mt-4 flex justify-center px-0">
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full sm:w-44"
-              >
-                <AnimatedSubscribeButton className="w-full">
-                  <span className="group inline-flex items-center">
-                    {isLoading ? "Sending..." : "Send"}
+            <CardFooter className="mt-4 flex justify-center px-0 pb-0">
+              <div className="w-full flex justify-center">
+                <AnimatedSubscribeButton
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-6 font-heading font-semibold text-sm bg-primary text-[#09090B] hover:bg-primary/95 transition-all shadow-md rounded-xl"
+                >
+                  <span className="group inline-flex items-center text-[#09090B]">
+                    {isLoading ? "Sending..." : "Send Feedback"}
                   </span>
-                  <span className="group inline-flex items-center">
-                    Your valuable feedback is sent to Shubair
+                  <span className="group inline-flex items-center text-[#09090B]">
+                    Feedback sent to Shubair!
                   </span>
                 </AnimatedSubscribeButton>
-              </button>
+              </div>
             </CardFooter>
           </form>
         </CardContent>
       </motion.div>
 
-      <SocialDock />
+      <div className="mt-12 relative z-10 w-full flex justify-center">
+        <SocialDock />
+      </div>
     </div>
   );
 };

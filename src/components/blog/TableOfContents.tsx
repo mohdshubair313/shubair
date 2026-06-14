@@ -17,45 +17,121 @@ interface TableOfContentsProps {
 export function TableOfContents({ items }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-20% 0% -80% 0%" }
-    );
+    setMounted(true);
+  }, []);
 
-    items.forEach((item) => {
-      const element = document.getElementById(item.id);
-      if (element) observer.observe(element);
-    });
+  useEffect(() => {
+    if (!mounted || items.length === 0) return;
 
-    return () => observer.disconnect();
-  }, [items]);
+    const elements = items
+      .map((item) => document.getElementById(item.id))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (elements.length === 0) return;
+
+    let rafId: number | null = null;
+
+    const updateActive = () => {
+      rafId = null;
+      const offset = 140; // approx. top navbar + a little breathing room
+      let currentId = elements[0]?.id ?? "";
+      for (const el of elements) {
+        const top = el.getBoundingClientRect().top;
+        if (top - offset <= 0) {
+          currentId = el.id;
+        } else {
+          break;
+        }
+      }
+      setActiveId((prev) => (prev === currentId ? prev : currentId));
+    };
+
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(updateActive);
+    };
+
+    updateActive();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+
+    return () => {
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [items, mounted]);
 
   const handleClick = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
       setIsOpen(false);
     }
   };
 
   if (items.length === 0) return null;
 
+  const tocContent = (
+    <div
+      className="w-full
+      bg-card border border-border/50
+      rounded-2xl shadow-xl overflow-hidden"
+    >
+      <div className="p-5">
+        {/* Header */}
+        <div className="flex items-center gap-2 mb-5 pb-4 border-b border-border/50">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+            <List className="w-4 h-4 text-primary" />
+          </div>
+          <h2 className="text-base font-bold font-heading text-foreground tracking-tight">
+            Contents
+          </h2>
+        </div>
+
+        {/* TOC Items */}
+        <nav className="space-y-1 max-h-[calc(100vh-16rem)] overflow-y-auto pr-1 -mr-1 scrollbar-thin">
+          {items.map((item) => {
+            const isActive = activeId === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => handleClick(item.id)}
+                className={`group w-full text-left px-3 py-2 rounded-lg text-sm leading-snug
+                transition-all duration-200 border-l-2
+                ${
+                  isActive
+                    ? "bg-primary/10 text-primary font-semibold border-primary"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground border-transparent"
+                }
+                ${item.level === 1 ? "pl-3" : ""}
+                ${item.level === 2 ? "pl-3" : ""}
+                ${item.level === 3 ? "pl-5" : ""}
+                ${item.level === 4 ? "pl-7" : ""}
+                `}
+              >
+                <span className="line-clamp-2 break-words font-heading text-xs tracking-wide uppercase">{item.text}</span>
+              </button>
+            );
+          })}
+        </nav>
+      </div>
+    </div>
+  );
+
   return (
     <>
       {/* Mobile Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 lg:hidden
-        w-12 h-12 rounded-full bg-cyan-500 text-white shadow-lg 
-        flex items-center justify-center transition-all duration-300 hover:scale-110"
+        className="fixed bottom-26 right-10 z-50 lg:hidden
+        w-12 h-12 rounded-full bg-primary hover:bg-primary/90
+        text-primary-foreground shadow-lg shadow-primary/20
+        flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-pointer"
+        aria-label="Toggle table of contents"
       >
         {isOpen ? <X className="w-5 h-5" /> : <List className="w-5 h-5" />}
       </button>
@@ -73,45 +149,12 @@ export function TableOfContents({ items }: TableOfContentsProps) {
         )}
       </AnimatePresence>
 
-      {/* TOC Container - Always visible on desktop */}
-      <div className="hidden lg:block sticky top-24">
-        <div className="w-64 bg-white/80 dark:bg-slate-900/50 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl overflow-y-auto max-h-[calc(100vh-8rem)]">
-          <div className="p-6">
-            {/* Header */}
-            <div className="flex items-center gap-2 mb-6">
-              <List className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                Contents
-              </h2>
-            </div>
-
-            {/* TOC Items */}
-            <nav className="space-y-1">
-              {items.map((item, index) => (
-                <motion.button
-                  key={item.id}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  onClick={() => handleClick(item.id)}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm
-                  transition-all duration-200
-                  ${
-                    activeId === item.id
-                      ? "bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 font-medium"
-                      : "text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-slate-200"
-                  }
-                  ${item.level === 2 ? "pl-3" : ""}
-                  ${item.level === 3 ? "pl-6" : ""}
-                  ${item.level === 4 ? "pl-9" : ""}
-                  `}
-                >
-                  <span className="line-clamp-2">{item.text}</span>
-                </motion.button>
-              ))}
-            </nav>
-          </div>
-        </div>
+      {/* TOC Container — desktop: sticky sidebar, mobile: slide-in drawer */}
+      <div
+        className="hidden lg:block"
+        style={{ maxHeight: "calc(100vh - 7rem)" }}
+      >
+        {tocContent}
       </div>
 
       {/* Mobile TOC Drawer */}
@@ -122,51 +165,55 @@ export function TableOfContents({ items }: TableOfContentsProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed lg:hidden right-0 top-[72px] h-[calc(100vh-72px)] w-72 z-50
-            bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl
-            border-l border-gray-200 dark:border-white/10 overflow-y-auto"
+            className="fixed lg:hidden right-0 top-[72px] h-[calc(100vh-72px)] w-80 max-w-[85vw] z-50
+            bg-card/95 backdrop-blur-xl
+            border-l border-border/50 overflow-y-auto
+            shadow-2xl"
           >
-            <div className="p-6">
+            <div className="p-5">
               {/* Header */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-5 pb-4 border-b border-border/50">
                 <div className="flex items-center gap-2">
-                  <List className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
-                  <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+                    <List className="w-4 h-4 text-primary" />
+                  </div>
+                  <h2 className="text-base font-bold font-heading text-foreground tracking-tight">
                     Contents
                   </h2>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5"
+                  className="p-2 rounded-lg hover:bg-[#1c1c1e] transition-colors"
+                  aria-label="Close"
                 >
-                  <X className="w-5 h-5 text-gray-600 dark:text-slate-400" />
+                  <X className="w-5 h-5 text-muted-foreground hover:text-foreground" />
                 </button>
               </div>
 
-              {/* TOC Items */}
+              {/* TOC Items (mobile) */}
               <nav className="space-y-1">
-                {items.map((item, index) => (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                    onClick={() => handleClick(item.id)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm
-                    transition-all duration-200
-                    ${
-                      activeId === item.id
-                        ? "bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 font-medium"
-                        : "text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-slate-200"
-                    }
-                    ${item.level === 2 ? "pl-3" : ""}
-                    ${item.level === 3 ? "pl-6" : ""}
-                    ${item.level === 4 ? "pl-9" : ""}
-                    `}
-                  >
-                    <span className="line-clamp-2">{item.text}</span>
-                  </motion.button>
-                ))}
+                {items.map((item) => {
+                  const isActive = activeId === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleClick(item.id)}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-sm leading-snug
+                      transition-all duration-200 border-l-2
+                      ${
+                        isActive
+                          ? "bg-primary/10 text-primary font-semibold border-primary"
+                          : "text-muted-foreground hover:bg-[#1c1c1e] border-transparent"
+                      }
+                      ${item.level === 2 ? "pl-3" : ""}
+                      ${item.level === 3 ? "pl-5" : ""}
+                      ${item.level === 4 ? "pl-7" : ""}
+                      `}
+                    >
+                      <span className="line-clamp-2 break-words font-heading text-xs tracking-wide uppercase">{item.text}</span>
+                    </button>
+                  );
+                })}
               </nav>
             </div>
           </motion.div>

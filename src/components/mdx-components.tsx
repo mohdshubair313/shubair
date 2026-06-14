@@ -2,6 +2,13 @@ import Link from "next/link";
 import { MDXImage } from "@/components/ui/mdx-image";
 import { ComponentPropsWithoutRef } from "react";
 import { CodeBlock } from "@/components/blog/CodeBlock";
+import { HarnessDiagram } from "@/components/blog/widgets/HarnessDiagram";
+import { ToolCallFlow } from "@/components/blog/widgets/ToolCallFlow";
+import { FeatureStateMachine } from "@/components/blog/widgets/FeatureStateMachine";
+import { VerificationLayers } from "@/components/blog/widgets/VerificationLayers";
+import { RalphLoop } from "@/components/blog/widgets/RalphLoop";
+import { CleanStateChecklist } from "@/components/blog/widgets/CleanStateChecklist";
+import { Reveal } from "@/components/blog/widgets/Reveal";
 
 type HeadingProps = ComponentPropsWithoutRef<"h1">;
 type ParagraphProps = ComponentPropsWithoutRef<"p">;
@@ -18,15 +25,27 @@ function generateId(text: string): string {
     .toLowerCase()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-")
-    .substring(0, 50);
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 export const mdxComponents = {
-  h1: ({ children, className, ...props }: HeadingProps) => {
-    const id = generateId(String(children));
+  // Expose <CodeBlock /> to MDX so we can render "dialogue + code" blocks
+  // (e.g. "You: ... / AI: ... / <pre>code</pre>") with a single component.
+  CodeBlock,
+  // Interactive widgets — drop into any blog post via JSX.
+  HarnessDiagram,
+  ToolCallFlow,
+  FeatureStateMachine,
+  VerificationLayers,
+  RalphLoop,
+  CleanStateChecklist,
+  Reveal,
+  h1: ({ children, className, id, ...props }: HeadingProps) => {
+    const computedId = id || generateId(String(children));
     return (
       <h1
-        id={id}
+        id={computedId}
         className={`mt-2 scroll-m-20 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100 ${className}`}
         {...props}
       >
@@ -34,11 +53,11 @@ export const mdxComponents = {
       </h1>
     );
   },
-  h2: ({ children, className, ...props }: HeadingProps) => {
-    const id = generateId(String(children));
+  h2: ({ children, className, id, ...props }: HeadingProps) => {
+    const computedId = id || generateId(String(children));
     return (
       <h2
-        id={id}
+        id={computedId}
         className={`mt-10 scroll-m-20 border-b border-slate-200/80 dark:border-white/10 pb-2 text-3xl font-semibold tracking-tight first:mt-0 text-cyan-700 dark:text-cyan-400 ${className}`}
         {...props}
       >
@@ -46,11 +65,11 @@ export const mdxComponents = {
       </h2>
     );
   },
-  h3: ({ children, className, ...props }: HeadingProps) => {
-    const id = generateId(String(children));
+  h3: ({ children, className, id, ...props }: HeadingProps) => {
+    const computedId = id || generateId(String(children));
     return (
       <h3
-        id={id}
+        id={computedId}
         className={`mt-8 scroll-m-20 text-2xl font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
         {...props}
       >
@@ -58,11 +77,11 @@ export const mdxComponents = {
       </h3>
     );
   },
-  h4: ({ children, className, ...props }: HeadingProps) => {
-    const id = generateId(String(children));
+  h4: ({ children, className, id, ...props }: HeadingProps) => {
+    const computedId = id || generateId(String(children));
     return (
       <h4
-        id={id}
+        id={computedId}
         className={`mt-8 scroll-m-20 text-xl font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
         {...props}
       >
@@ -70,11 +89,11 @@ export const mdxComponents = {
       </h4>
     );
   },
-  h5: ({ children, className, ...props }: HeadingProps) => {
-    const id = generateId(String(children));
+  h5: ({ children, className, id, ...props }: HeadingProps) => {
+    const computedId = id || generateId(String(children));
     return (
       <h5
-        id={id}
+        id={computedId}
         className={`mt-8 scroll-m-20 text-lg font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
         {...props}
       >
@@ -82,11 +101,11 @@ export const mdxComponents = {
       </h5>
     );
   },
-  h6: ({ children, className, ...props }: HeadingProps) => {
-    const id = generateId(String(children));
+  h6: ({ children, className, id, ...props }: HeadingProps) => {
+    const computedId = id || generateId(String(children));
     return (
       <h6
-        id={id}
+        id={computedId}
         className={`mt-8 scroll-m-20 text-base font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
         {...props}
       >
@@ -184,7 +203,7 @@ export const mdxComponents = {
     // Inline code
     return (
       <code
-        className={`px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-pink-600 dark:text-pink-400 text-sm font-mono ${className}`}
+        className={`px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-fuchsia-600 dark:text-fuchsia-300 text-sm font-mono font-semibold ${className}`}
         {...props}
       >
         {children}
