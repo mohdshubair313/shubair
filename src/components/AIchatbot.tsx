@@ -172,25 +172,29 @@ function ChatMessage({ message: { role, content } }: ChatMessageProps) {
           </div>
         )}
         <div className="prose prose-invert prose-sm max-w-none">
+          {/* eslint-disable @typescript-eslint/no-unused-vars */}
           <ReactMarkdown
             components={{
-              a: props => (
-                <Link {...props} href={props.href as string} className="text-blue-400 hover:text-blue-300 underline decoration-blue-500/30 underline-offset-4 font-medium transition-colors" />
+              a: ({ node, ...props }) => (
+                <Link href={props.href as string} className="text-blue-400 hover:text-blue-300 underline decoration-blue-500/30 underline-offset-4 font-medium transition-colors">
+                  {props.children}
+                </Link>
               ),
-              p: props => <p {...props} className="mb-3 last:mb-0 leading-relaxed" />,
-              ul: props => <ul {...props} className="list-disc list-outside ml-4 space-y-1 mb-3" />,
-              ol: props => <ol {...props} className="list-decimal list-outside ml-4 space-y-1 mb-3" />,
-              li: props => <li {...props} className="pl-1" />,
-              code: props => (
+              p: ({ node, ...props }) => <p {...props} className="mb-3 last:mb-0 leading-relaxed" />,
+              ul: ({ node, ...props }) => <ul {...props} className="list-disc list-outside ml-4 space-y-1 mb-3" />,
+              ol: ({ node, ...props }) => <ol {...props} className="list-decimal list-outside ml-4 space-y-1 mb-3" />,
+              li: ({ node, ...props }) => <li {...props} className="pl-1" />,
+              code: ({ node, ...props }) => (
                 <code {...props} className="bg-white/10 px-1.5 py-0.5 rounded text-[13px] font-mono text-blue-300" />
               ),
-              blockquote: props => (
+              blockquote: ({ node, ...props }) => (
                 <blockquote {...props} className="pl-4 border-l-3 border-blue-500 bg-blue-500/5 py-1 my-2 text-gray-400 italic rounded-r-lg" />
               ),
             }}
           >
             {content}
           </ReactMarkdown>
+          {/* eslint-enable @typescript-eslint/no-unused-vars */}
         </div>
       </div>
     </motion.div>

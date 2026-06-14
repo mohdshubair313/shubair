@@ -31,77 +31,75 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
 
-  --animate-fade-in: fadeIn 0.6s ease-out forwards;
-  --animate-slide-up: slideUp 0.6s ease-out forwards;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-slide-up: slideUp 0.5s ease-out forwards;
 
-  --font-outfit: var(--font-outfit), sans-serif;
-  --font-caveat: var(--font-caveat), cursive;
-  --font-reenie: var(--font-reenie), cursive;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
 }
 
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
   :root {
-    --background: 36 28% 97%;
-    --foreground: 24 9% 12%;
-    --card: 36 30% 99%;
-    --card-foreground: 24 9% 12%;
-    --popover: 36 30% 99%;
-    --popover-foreground: 24 9% 12%;
-    --primary: 36 45% 38%;
-    --primary-foreground: 36 28% 97%;
-    --secondary: 36 18% 93%;
-    --secondary-foreground: 24 9% 15%;
-    --muted: 36 15% 93%;
-    --muted-foreground: 24 5% 45%;
-    --accent: 36 18% 93%;
-    --accent-foreground: 24 9% 12%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
-    --border: 36 12% 86%;
-    --input: 36 12% 86%;
-    --ring: 36 45% 38%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 0 0% 9%;
     --radius: 1rem;
-    --chart-1: 36 45% 38%;
-    --chart-2: 200 30% 40%;
-    --chart-3: 160 40% 35%;
-    --chart-4: 280 30% 50%;
-    --chart-5: 20 50% 50%;
+    --chart-1: 0 0% 20%;
+    --chart-2: 0 0% 35%;
+    --chart-3: 0 0% 50%;
+    --chart-4: 0 0% 65%;
+    --chart-5: 0 0% 80%;
   }
 
   .dark {
-    --background: 240 6% 4%;
-    --foreground: 60 5% 98%;
-    --card: 240 5% 7.5%;
-    --card-foreground: 60 5% 98%;
-    --popover: 240 5% 7.5%;
-    --popover-foreground: 60 5% 98%;
-    --primary: 42 40% 59%;
-    --primary-foreground: 240 6% 4%;
-    --secondary: 240 4% 12%;
-    --secondary-foreground: 60 5% 90%;
-    --muted: 240 4% 14%;
-    --muted-foreground: 240 5% 48%;
-    --accent: 240 4% 12%;
-    --accent-foreground: 60 5% 98%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 90%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 0 0% 12%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 72% 51%;
-    --destructive-foreground: 60 5% 98%;
-    --border: 240 4% 16%;
-    --input: 240 4% 14%;
-    --ring: 42 40% 59%;
-    --radius: 0.75rem;
-    --chart-1: 42 50% 55%;
-    --chart-2: 200 40% 45%;
-    --chart-3: 160 45% 40%;
-    --chart-4: 280 35% 55%;
-    --chart-5: 20 55% 55%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 12%;
+    --input: 0 0% 12%;
+    --ring: 0 0% 98%;
+    --radius: 1rem;
+    --chart-1: 0 0% 80%;
+    --chart-2: 0 0% 65%;
+    --chart-3: 0 0% 50%;
+    --chart-4: 0 0% 35%;
+    --chart-5: 0 0% 20%;
   }
 
   html {
     scroll-behavior: smooth;
     overflow-y: scroll;
-    scroll-padding-top: 100px;
+    scroll-padding-top: 32px;
   }
 
   body {
@@ -111,7 +109,11 @@
   }
 
   h1, h2, h3, h4, h5, h6, .font-heading {
-    font-family: var(--font-outfit), var(--font-inter), system-ui, sans-serif;
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
   }
 }
 
@@ -120,67 +122,41 @@
     text-wrap: balance;
   }
 
-  .section-number {
-    @apply text-[100px] md:text-[160px] font-bold leading-none select-none;
-    font-family: var(--font-inter), system-ui, sans-serif;
-    letter-spacing: -0.04em;
+  /* srbh-style section card container */
+  .section-card {
+    @apply rounded-2xl border border-border p-6 sm:p-8;
   }
 
-  .dark .section-number {
-    background: linear-gradient(to bottom, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  /* Section divider inside cards */
+  .section-divider {
+    height: 1px;
+    width: calc(100% + 3rem);
+    margin-left: -1.5rem;
+    @apply bg-border my-10;
   }
 
-  .section-number:not(.dark *) {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.01) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .heading-xl {
-    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.08] tracking-tight;
-    font-family: var(--font-outfit), var(--font-inter), system-ui, sans-serif;
-    letter-spacing: -0.03em;
-  }
-
-  .heading-lg {
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight;
-    font-family: var(--font-outfit), var(--font-inter), system-ui, sans-serif;
-    letter-spacing: -0.025em;
-  }
-
-  .text-accent-highlight {
-    @apply text-primary;
+  @media (min-width: 640px) {
+    .section-divider {
+      width: calc(100% + 4rem);
+      margin-left: -2rem;
+    }
   }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -195,9 +171,8 @@
   @apply bg-muted-foreground/30;
 }
 
-/* Slimmer scrollbar used inside cards/panels */
 .scrollbar-thin::-webkit-scrollbar {
-  width: 5px;
+  width: 4px;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
@@ -233,14 +208,14 @@
   color: #f8fafc;
 }
 .dark .prose a {
-  color: hsl(42 40% 59%);
+  color: #e5e5e5;
 }
 .dark .prose hr {
   border-color: rgba(51, 65, 85, 0.6);
 }
 
 ::selection {
-  background-color: hsl(var(--primary) / 0.2);
+  background-color: hsl(var(--foreground) / 0.12);
   color: inherit;
 }
 
@@ -249,48 +224,18 @@
   outline-offset: 2px;
 }
 
-/* Subtle noise texture for background depth */
-.bg-noise::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  opacity: 0.015;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 256px 256px;
+/* Intro blur-in animation (srbh-style page load) */
+@keyframes blurIn {
+  from {
+    opacity: 0;
+    filter: blur(16px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+  }
 }
 
-/* Lazer Speed-of-Light Sweep Effect */
-.laser-sweep {
-  position: relative;
-  overflow: hidden;
+.animate-blur-in {
+  animation: blurIn 0.8s ease-out forwards;
 }
-
-.laser-sweep::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 150%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    rgba(200, 169, 96, 0) 0%,
-    rgba(200, 169, 96, 0.05) 25%,
-    rgba(255, 255, 255, 0.45) 50%,
-    rgba(200, 169, 96, 0.05) 75%,
-    rgba(200, 169, 96, 0) 100%
-  );
-  transform: skewX(-30deg);
-  left: -180%;
-  transition: none;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.laser-sweep:hover::after {
-  left: 180%;
-  transition: left 0.7s cubic-bezier(0.25, 1, 0.5, 1);
-}
-

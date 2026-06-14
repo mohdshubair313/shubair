@@ -1,13 +1,7 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, Clock, BookOpen } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { ArrowRight } from "lucide-react";
 
 interface Blog {
   slug: string;
@@ -20,131 +14,61 @@ interface BlogSectionProps {
   blogs: Blog[];
 }
 
-const BlogSection = ({ blogs }: BlogSectionProps) => {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const headingRef = useRef<HTMLDivElement | null>(null);
-  const cardsRef = useRef<(HTMLElement | null)[]>([]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (headingRef.current) {
-        gsap.from(headingRef.current, {
-          scrollTrigger: {
-            trigger: headingRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-          y: 50,
-          opacity: 0,
-          duration: 0.9,
-          ease: "power3.out",
-        });
-      }
-
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return;
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-          y: 40,
-          opacity: 0,
-          duration: 0.7,
-          delay: i * 0.15,
-          ease: "power3.out",
-        });
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
+export default function BlogSection({ blogs }: BlogSectionProps) {
+  const displayedBlogs = blogs.slice(0, 3);
 
   return (
-    <section
-      ref={sectionRef}
-      id="blog"
-      className="relative py-16 md:py-20 overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <div ref={headingRef} className="mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading">Blog</h2>
-        </div>
+    <section id="blog" data-section="Blog" className="scroll-mt-24">
+      <h3 className="font-serif text-3xl tracking-wide text-neutral-900 dark:text-white mb-6">
+        Writing
+      </h3>
 
-        {blogs.length === 0 ? (
-          <div className="bg-card border border-border/50 rounded-2xl p-10 text-center">
-            <BookOpen className="w-8 h-8 mx-auto mb-3 text-muted-foreground/50" />
-            <p className="text-muted-foreground text-sm">
-              Thoughts brewing. Check back soon.
-            </p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {blogs.slice(0, 2).map((blog, index) => (
-              <Link
-                key={blog.slug}
-                href={`/blogs/${blog.slug}`}
-                ref={(el) => { cardsRef.current[index] = el; }}
-              >
-                <motion.div
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2, ease: "easeOut" }}
-                  className="bg-card border border-border/50 rounded-2xl p-7 md:p-8 h-full group cursor-pointer"
-                >
-                  <div className="flex items-center gap-2.5 text-xs text-muted-foreground mb-4">
-                    <span className="inline-flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {formatDate(blog.publishedAt)}
-                    </span>
-                  </div>
-
-                  <h3 className="text-lg md:text-xl font-bold mb-2.5 group-hover:text-primary transition-colors">
-                    {blog.title}
-                  </h3>
-
-                  <p className="text-sm text-muted-foreground/80 leading-relaxed mb-5 line-clamp-3">
-                    {blog.summary}
-                  </p>
-
-                  <div className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                    Read more
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </motion.div>
-              </Link>
-            ))}
-          </div>
-        )}
-
-        {blogs.length > 2 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mt-8 text-center"
-          >
+      {blogs.length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          Thoughts brewing. Check back soon.
+        </p>
+      ) : (
+        <div className="flex flex-col">
+          {displayedBlogs.map((blog, index) => (
             <Link
-              href="/blogs"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              key={blog.slug}
+              href={`/blogs/${blog.slug}`}
+              className={`group flex items-start justify-between gap-4 py-4 ${
+                index !== displayedBlogs.length - 1
+                  ? "border-b border-dotted border-neutral-200 dark:border-neutral-800"
+                  : ""
+              }`}
             >
-              View all posts ({blogs.length})
-              <ArrowRight className="w-3.5 h-3.5" />
+              <div className="min-w-0">
+                <h4 className="font-medium text-neutral-900 dark:text-white group-hover:underline">
+                  {blog.title}
+                </h4>
+                <p className="mt-1 text-sm text-muted-foreground line-clamp-1">
+                  {blog.summary}
+                </p>
+              </div>
+              <div className="flex shrink-0 items-center gap-2 pt-0.5">
+                <time className="text-xs text-muted-foreground whitespace-nowrap">
+                  {blog.publishedAt}
+                </time>
+                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
+              </div>
             </Link>
-          </motion.div>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {blogs.length > 3 && (
+        <div className="mt-4">
+          <Link
+            href="/blogs"
+            className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+          >
+            View all posts
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      )}
     </section>
   );
-};
-
-export default BlogSection;
+}

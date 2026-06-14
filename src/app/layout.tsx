@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter, Outfit, Caveat, Reenie_Beanie } from 'next/font/google'
-import { NavbarDemo } from "@/components/Navbar";
+import { Inter, Instrument_Serif, Geist_Mono } from 'next/font/google'
+import { Navbar } from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react"
 import { Toaster } from "sonner";
@@ -11,20 +11,15 @@ const inter = Inter({
   variable: "--font-inter",
 })
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-})
-
-const caveat = Caveat({
-  subsets: ["latin"],
-  variable: "--font-caveat",
-})
-
-const reenie = Reenie_Beanie({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-reenie",
+  variable: "--font-instrument-serif",
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
 })
 
 export const metadata: Metadata = {
@@ -84,11 +79,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} ${caveat.variable} ${reenie.variable}`} suppressHydrationWarning>
-      <body className={`${inter.className} bg-noise`}>
+    <html lang="en" className={`${inter.variable} ${instrumentSerif.variable} ${geistMono.variable} h-full antialiased`} suppressHydrationWarning>
+      <body className={`${inter.className} flex min-h-full w-full flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <NavbarDemo />
-          {children}
+          <div className="flex min-h-screen w-full flex-col">
+            <div className="mx-auto w-full max-w-3xl px-4 py-4 sm:px-0">
+              <Navbar />
+            </div>
+            <main className="flex flex-1 flex-col">
+              {children}
+            </main>
+          </div>
           <Analytics />
           <Toaster position="top-center" richColors />
         </ThemeProvider>

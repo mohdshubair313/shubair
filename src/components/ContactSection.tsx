@@ -1,16 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Send, Github, Linkedin, Mail, MapPin } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useState } from "react";
+import { Send, Github, Linkedin, Mail, Twitter } from "lucide-react";
 
 const ContactSection = () => {
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  const headingRef = useRef<HTMLDivElement | null>(null);
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
@@ -24,164 +17,113 @@ const ContactSection = () => {
   };
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="relative py-16 md:py-20 overflow-hidden"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <div ref={headingRef} className="mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold font-heading mb-2">Contact</h2>
-          <p className="text-muted-foreground max-w-lg text-sm leading-relaxed">
-            Open to full-time roles, internships, and collaborations.
-            Especially excited about opportunities in{" "}
-            <span className="font-semibold text-foreground">Japan</span>,{" "}
-            <span className="font-semibold text-foreground">Germany</span>,
-            and tech-forward hubs worldwide.
+    <div id="contact" data-section="Contact" className="flex w-full flex-col scroll-mt-24">
+      <h3 className="font-serif text-3xl tracking-wide text-neutral-900 dark:text-white mb-2">
+        Get in Touch
+      </h3>
+      <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-8 leading-relaxed max-w-md">
+        Open to full-time roles, internships, and collaborations.
+        Especially interested in opportunities in{" "}
+        <span className="text-neutral-900 dark:text-white font-medium">Japan</span>,{" "}
+        <span className="text-neutral-900 dark:text-white font-medium">Germany</span>,
+        and tech-forward hubs worldwide.
+      </p>
+
+      {submitted ? (
+        <div className="text-center py-12">
+          <div className="w-12 h-12 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto mb-4">
+            <Send className="w-5 h-5 text-neutral-900 dark:text-white" />
+          </div>
+          <h4 className="text-base font-medium mb-1 text-neutral-900 dark:text-white">Message sent!</h4>
+          <p className="text-sm text-neutral-500 dark:text-neutral-400">
+            I&rsquo;ll get back to you within 24 hours.
           </p>
         </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 md:gap-8 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-            className="lg:col-span-3"
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-medium mb-1.5 text-neutral-500 dark:text-neutral-400">
+                Name
+              </label>
+              <input
+                type="text"
+                value={formState.name}
+                onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                placeholder="Your name"
+                required
+                className="w-full px-3.5 py-2 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-all text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-medium mb-1.5 text-neutral-500 dark:text-neutral-400">
+                Email
+              </label>
+              <input
+                type="email"
+                value={formState.email}
+                onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                placeholder="your@email.com"
+                required
+                className="w-full px-3.5 py-2 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-all text-sm text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-medium mb-1.5 text-neutral-500 dark:text-neutral-400">
+              Message
+            </label>
+            <textarea
+              value={formState.message}
+              onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+              placeholder="Tell me about your project or just say hi..."
+              rows={4}
+              required
+              className="w-full px-3.5 py-2 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-all text-sm resize-none text-neutral-900 dark:text-white placeholder:text-neutral-400 dark:placeholder:text-neutral-600"
+            />
+          </div>
+          <button
+            type="submit"
+            className="px-5 py-2 rounded-xl text-sm font-medium bg-neutral-900 text-white dark:bg-white dark:text-black hover:opacity-90 transition-all inline-flex items-center gap-2 cursor-pointer"
           >
-            <div className="bg-card border border-border/50 rounded-2xl p-7 md:p-9">
-              <div className="flex items-center gap-2.5 mb-7">
-                <Mail className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium">Tell me about your idea</span>
-              </div>
+            <Send className="w-3.5 h-3.5" />
+            Send Message
+          </button>
+        </form>
+      )}
 
-              {submitted ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-10"
-                >
-                  <div className="w-14 h-14 rounded-full bg-primary/15 flex items-center justify-center mx-auto mb-5">
-                    <Send className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="text-lg font-bold mb-1">Message sent!</h3>
-                  <p className="text-sm text-muted-foreground">
-                    I&rsquo;ll get back to you within 24 hours.
-                  </p>
-                </motion.div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-medium mb-1.5 text-muted-foreground">
-                      What should I call you?
-                    </label>
-                    <input
-                      type="text"
-                      value={formState.name}
-                      onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                      placeholder="Your name"
-                      required
-                      className="w-full px-4 py-2.5 rounded-xl bg-background border border-border/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium mb-1.5 text-muted-foreground">
-                      Where can I reach you?
-                    </label>
-                    <input
-                      type="email"
-                      value={formState.email}
-                      onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                      placeholder="your@email.com"
-                      required
-                      className="w-full px-4 py-2.5 rounded-xl bg-background border border-border/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all text-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium mb-1.5 text-muted-foreground">
-                      What&rsquo;s on your mind?
-                    </label>
-                    <textarea
-                      value={formState.message}
-                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      placeholder="Tell me about your project, idea, or just say hi..."
-                      rows={4}
-                      required
-                      className="w-full px-4 py-2.5 rounded-xl bg-background border border-border/50 focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all text-sm resize-none"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 transition-all duration-300 flex items-center justify-center gap-2 text-sm"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                    Send Message
-                  </button>
-                </form>
-              )}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2 space-y-4"
-          >
-            <div className="bg-card border border-border/50 rounded-2xl p-7">
-              <div className="flex items-center gap-2 mb-4">
-                <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium">Availability</span>
-              </div>
-              <div className="space-y-2.5 text-sm">
-                {[
-                  "Remote-first, globally available",
-                  "Open to relocation (Japan, Germany, EU)",
-                  "Full-time, internship, or freelance",
-                ].map((text) => (
-                  <div key={text} className="flex items-center gap-2.5">
-                    <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                    <span className="text-muted-foreground text-xs">{text}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-card border border-border/50 rounded-2xl p-7">
-              <h3 className="text-sm font-medium mb-4">Find me online</h3>
-              <div className="space-y-2.5">
-                {[
-                  { icon: Github, label: "GitHub", href: "https://github.com/mohdshubair313" },
-                  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/mohdshubair313" },
-                  { icon: Mail, label: "hey@shubair.in", href: "mailto:hey@shubair.in" },
-                ].map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <a
-                      key={link.label}
-                      href={link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2.5 text-muted-foreground hover:text-foreground transition-colors group"
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      <span className="text-xs">{link.label}</span>
-                    </a>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
+      {/* Social links */}
+      <div className="mt-10 pt-6 border-t border-dotted border-neutral-200 dark:border-neutral-800">
+        <div className="flex flex-wrap gap-4">
+          {[
+            { icon: Github, label: "GitHub", href: "https://github.com/mohdshubair313" },
+            { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/mohdshubair313" },
+            { icon: Twitter, label: "Twitter", href: "https://x.com/shubair313" },
+            { icon: Mail, label: "hey@shubair.in", href: "mailto:hey@shubair.in" },
+          ].map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors text-xs"
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{link.label}</span>
+              </a>
+            );
+          })}
         </div>
       </div>
 
-      <div className="mt-28 text-center">
-        <p className="text-xs text-muted-foreground/60">
+      <div className="mt-12 text-center">
+        <p className="text-[11px] text-neutral-400 dark:text-neutral-600">
           &copy; {new Date().getFullYear()} Mohd Shubair. Built with care.
         </p>
       </div>
-    </section>
+    </div>
   );
 };
 

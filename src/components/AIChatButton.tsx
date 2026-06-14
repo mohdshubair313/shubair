@@ -1,100 +1,131 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AIchatbot from "./AIchatbot";
-import { Bot } from "lucide-react";
+import { Bot, X, Sparkles } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const AIChatButton = () => {
   const [chatBoxOpen, setboxOpen] = useState(false);
+  const [showLabel, setShowLabel] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    // Show the annotation after a short delay
+    const timer = setTimeout(() => setShowLabel(true), 2500);
+    // Auto-dismiss after some time
+    const dismiss = setTimeout(() => setDismissed(true), 12000);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(dismiss);
+    };
+  }, []);
+
+  const handleOpen = () => {
+    setboxOpen(true);
+    setDismissed(true);
+  };
 
   return (
     <>
-      {/* Creative Chatbot Callout Pointer */}
-      <AnimatePresence>
-        {!chatBoxOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 15 }}
-            transition={{ type: "spring", damping: 15 }}
-            className="fixed bottom-26 right-6 md:right-10 z-50 flex flex-col items-end max-w-[280px]"
-          >
-            {/* Gentle float wrapper */}
+      {/* Floating annotation + button group */}
+      <div className="fixed bottom-6 right-6 z-40 flex items-center gap-2">
+        {/* Animated annotation label with curly arrow */}
+        <AnimatePresence>
+          {showLabel && !dismissed && !chatBoxOpen && (
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 4,
-                ease: "easeInOut",
-              }}
-              className="flex flex-col items-end"
+              initial={{ opacity: 0, x: 10, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 5, scale: 0.95 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex items-center"
             >
-              <div className="relative bg-card border border-primary/30 dark:border-primary/20 px-4 py-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.5)] text-center text-primary select-none flex flex-col items-center">
-                <p className="font-caveat text-xl font-bold leading-tight text-primary">
-                  Psst... Shubair&apos;s AI clone is online!
-                </p>
-                <p className="font-caveat text-lg leading-tight text-foreground/90 mt-1">
-                  Ask me anything here!
-                </p>
-              </div>
-
-              {/* Hand-drawn Curly Arrow SVG */}
-              <svg
-                width="80"
-                height="65"
-                viewBox="0 0 80 65"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="mr-8 mt-1 overflow-visible"
+              {/* Label pill */}
+              <motion.div
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-300 text-[11px] font-medium shadow-sm whitespace-nowrap cursor-pointer select-none hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors"
+                onClick={handleOpen}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
-                {/* Curly pointer line */}
+                <Sparkles className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
+                Know about me — ask AI
+              </motion.div>
+
+              {/* Curly arrow SVG pointing right to the button */}
+              <svg
+                width="36"
+                height="20"
+                viewBox="0 0 36 20"
+                fill="none"
+                className="ml-1 mr-1 text-neutral-400 dark:text-neutral-500 pointer-events-none"
+              >
                 <motion.path
-                  d="M 65 5 C 50 15, 30 0, 20 20 C 10 40, 35 45, 45 35 C 50 30, 48 22, 35 25 C 20 28, 22 45, 28 52"
+                  d="M2 10 C10 4, 18 4, 24 10 C28 13, 26 18, 20 16 C16 14, 20 6, 30 10"
                   stroke="currentColor"
-                  strokeWidth="2.5"
+                  strokeWidth="1.2"
                   strokeLinecap="round"
-                  className="text-amber-500/80 dark:text-primary"
-                  animate={{ pathLength: [0, 1, 1, 0], opacity: [0, 1, 1, 0] }}
-                  transition={{
-                    duration: 5,
-                    times: [0, 0.3, 0.9, 1],
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                 />
-                {/* Arrow head */}
                 <motion.path
-                  d="M 20 46 L 28 52 L 32 43"
+                  d="M26 6 L31 10 L26 14"
                   stroke="currentColor"
-                  strokeWidth="2.5"
+                  strokeWidth="1.2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-amber-500/80 dark:text-primary"
-                  animate={{ pathLength: [0, 0, 1, 1, 0], opacity: [0, 0, 1, 1, 0] }}
-                  transition={{
-                    duration: 5,
-                    times: [0, 0.25, 0.35, 0.9, 1],
-                    repeat: Infinity,
-                    ease: "easeOut"
-                  }}
+                  fill="none"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, delay: 1 }}
                 />
               </svg>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
 
-      {/* Chat Button */}
-      <div className="fixed bottom-10 right-10 z-50">
+        {/* Chat Button */}
         <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setboxOpen(!chatBoxOpen)}
-          className="relative w-14 h-14 rounded-full bg-card border border-primary/30 dark:border-primary/20 text-primary hover:border-primary/50 shadow-[0_4px_20px_rgba(200,169,96,0.15)] flex items-center justify-center cursor-pointer transition-all duration-300 group"
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={() => {
+            if (chatBoxOpen) {
+              setboxOpen(false);
+            } else {
+              handleOpen();
+            }
+          }}
+          className="relative w-11 h-11 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-black flex items-center justify-center cursor-pointer shadow-lg shadow-neutral-900/20 dark:shadow-white/10 transition-all duration-300 hover:shadow-xl group shrink-0"
+          aria-label={chatBoxOpen ? "Close AI chat" : "Open AI chat"}
         >
-          {/* Accent Pulse Halo behind the button */}
-          <div className="absolute inset-0 rounded-full bg-primary/10 border border-primary/30 animate-ping opacity-75 group-hover:animate-none pointer-events-none" />
-          <Bot size={26} className="group-hover:rotate-12 transition-transform duration-300" />
+          <AnimatePresence mode="wait">
+            {chatBoxOpen ? (
+              <motion.span
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <X className="w-4 h-4" />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="bot"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Bot className="w-5 h-5" />
+              </motion.span>
+            )}
+          </AnimatePresence>
+
+          {/* Subtle pulsing ring when closed */}
+          {!chatBoxOpen && (
+            <span className="absolute inset-0 rounded-full border border-neutral-900/30 dark:border-white/30 animate-ping opacity-20 pointer-events-none" />
+          )}
         </motion.button>
       </div>
 
