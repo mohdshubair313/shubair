@@ -7,13 +7,13 @@ import { ExternalLink, Github, ArrowLeft } from "lucide-react";
 
 const projects = [
   {
-    title: "Chaty AI",
+    title: "TradeInsight",
     description:
-      "Intelligent research assistant that helps with papers, resume improvements, and contextual Q&A using vector embeddings and LLMs.",
-    image: "/pro5.png",
-    link: "https://chaty-ai.vercel.app/",
-    github: "https://github.com/mohdshubair313/ChatyBackend/",
-    tags: ["Chatbot", "RAG", "LangChain", "AI"],
+      "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
+    image: "/pro6.png",
+    link: "https://trade-opportunity-by-ai.vercel.app/",
+    github: "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
+    tags: ["FastAPI", "AI", "Market Analysis", "Trading"],
   },
   {
     title: "Friends AI",
@@ -23,6 +23,24 @@ const projects = [
     link: "https://friends-ai-sunf.vercel.app/",
     github: "#",
     tags: ["AI", "Next.js", "Groq", "Emotion AI"],
+  },
+  {
+    title: "Chaty AI",
+    description:
+      "Intelligent research assistant that helps with papers, resume improvements, and contextual Q&A using vector embeddings and LLMs.",
+    image: "/pro5.png",
+    link: "https://chaty-ai.vercel.app/",
+    github: "https://github.com/mohdshubair313/ChatyBackend/",
+    tags: ["Chatbot", "RAG", "LangChain", "AI"],
+  },
+  {
+    title: "Bollyscript AI",
+    description:
+      "AI-powered Bollywood script generation platform that creates movie scripts with custom scenes, dialogues, and characters.",
+    image: "/bollyProjectImages/bollyPro1.png",
+    link: "https://bollyscript.vercel.app",
+    github: "#",
+    tags: ["Next.js", "OpenAI", "AI", "Creativity"],
   },
   {
     title: "Next Stripe",
@@ -41,15 +59,6 @@ const projects = [
     link: "https://apple3-d-page-sepia.vercel.app/",
     github: "https://github.com/mohdshubair313/Apple3DPage",
     tags: ["3D", "GSAP", "Three.js", "Animations"],
-  },
-  {
-    title: "Trade AI",
-    description:
-      "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
-    image: "/pro6.png",
-    link: "https://trade-opportunity-by-ai.vercel.app/",
-    github: "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
-    tags: ["FastAPI", "AI", "Market Analysis", "Trading"],
   },
   {
     title: "Travelbook",

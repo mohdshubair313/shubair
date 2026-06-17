@@ -16,14 +16,14 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Chaty AI",
-    subtitle: "PDF-RAG Chatbot",
+    title: "TradeInsight",
+    subtitle: "AI Market Analysis",
     description:
-      "Intelligent research assistant that understands documents, answers questions contextually, and extracts insights using vector embeddings and LLMs.",
-    tags: ["Next.js", "LangChain", "Pinecone", "OpenAI"],
-    link: "https://chaty-ai.vercel.app",
-    github: "https://github.com/mohdshubair313/ChatyBackend",
-    image: "/pro5.png",
+      "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
+    tags: ["FastAPI", "AI", "Market Analysis", "Trading"],
+    link: "https://trade-opportunity-by-ai.vercel.app/",
+    github: "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
+    image: "/pro6.png",
   },
   {
     title: "Friends AI",
@@ -36,24 +36,24 @@ const projects: Project[] = [
     image: "/pro1.png",
   },
   {
-    title: "Next Stripe",
-    subtitle: "Payment Platform",
+    title: "Chaty AI",
+    subtitle: "PDF-RAG Chatbot",
     description:
-      "Premium subscription management platform with Stripe payment gateway integration for seamless billing experiences.",
-    tags: ["Stripe", "Next.js", "SaaS"],
-    link: "https://next-stripe-smoky.vercel.app",
-    github: "#",
-    image: "/pro2.png",
+      "Intelligent research assistant that understands documents, answers questions contextually, and extracts insights using vector embeddings and LLMs.",
+    tags: ["Next.js", "LangChain", "Pinecone", "OpenAI"],
+    link: "https://chaty-ai.vercel.app",
+    github: "https://github.com/mohdshubair313/ChatyBackend",
+    image: "/pro5.png",
   },
   {
-    title: "iPhone Landing",
-    subtitle: "3D Product Showcase",
+    title: "Bollyscript AI",
+    subtitle: "AI Script Writer",
     description:
-      "Stunning 3D landing page for iPhone featuring smooth animations and interactive product showcase built with Three.js.",
-    tags: ["Three.js", "GSAP", "3D"],
-    link: "https://apple3d-page-sepia.vercel.app",
-    github: "https://github.com/mohdshubair313/Apple3DPage",
-    image: "/pro3.png",
+      "AI-powered Bollywood script generation platform that creates movie scripts with custom scenes, dialogues, and characters.",
+    tags: ["Next.js", "OpenAI", "AI", "Creativity"],
+    link: "https://bollyscript.vercel.app",
+    github: "#",
+    image: "/bollyProjectImages/bollyPro1.png",
   },
 ];
 

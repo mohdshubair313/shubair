@@ -6,7 +6,7 @@ const experiences = [
   {
     title: "Full-Stack Developer",
     company: "Stealth Startup",
-    date: "Dec 2025 – Present",
+    date: "Dec 2025 – April 2026",
     location: "Remote",
     description:
       "Developing and deploying client projects, implementing CI/CD pipelines, and optimizing application performance across the stack.",
@@ -40,12 +40,6 @@ const ExperienceSection = () => {
               <div className="flex-1">
                 <div className="flex items-center gap-2 flex-wrap mb-1">
                   <h4 className="font-medium text-foreground">{item.company}</h4>
-                  {index === 0 && (
-                    <span className="inline-flex items-center gap-1 text-[10px] text-green-600 dark:text-green-400 border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 rounded-full">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                      Working
-                    </span>
-                  )}
                 </div>
                 <p className="text-sm text-muted-foreground">{item.title}</p>
                 <p className="text-sm text-muted-foreground/70 mt-2 leading-relaxed max-w-lg">
