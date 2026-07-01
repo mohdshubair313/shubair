@@ -13,7 +13,6 @@ import {
   Globe,
   Plus,
   Minus,
-  Sparkles,
 } from "lucide-react";
 
 // Platform Custom SVG Icons
@@ -421,7 +420,7 @@ const PostCard = ({ post }: { post: Post }) => {
       <div className="flex justify-between items-start mb-4">
         <div className="flex gap-3">
           {/* Circular profile avatar */}
-          <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-primary to-amber-500/80 flex items-center justify-center font-heading text-neutral-950 font-bold text-sm shadow-md flex-shrink-0 select-none">
+          <div className="w-11 h-11 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center font-heading text-neutral-600 dark:text-neutral-300 font-bold text-sm shadow-sm flex-shrink-0 select-none">
             MS
           </div>
           <div>
@@ -560,15 +559,12 @@ const PostCard = ({ post }: { post: Post }) => {
           href={post.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/50 bg-neutral-200/60 dark:bg-neutral-800/80 text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 hover:text-primary dark:hover:text-primary hover:border-primary/30 transition-all cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/50 bg-neutral-200/60 dark:bg-neutral-800/80 text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600 transition-all cursor-pointer"
         >
           <span>View on {post.platform === "linkedin" ? "LinkedIn" : "X"}</span>
-          <ExternalLink className="w-3.5 h-3.5 text-primary" />
+          <ExternalLink className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
         </Link>
       </div>
-
-      {/* Subtle hover outline blur glow */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/10 to-amber-500/10 rounded-2xl opacity-0 group-hover:opacity-100 blur transition-opacity duration-500 -z-10 pointer-events-none" />
     </div>
   );
 };
@@ -682,24 +678,17 @@ How would you structure this? Let's discuss in the comments!`,
 
   return (
     <div className="min-h-screen w-full relative bg-background pt-24 pb-16">
-      {/* Background Subtle Grid Pattern */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        <div
-          className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]"
-          style={{ opacity: 0.6 }}
-        />
-        {/* Subtle top ambient gold glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-[100px]" />
-      </div>
+      {/* Subtle top ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-neutral-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 
       <div className="mx-auto w-full max-w-3xl px-4 py-4 sm:px-0">
         {/* Back Button outside card */}
         <div className="mb-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-primary transition-colors duration-200 cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors duration-200 cursor-pointer"
           >
-            <ArrowLeft className="w-3.5 h-3.5 text-primary" />
+            <ArrowLeft className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
             Back to Home
           </Link>
         </div>
@@ -710,8 +699,7 @@ How would you structure this? Let's discuss in the comments!`,
           {/* Header */}
           <div className="mb-8 border-b border-border/30 pb-6 relative">
             {/* Corner ambient Sparkle Badge */}
-            <div className="absolute top-0 right-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-semibold text-primary select-none uppercase tracking-wider font-mono">
-              <Sparkles className="w-3 h-3 text-primary animate-pulse" />
+            <div className="absolute top-0 right-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[10px] font-semibold text-neutral-500 dark:text-neutral-400 select-none uppercase tracking-wider font-mono">
               Proof of Work
             </div>
 
@@ -729,7 +717,7 @@ How would you structure this? Let's discuss in the comments!`,
               onClick={() => setFilter("all")}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold font-heading transition-all cursor-pointer ${
                 filter === "all"
-                  ? "bg-primary text-black shadow-sm font-bold"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-black shadow-sm font-bold"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -739,7 +727,7 @@ How would you structure this? Let's discuss in the comments!`,
               onClick={() => setFilter("linkedin")}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold font-heading transition-all cursor-pointer ${
                 filter === "linkedin"
-                  ? "bg-primary text-black shadow-sm font-bold"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-black shadow-sm font-bold"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -749,7 +737,7 @@ How would you structure this? Let's discuss in the comments!`,
               onClick={() => setFilter("x")}
               className={`px-4 py-1.5 rounded-lg text-xs font-semibold font-heading transition-all cursor-pointer ${
                 filter === "x"
-                  ? "bg-primary text-black shadow-sm font-bold"
+                  ? "bg-neutral-900 text-white dark:bg-white dark:text-black shadow-sm font-bold"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >

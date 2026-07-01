@@ -49,7 +49,11 @@ export default function BlogSection({ blogs }: BlogSectionProps) {
               </div>
               <div className="flex shrink-0 items-center gap-2 pt-0.5">
                 <time className="text-xs text-muted-foreground whitespace-nowrap">
-                  {blog.publishedAt}
+                  {new Date(blog.publishedAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
                 </time>
                 <ArrowRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
               </div>

@@ -46,7 +46,7 @@ export const mdxComponents = {
     return (
       <h1
         id={computedId}
-        className={`mt-2 scroll-m-20 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100 ${className}`}
+        className={`mt-2 scroll-mt-24 text-3xl sm:text-4xl font-bold tracking-tight text-neutral-900 dark:text-neutral-100 ${className}`}
         {...props}
       >
         {children}
@@ -58,7 +58,7 @@ export const mdxComponents = {
     return (
       <h2
         id={computedId}
-        className={`mt-10 scroll-m-20 border-b border-slate-200/80 dark:border-white/10 pb-2 text-3xl font-semibold tracking-tight first:mt-0 text-cyan-700 dark:text-cyan-400 ${className}`}
+        className={`mt-10 scroll-mt-24 border-b border-neutral-200 dark:border-neutral-800 pb-2 text-2xl font-semibold tracking-tight first:mt-0 text-neutral-900 dark:text-neutral-100 ${className}`}
         {...props}
       >
         {children}
@@ -70,7 +70,7 @@ export const mdxComponents = {
     return (
       <h3
         id={computedId}
-        className={`mt-8 scroll-m-20 text-2xl font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
+        className={`mt-8 scroll-mt-24 text-xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 ${className}`}
         {...props}
       >
         {children}
@@ -82,7 +82,7 @@ export const mdxComponents = {
     return (
       <h4
         id={computedId}
-        className={`mt-8 scroll-m-20 text-xl font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
+        className={`mt-8 scroll-mt-24 text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 ${className}`}
         {...props}
       >
         {children}
@@ -94,7 +94,7 @@ export const mdxComponents = {
     return (
       <h5
         id={computedId}
-        className={`mt-8 scroll-m-20 text-lg font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
+        className={`mt-8 scroll-mt-24 text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 ${className}`}
         {...props}
       >
         {children}
@@ -106,7 +106,7 @@ export const mdxComponents = {
     return (
       <h6
         id={computedId}
-        className={`mt-8 scroll-m-20 text-base font-semibold tracking-tight text-slate-800 dark:text-slate-200 ${className}`}
+        className={`mt-8 scroll-mt-24 text-sm font-semibold tracking-tight text-neutral-900 dark:text-neutral-100 ${className}`}
         {...props}
       >
         {children}
@@ -118,7 +118,7 @@ export const mdxComponents = {
       return (
         <Link
           href={href}
-          className={`font-medium text-cyan-600 dark:text-cyan-400 hover:underline underline-offset-4 ${className}`}
+          className={`font-medium text-neutral-900 dark:text-neutral-100 underline underline-offset-4 decoration-neutral-400/50 hover:decoration-neutral-900 dark:hover:decoration-neutral-100 transition-colors ${className}`}
           {...props}
         >
           {children}
@@ -129,7 +129,7 @@ export const mdxComponents = {
       return (
         <a
           href={href}
-          className={`font-medium text-cyan-600 dark:text-cyan-400 hover:underline underline-offset-4 ${className}`}
+          className={`font-medium text-neutral-900 dark:text-neutral-100 underline underline-offset-4 decoration-neutral-400/50 hover:decoration-neutral-900 dark:hover:decoration-neutral-100 transition-colors ${className}`}
           {...props}
         >
           {children}
@@ -141,7 +141,7 @@ export const mdxComponents = {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className={`font-medium text-cyan-600 dark:text-cyan-400 hover:underline underline-offset-4 ${className}`}
+        className={`font-medium text-neutral-900 dark:text-neutral-100 underline underline-offset-4 decoration-neutral-400/50 hover:decoration-neutral-900 dark:hover:decoration-neutral-100 transition-colors ${className}`}
         {...props}
       >
         {children}
@@ -150,28 +150,28 @@ export const mdxComponents = {
   },
   p: ({ className, ...props }: ParagraphProps) => (
     <p
-      className={`leading-7 text-slate-600 dark:text-slate-400 [&:not(:first-child)]:mt-6 ${className}`}
+      className={`leading-7 text-neutral-600 dark:text-neutral-400 [&:not(:first-child)]:mt-6 ${className}`}
       {...props}
     />
   ),
   ul: ({ className, ...props }: ListProps) => (
     <ul
-      className={`my-6 ml-6 list-disc [&>li]:mt-2 text-slate-600 dark:text-slate-400 ${className}`}
+      className={`my-6 ml-6 list-disc [&>li]:mt-2 text-neutral-600 dark:text-neutral-400 marker:text-neutral-400 ${className}`}
       {...props}
     />
   ),
   ol: ({ className, ...props }: ListProps) => (
     <ol
-      className={`my-6 ml-6 list-decimal [&>li]:mt-2 text-slate-600 dark:text-slate-400 ${className}`}
+      className={`my-6 ml-6 list-decimal [&>li]:mt-2 text-neutral-600 dark:text-neutral-400 marker:text-neutral-400 ${className}`}
       {...props}
     />
   ),
   li: ({ className, ...props }: ListItemProps) => (
-    <li className={`mt-2 text-slate-600 dark:text-slate-400 ${className}`} {...props} />
+    <li className={`mt-2 text-neutral-600 dark:text-neutral-400 pl-1 ${className}`} {...props} />
   ),
   blockquote: ({ className, ...props }: BlockquoteProps) => (
     <blockquote
-      className={`mt-6 border-l-4 border-cyan-500 bg-cyan-50/50 dark:bg-cyan-900/20 pl-6 py-4 pr-4 rounded-r-lg italic text-slate-700 dark:text-slate-300 ${className}`}
+      className={`mt-6 border-l-2 border-neutral-300 dark:border-neutral-700 pl-5 py-1 italic text-neutral-600 dark:text-neutral-400 ${className}`}
       {...props}
     />
   ),
@@ -203,7 +203,7 @@ export const mdxComponents = {
     // Inline code
     return (
       <code
-        className={`px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800/80 text-fuchsia-600 dark:text-fuchsia-300 text-sm font-mono font-semibold ${className}`}
+        className={`px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-[0.85em] font-mono ${className}`}
         {...props}
       >
         {children}
@@ -212,7 +212,7 @@ export const mdxComponents = {
   },
   // Enhanced table components with better styling
   table: ({ className, ...props }: ComponentPropsWithoutRef<"table">) => (
-    <div className="overflow-x-auto my-8 rounded-xl border border-slate-200 dark:border-slate-800">
+    <div className="overflow-x-auto my-8 rounded-xl border border-neutral-200 dark:border-neutral-800">
       <table
         className={`w-full text-sm ${className}`}
         {...props}
@@ -220,29 +220,29 @@ export const mdxComponents = {
     </div>
   ),
   thead: ({ className, ...props }: ComponentPropsWithoutRef<"thead">) => (
-    <thead className={`bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-900/50 dark:to-blue-900/50 ${className}`} {...props} />
+    <thead className={`bg-neutral-50 dark:bg-neutral-900 ${className}`} {...props} />
   ),
   th: ({ className, ...props }: ComponentPropsWithoutRef<"th">) => (
     <th
-      className={`p-4 text-left font-semibold text-slate-900 dark:text-slate-100 border-b border-slate-200 dark:border-slate-700 first:rounded-tl-lg last:rounded-tr-lg ${className}`}
+      className={`p-4 text-left font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-800 first:rounded-tl-lg last:rounded-tr-lg ${className}`}
       {...props}
     />
   ),
   td: ({ className, ...props }: ComponentPropsWithoutRef<"td">) => (
     <td
-      className={`p-4 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 ${className}`}
+      className={`p-4 border-b border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 ${className}`}
       {...props}
     />
   ),
   tr: ({ className, ...props }: ComponentPropsWithoutRef<"tr">) => (
     <tr
-      className={`hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors ${className}`}
+      className={`hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors ${className}`}
       {...props}
     />
   ),
   hr: ({ className, ...props }: ComponentPropsWithoutRef<"hr">) => (
     <hr
-      className={`my-12 border-slate-200 dark:border-slate-800 ${className}`}
+      className={`my-12 border-neutral-200 dark:border-neutral-800 ${className}`}
       {...props}
     />
   ),
