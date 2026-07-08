@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import MusicToggle from '@/components/MusicToggle'
+import LiveViewers from '@/components/LiveViewers'
  
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -33,7 +34,8 @@ export function Navbar() {
           </span>
         </Link>
       </nav>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1.5">
+        <LiveViewers />
         <MusicToggle />
         <ThemeToggle />
       </div>
