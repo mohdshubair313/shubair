@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Send, Github, Linkedin, Mail, Twitter } from "lucide-react";
+import VisitorCounter from "./VisitorCounter";
 
 const ContactSection = () => {
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
@@ -97,7 +98,7 @@ const ContactSection = () => {
         <div className="flex flex-wrap gap-4">
           {[
             { icon: Github, label: "GitHub", href: "https://github.com/mohdshubair313" },
-            { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/mohdshubair313" },
+            { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/mohd-shubair-b1a454250/" },
             { icon: Twitter, label: "Twitter", href: "https://x.com/shubair313" },
             { icon: Mail, label: "hey@shubair.in", href: "mailto:hey@shubair.in" },
           ].map((link) => {
@@ -118,7 +119,9 @@ const ContactSection = () => {
         </div>
       </div>
 
-      <div className="mt-12 text-center">
+      {/* Footer with copyright + visitor counter */}
+      <div className="mt-12 flex flex-col items-center gap-2">
+        <VisitorCounter />
         <p className="text-[11px] text-neutral-400 dark:text-neutral-600">
           &copy; {new Date().getFullYear()} Mohd Shubair. Built with care.
         </p>
@@ -128,3 +131,4 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
+

@@ -118,36 +118,39 @@ export default function VideoWalkthrough() {
               animate={{ scale: 1, opacity: 1, borderRadius: "16px" }}
               exit={{ scale: 0.3, opacity: 0, borderRadius: "50%" }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-3xl aspect-video bg-neutral-950 rounded-2xl overflow-hidden shadow-2xl border border-neutral-800"
+              className="relative w-full max-w-3xl aspect-video bg-neutral-950 rounded-2xl shadow-2xl border border-neutral-800"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close button */}
+              {/* Close button — anchored to outer box corner */}
               <button
                 onClick={() => setIsExpanded(false)}
-                className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-neutral-800/80 flex items-center justify-center text-white hover:bg-neutral-700 transition-colors cursor-pointer"
+                className="absolute -top-3 -right-3 z-20 w-9 h-9 rounded-full bg-white dark:bg-neutral-800 flex items-center justify-center text-neutral-900 dark:text-white shadow-lg border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:scale-110 transition-all duration-200 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
 
-              {/* Browser header */}
-              <div className="flex items-center px-4 py-2.5 bg-neutral-900 border-b border-neutral-800">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+              {/* Inner content with overflow hidden */}
+              <div className="w-full h-full rounded-2xl overflow-hidden">
+                {/* Browser header */}
+                <div className="flex items-center px-4 py-2.5 bg-neutral-900 border-b border-neutral-800">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+                  </div>
+                  <span className="text-neutral-500 text-[11px] font-mono ml-3">
+                    shubair.dev/showcase
+                  </span>
                 </div>
-                <span className="text-neutral-500 text-[11px] font-mono ml-3">
-                  shubair.dev/showcase
-                </span>
-              </div>
 
-              {/* Video iframe */}
-              <div className="relative w-full" style={{ paddingBottom: "calc(56.25% - 36px)" }}>
-                <iframe
-                  src="https://www.loom.com/embed/02ef3b53bee74c939365b86604573b8d?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true&autoplay=1"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full border-0"
-                />
+                {/* Video iframe */}
+                <div className="relative w-full" style={{ paddingBottom: "calc(56.25% - 36px)" }}>
+                  <iframe
+                    src="https://www.loom.com/embed/02ef3b53bee74c939365b86604573b8d?hide_owner=true&hide_share=true&hide_title=true&hideEmbedTopBar=true&autoplay=1"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full border-0"
+                  />
+                </div>
               </div>
             </motion.div>
           </motion.div>
