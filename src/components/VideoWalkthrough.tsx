@@ -124,7 +124,7 @@ export default function VideoWalkthrough() {
               {/* Close button — anchored to outer box corner */}
               <button
                 onClick={() => setIsExpanded(false)}
-                className="absolute -top-3 -right-3 z-20 w-9 h-9 rounded-full bg-white dark:bg-neutral-800 flex items-center justify-center text-neutral-900 dark:text-white shadow-lg border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:scale-110 transition-all duration-200 cursor-pointer"
+                className="absolute top-1 right-2 z-20 w-8 h-8 rounded-full bg-white dark:bg-neutral-800 flex items-center justify-center text-neutral-900 dark:text-white shadow-lg border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700 hover:scale-110 transition-all duration-200 cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
