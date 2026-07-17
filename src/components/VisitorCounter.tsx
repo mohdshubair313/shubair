@@ -4,19 +4,38 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye } from "lucide-react";
 
+const STORAGE_KEY = "shubair_visitor_count";
+
 export default function VisitorCounter() {
   const [count, setCount] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
 
   const recordVisit = useCallback(async () => {
     try {
-      const res = await fetch("/api/visitors", { method: "POST" });
+      // Read previously stored count to help server survive cold starts
+      const stored = parseInt(localStorage.getItem(STORAGE_KEY) || "0", 10);
+
+      const res = await fetch("/api/visitors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lastKnownCount: stored }),
+      });
+
       if (res.ok) {
         const json = await res.json();
-        setCount(json.totalVisitors);
+        const serverCount = json.totalVisitors ?? 0;
+        // Always use the higher of server or local count
+        const bestCount = Math.max(serverCount, stored);
+        setCount(bestCount);
+        localStorage.setItem(STORAGE_KEY, bestCount.toString());
+      } else {
+        // Fallback to local count
+        setCount(stored || 1);
       }
     } catch {
-      // Non-critical — silently fail
+      // Offline or API error — show stored count
+      const stored = parseInt(localStorage.getItem(STORAGE_KEY) || "1", 10);
+      setCount(stored);
     }
   }, []);
 
@@ -27,7 +46,6 @@ export default function VisitorCounter() {
 
   if (!mounted || count === null) return null;
 
-  // Format number with commas for readability
   const formattedCount = count.toLocaleString();
 
   return (
