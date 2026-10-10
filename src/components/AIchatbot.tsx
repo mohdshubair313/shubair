@@ -24,12 +24,27 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
     setMessages,
     error,
     status,
+    reload,
+    stop,
   } = useChat({
     api: '/api/chat',
     initialMessages: [
       { id: "1", role: "assistant", content: "Hey there! I'm Shubair's AI assistant. How can I help you today? You can ask me about his projects, skills, social handles, or anything else on this site!" },
     ],
     streamProtocol: "text",
+    fetch: async (url, options) => {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        if (response.status === 504) {
+          throw new Error("The AI assistant took too long to respond. Please try again.");
+        }
+        if (response.status >= 500) {
+          throw new Error("The AI assistant is temporarily unavailable. Please try again shortly.");
+        }
+        throw new Error("Your message could not be sent. Please try again.");
+      }
+      return response;
+    },
   });
 
   const lastMessageByUser = messages[messages.length - 1]?.role === "user";
@@ -99,8 +114,11 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
           )}
 
           {error && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs text-center">
+            <div role="alert" className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs text-center">
               {error.message || "Something went wrong. Please try again."}
+              <button type="button" onClick={() => void reload()} disabled={isLoading} className="block mx-auto mt-2 underline cursor-pointer">
+                Try again
+              </button>
             </div>
           )}
 
@@ -120,9 +138,10 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
           <div className="flex items-center gap-2 bg-[#1a1a22] p-1.5 sm:p-2 rounded-2xl border border-white/10 focus-within:border-blue-500/50 transition-all duration-300 shadow-inner">
             <button
               type="button"
-              onClick={() => setMessages([])}
+              onClick={() => { stop(); setMessages([]); }}
               className="text-gray-400 hover:text-red-400 p-2 hover:bg-red-400/10 rounded-xl transition-all cursor-pointer"
               title="Clear Chat"
+              aria-label="Clear Chat"
             >
               <Trash2Icon size={18} />
             </button>
@@ -130,10 +149,13 @@ const AIchatbot = ({ open, onClose }: ChatbotProps) => {
               value={input}
               onChange={handleInputChange}
               placeholder="Ask about projects, skills, social links..."
+              aria-label="Chat message"
+              maxLength={8000}
               className="flex-grow bg-transparent text-white text-sm py-2 px-1 outline-none placeholder:text-gray-500"
             />
             <button
               type="submit"
+              aria-label="Send message"
               disabled={isLoading || !input.trim()}
               className={cn(
                 "p-2.5 rounded-xl transition-all duration-300 cursor-pointer",

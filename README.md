@@ -1,5 +1,18 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Chatbot configuration and checks
+
+The RAG chatbot uses Groq for answers, Google `gemini-embedding-001` for embeddings, and an existing Astra DB collection containing 3,072-dimensional vectors. Set `GROQ_API_KEY`, `GOOGLE_API_KEY`, `ASTRA_DB_ENDPOINT`, `ASTRA_DB_APPLICATION`, and `ASTRA_DB_COLLECTION` in `.env.local` and in the Vercel project's environment variables. `GROQ_MODEL` is optional and defaults to `openai/gpt-oss-20b`.
+
+```bash
+npm run test:chat      # Offline regression tests, including stalled services and stream failures
+npm run diagnose:chat  # Read-only checks against the configured live services; no keys are printed
+```
+
+Chat requests read the existing collection without provisioning it. Retrieval has an eight-second deadline, and the whole response has a 50-second deadline inside a 60-second Vercel function limit. Failed retrieval uses the verified portfolio facts already in the prompt. A failed answer request displays a friendly message and a retry button. Runtime logs show retrieval and first-answer timing without logging questions or credentials.
+
+`FUNCTION_INVOCATION_TIMEOUT` means Vercel stopped a request that exceeded its allowed runtime; it does not identify which upstream service caused the delay. See [Vercel's timeout documentation](https://vercel.com/docs/errors/function_invocation_timeout). Redeploy after changing the route code so its duration setting and fixes take effect. The saved `astra-collection-info.json` is a historical snapshot; `diagnose:chat` checks the actual collection.
+
 ## Getting Started
 
 First, run the development server:

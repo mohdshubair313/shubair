@@ -7,7 +7,9 @@
     "build": "next build",
     "generate": "npx ts-node ./scripts/generate.ts",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:chat": "node --test scripts/chat.test.cjs",
+    "diagnose:chat": "node scripts/diagnose-chat.cjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^1.2.3",

@@ -20,7 +20,7 @@ async function GenerateEmbeddings() {
         console.log(`Collection ${collection} does not exist, creating new one`);
     }
 
-    const vectorStore = await getVectorStore();
+    const vectorStore = await getVectorStore({ provision: true });
 
     const documents: Document[] = [];
 
