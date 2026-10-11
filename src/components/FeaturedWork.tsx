@@ -1,61 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import portfolio from "@/content/portfolio.json";
+
+import { useState } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 
-interface Project {
-  title: string;
-  subtitle: string;
-  description: string;
-  tags: string[];
-  link: string;
-  github: string;
-  image: string;
-}
+type Project = (typeof portfolio.projects)[number];
 
-const projects: Project[] = [
-  {
-    title: "TradeInsight",
-    subtitle: "AI Market Analysis",
-    description:
-      "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
-    tags: ["FastAPI", "AI", "Market Analysis", "Trading"],
-    link: "https://trade-opportunity-by-ai.vercel.app/",
-    github: "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
-    image: "/pro6.png",
-  },
-  {
-    title: "Friends AI",
-    subtitle: "Emotion-Aware Chatbot",
-    description:
-      "AI virtual friend that understands emotions and provides meaningful conversations powered by advanced language models.",
-    tags: ["Python", "FastAPI", "Transformers", "React"],
-    link: "https://friends-ai-sunf.vercel.app",
-    github: "#",
-    image: "/pro1.png",
-  },
-  {
-    title: "Chaty AI",
-    subtitle: "PDF-RAG Chatbot",
-    description:
-      "Intelligent research assistant that understands documents, answers questions contextually, and extracts insights using vector embeddings and LLMs.",
-    tags: ["Next.js", "LangChain", "Pinecone", "OpenAI"],
-    link: "https://chaty-ai.vercel.app",
-    github: "https://github.com/mohdshubair313/ChatyBackend",
-    image: "/pro5.png",
-  },
-  {
-    title: "Bollyscript AI",
-    subtitle: "AI Script Writer",
-    description:
-      "AI-powered Bollywood script generation platform that creates movie scripts with custom scenes, dialogues, and characters.",
-    tags: ["Next.js", "OpenAI", "AI", "Creativity"],
-    link: "https://bollyscript.vercel.app",
-    github: "#",
-    image: "/bollyProjectImages/bollyPro1.png",
-  },
-];
+const projects = portfolio.projects.slice(0, 4);
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const [imgError, setImgError] = useState(false);
@@ -99,6 +52,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           <div className="flex items-center gap-1.5">
             {project.github !== "#" && (
               <a
+                aria-label={`${project.title} source code`}
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -114,6 +68,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
               className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
             >
               <ExternalLink className="w-3.5 h-3.5" />
+              <span className="sr-only">Open {project.title} demo</span>
             </a>
           </div>
         </div>
@@ -136,15 +91,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 };
 
 const FeaturedWork = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  return (
+return (
     <div id="projects" data-section="Projects" className="flex w-full flex-col scroll-mt-24">
       <div className="mb-6 flex items-center justify-between">
         <h3 className="font-serif text-3xl tracking-wide text-neutral-900 dark:text-white">

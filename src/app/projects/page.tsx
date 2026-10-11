@@ -1,76 +1,15 @@
 "use client";
 
+import portfolio from "@/content/portfolio.json";
+
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ExternalLink, Github, ArrowLeft } from "lucide-react";
 
-const projects = [
-  {
-    title: "TradeInsight",
-    description:
-      "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
-    image: "/pro6.png",
-    link: "https://trade-opportunity-by-ai.vercel.app/",
-    github: "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
-    tags: ["FastAPI", "AI", "Market Analysis", "Trading"],
-  },
-  {
-    title: "Friends AI",
-    description:
-      "AI-based virtual friend that understands emotions and provides meaningful conversations powered by advanced language models.",
-    image: "/pro1.png",
-    link: "https://friends-ai-sunf.vercel.app/",
-    github: "#",
-    tags: ["AI", "Next.js", "Groq", "Emotion AI"],
-  },
-  {
-    title: "Chaty AI",
-    description:
-      "Intelligent research assistant that helps with papers, resume improvements, and contextual Q&A using vector embeddings and LLMs.",
-    image: "/pro5.png",
-    link: "https://chaty-ai.vercel.app/",
-    github: "https://github.com/mohdshubair313/ChatyBackend/",
-    tags: ["Chatbot", "RAG", "LangChain", "AI"],
-  },
-  {
-    title: "Bollyscript AI",
-    description:
-      "AI-powered Bollywood script generation platform that creates movie scripts with custom scenes, dialogues, and characters.",
-    image: "/bollyProjectImages/bollyPro1.png",
-    link: "https://bollyscript.vercel.app",
-    github: "#",
-    tags: ["Next.js", "OpenAI", "AI", "Creativity"],
-  },
-  {
-    title: "Next Stripe",
-    description:
-      "Premium subscription management platform with Stripe payment gateway integration for seamless billing experiences.",
-    image: "/pro2.png",
-    link: "https://next-stripe-smoky.vercel.app/",
-    github: "#",
-    tags: ["Stripe", "Payments", "Next.js", "SaaS"],
-  },
-  {
-    title: "iPhone Landing Page",
-    description:
-      "Stunning 3D landing page for iPhone featuring smooth animations and interactive product showcase.",
-    image: "/pro3.png",
-    link: "https://apple3-d-page-sepia.vercel.app/",
-    github: "https://github.com/mohdshubair313/Apple3DPage",
-    tags: ["3D", "GSAP", "Three.js", "Animations"],
-  },
-  {
-    title: "Travelbook",
-    description:
-      "Takes the pain out of vacation planning. Handles tickets, stays, and meals — all tailored to your budget with an AI chatbot concierge.",
-    image: "/pro4.png",
-    link: "#",
-    github: "https://github.com/mohdshubair313/Travelbook",
-    tags: ["AI", "Travel", "Next.js", "Chatbot"],
-    underDev: true,
-  },
-];
+type Project = (typeof portfolio.projects)[number] & { underDev?: boolean };
+
+const projects: Project[] = portfolio.projects;
 
 const ProjectCard = ({ project }: { project: (typeof projects)[number] }) => {
   const [imgError, setImgError] = useState(false);
@@ -119,6 +58,7 @@ const ProjectCard = ({ project }: { project: (typeof projects)[number] }) => {
           <div className="flex items-center gap-1.5">
             {project.github !== "#" && (
               <a
+                aria-label={`${project.title} source code`}
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -135,6 +75,7 @@ const ProjectCard = ({ project }: { project: (typeof projects)[number] }) => {
                 className="text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
+                <span className="sr-only">Open {project.title} demo</span>
               </a>
             )}
           </div>

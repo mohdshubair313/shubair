@@ -1,20 +1,6 @@
-"use client";
-
-import { useEffect } from "react";
-import { getCalApi } from "@calcom/embed-react";
 import Image from "next/image";
 
 export default function HeroSection() {
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi();
-      cal("ui", {
-        theme: "auto",
-        styles: { branding: { brandColor: "#171717" } },
-      });
-    })();
-  }, []);
-
   return (
     <section id="hero" data-section="Home" className="section-card">
       {/* Profile Row */}
@@ -45,12 +31,12 @@ export default function HeroSection() {
 
       {/* CTA Buttons */}
       <div className="flex flex-wrap gap-3">
-        <button
-          data-cal-link="mohdshubair313/30min"
+        <a
+          href="#contact"
           className="px-4 py-1.5 rounded-xl text-sm font-medium bg-neutral-900 text-white dark:bg-white dark:text-black shadow-lg dark:shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:opacity-90 cursor-pointer inline-flex items-center justify-center transition-all"
         >
           Get in touch
-        </button>
+        </a>
         <a
           href="https://cal.com/mohdshubair313/30min"
           target="_blank"

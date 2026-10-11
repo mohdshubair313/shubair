@@ -38,7 +38,8 @@ export default function GitHubContributions() {
     try {
       setLoading(true);
       const res = await fetch(
-        `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`
+        `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`,
+        { signal: AbortSignal.timeout(5000) }
       );
       if (!res.ok) throw new Error("API error");
       const data = await res.json();

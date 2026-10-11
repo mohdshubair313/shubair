@@ -1,27 +1,10 @@
 "use client";
 
+import portfolio from "@/content/portfolio.json";
+
 import { Calendar, MapPin } from "lucide-react";
 
-const experiences = [
-  {
-    title: "Full-Stack Developer",
-    company: "Stealth Startup",
-    date: "Dec 2025 – April 2026",
-    location: "Remote",
-    description:
-      "Developing and deploying client projects, implementing CI/CD pipelines, and optimizing application performance across the stack.",
-    skills: ["Next.js", "TypeScript", "PostgreSQL", "Docker"],
-  },
-  {
-    title: "MERN Stack Intern",
-    company: "Bestlatech Solutions",
-    date: "Aug 2025 – Oct 2025",
-    location: "Remote",
-    description:
-      "Worked on full-stack projects including social media and e-commerce platforms using Django, React, Node.js, and MongoDB.",
-    skills: ["React", "Node.js", "Django", "MongoDB", "AWS"],
-  },
-];
+const experiences = portfolio.experiences;
 
 const ExperienceSection = () => {
   return (

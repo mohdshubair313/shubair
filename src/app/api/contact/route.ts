@@ -1,79 +1,31 @@
-import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+export const runtime = "nodejs";
+export const maxDuration = 15;
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
+  let body;
+  try { body = await request.json(); }
+  catch { return Response.json({ error: "Invalid message." }, { status: 400 }); }
+  const { name = "", email, message } = body || {};
+  if (typeof name !== "string" || name.length > 100 || typeof email !== "string" || email.length > 254
+    || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()) || typeof message !== "string" || !message.trim() || message.length > 5000) {
+    return Response.json({ error: "Please provide a valid email and message (up to 5,000 characters)." }, { status: 400 });
+  }
+  if (!process.env.RESEND_API_KEY) return Response.json({ error: "Please email hey@shubair.in directly." }, { status: 503 });
   try {
-    const body = await request.json();
-    const { email, message } = body;
-
-    // Validation
-    if (!email || !email.trim()) {
-      return NextResponse.json(
-        { error: "Please enter your email address" },
-        { status: 400 }
-      );
-    }
-
-    if (!message || !message.trim()) {
-      return NextResponse.json(
-        { error: "Please enter your feedback message" },
-        { status: 400 }
-      );
-    }
-
-    // Email validation regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Please enter a valid email address" },
-        { status: 400 }
-      );
-    }
-
-    // Send email using Resend
-    const { error } = await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>",
-      to: ["shubair313@gmail.com"],
-      subject: `New Contact Form Submission from ${email}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2 style="color: #0891b2; border-bottom: 2px solid #0891b2; padding-bottom: 10px;">
-            New Contact Form Submission
-          </h2>
-          <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p style="margin: 0 0 10px 0;"><strong>From:</strong> ${email}</p>
-            <p style="margin: 0;"><strong>Message:</strong></p>
-            <p style="background: white; padding: 15px; border-radius: 5px; border-left: 4px solid #0891b2; margin-top: 10px;">
-              ${message.replace(/\n/g, "<br>")}
-            </p>
-          </div>
-          <p style="color: #64748b; font-size: 12px; margin-top: 30px;">
-            This email was sent from your portfolio website contact form.
-          </p>
-        </div>
-      `,
-      text: `New Contact Form Submission\n\nFrom: ${email}\n\nMessage:\n${message}`,
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST", signal: AbortSignal.timeout(8000),
+      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: process.env.CONTACT_FROM_EMAIL || "Portfolio Contact <onboarding@resend.dev>",
+        to: ["shubair313@gmail.com"], reply_to: email.trim(),
+        subject: "New portfolio enquiry",
+        text: `From: ${name.trim()} <${email.trim()}>\n\n${message.trim()}`,
+      }),
     });
-
-    if (error) {
-      console.error("Resend API error:", error);
-      return NextResponse.json(
-        { error: "Failed to send email. Please try again later." },
-        { status: 500 }
-      );
-    }
-
-    return NextResponse.json(
-      { message: "Email sent successfully!" },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error("Error sending email:", error);
-    return NextResponse.json(
-      { error: "Failed to send email. Please try again later." },
-      { status: 500 }
-    );
+    const result = await response.json();
+    if (!response.ok || !result.id) throw new Error("Email not accepted");
+    return Response.json({ success: true });
+  } catch {
+    return Response.json({ error: "Sending could not be confirmed. Please email hey@shubair.in directly." }, { status: 503 });
   }
 }

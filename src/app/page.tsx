@@ -18,11 +18,6 @@ const Home = () => {
 
       {/* Main content card — srbh.site style single card with sections separated by dividers */}
       <div className="section-card flex flex-col">
-        {/* GitHub Contributions */}
-        <GitHubContributions />
-
-        <div className="section-divider" />
-
         {/* Projects */}
         <FeaturedWork />
 
@@ -30,6 +25,10 @@ const Home = () => {
 
         {/* Experience */}
         <ExperienceSection />
+
+        <div className="section-divider" />
+
+        <GitHubContributions />
 
         <div className="section-divider" />
 

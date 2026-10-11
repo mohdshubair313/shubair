@@ -42,7 +42,6 @@ export default function VideoWalkthrough() {
           <div className="relative w-11 h-11 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center shadow-lg shadow-neutral-900/20 dark:shadow-white/10 transition-all duration-300 group-hover:shadow-xl">
             <Play className="w-4 h-4 text-white dark:text-black ml-0.5" fill="currentColor" />
             {/* Subtle pulse ring */}
-            <span className="absolute inset-0 rounded-full border border-neutral-900/30 dark:border-white/30 animate-ping opacity-20 pointer-events-none" />
           </div>
         </motion.button>
 
@@ -54,7 +53,7 @@ export default function VideoWalkthrough() {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: -5, scale: 0.95 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              className="flex items-center flex-row-reverse"
+              className="hidden sm:flex items-center flex-row-reverse"
             >
               {/* Label pill */}
               <motion.div

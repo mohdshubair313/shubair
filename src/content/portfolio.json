@@ -1,0 +1,184 @@
+{
+  "name": "Mohd Shubair",
+  "role": "Software Engineer & AI Engineer Intern (learning ML/DL)",
+  "summary": "Building AI-powered systems and full-stack applications.",
+  "availability": "Open to full-time roles, internships, and collaborations. Interested in Japan, Germany, and opportunities worldwide.",
+  "website": "https://www.shubair.in",
+  "email": "hey@shubair.in",
+  "booking": "https://cal.com/mohdshubair313/30min",
+  "socials": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/mohdshubair313"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/mohd-shubair-b1a454250/"
+    },
+    {
+      "label": "Twitter / X",
+      "url": "https://x.com/shubair313/"
+    },
+    {
+      "label": "Peerlist",
+      "url": "https://peerlist.io/shubair"
+    },
+    {
+      "label": "LeetCode",
+      "url": "https://leetcode.com/mohd_shubair"
+    }
+  ],
+  "skills": [
+    "FastAPI",
+    "Python",
+    "React",
+    "Next.js",
+    "LangChain",
+    "Pinecone",
+    "OpenAI",
+    "Stripe",
+    "GSAP",
+    "Three.js",
+    "TypeScript",
+    "PostgreSQL",
+    "Docker",
+    "Node.js",
+    "Django",
+    "MongoDB",
+    "AWS",
+    "Groq",
+    "WebRTC",
+    "LangGraph",
+    "Vercel AI SDK"
+  ],
+  "projects": [
+    {
+      "title": "TradeInsight",
+      "description": "A FastAPI service that analyzes market data and provides trade opportunity insights for specific sectors in India.",
+      "image": "/pro6.png",
+      "link": "https://trade-opportunity-by-ai.vercel.app/",
+      "github": "https://github.com/mohdshubair313/Trade_opportunity_ByAI",
+      "tags": [
+        "FastAPI",
+        "AI",
+        "Market Analysis",
+        "Trading"
+      ],
+      "subtitle": "AI Market Analysis"
+    },
+    {
+      "title": "Friends AI",
+      "description": "AI virtual friend that understands emotions and provides meaningful conversations powered by advanced language models.",
+      "image": "/pro1.png",
+      "link": "https://friends-ai-sunf.vercel.app",
+      "github": "#",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Groq",
+        "WebRTC",
+        "LangChain",
+        "LangGraph",
+        "Vercel AI SDK"
+      ],
+      "subtitle": "Emotion-Aware Chatbot"
+    },
+    {
+      "title": "Chaty AI",
+      "description": "Intelligent research assistant that understands documents, answers questions contextually, and extracts insights using vector embeddings and LLMs.",
+      "image": "/pro5.png",
+      "link": "https://chaty-ai.vercel.app",
+      "github": "https://github.com/mohdshubair313/ChatyBackend",
+      "tags": [
+        "Next.js",
+        "LangChain",
+        "Pinecone",
+        "OpenAI"
+      ],
+      "subtitle": "PDF-RAG Chatbot"
+    },
+    {
+      "title": "Bollyscript AI",
+      "description": "AI-powered Bollywood script generation platform that creates movie scripts with custom scenes, dialogues, and characters.",
+      "image": "/bollyProjectImages/bollyPro1.png",
+      "link": "https://bollyscript.vercel.app",
+      "github": "#",
+      "tags": [
+        "Next.js",
+        "OpenAI",
+        "AI",
+        "Creativity"
+      ],
+      "subtitle": "AI Script Writer"
+    },
+    {
+      "title": "Next Stripe",
+      "description": "Premium subscription management platform with Stripe payment gateway integration for seamless billing experiences.",
+      "image": "/pro2.png",
+      "link": "https://next-stripe-smoky.vercel.app/",
+      "github": "#",
+      "tags": [
+        "Stripe",
+        "Payments",
+        "Next.js",
+        "SaaS"
+      ]
+    },
+    {
+      "title": "iPhone Landing Page",
+      "description": "Stunning 3D landing page for iPhone featuring smooth animations and interactive product showcase.",
+      "image": "/pro3.png",
+      "link": "https://apple3-d-page-sepia.vercel.app/",
+      "github": "https://github.com/mohdshubair313/Apple3DPage",
+      "tags": [
+        "3D",
+        "GSAP",
+        "Three.js",
+        "Animations"
+      ]
+    },
+    {
+      "title": "Travelbook",
+      "description": "Takes the pain out of vacation planning. Handles tickets, stays, and meals — all tailored to your budget with an AI chatbot concierge.",
+      "image": "/pro4.png",
+      "link": "#",
+      "github": "https://github.com/mohdshubair313/Travelbook",
+      "tags": [
+        "AI",
+        "Travel",
+        "Next.js",
+        "Chatbot"
+      ],
+      "underDev": true
+    }
+  ],
+  "experiences": [
+    {
+      "title": "Full-Stack Developer",
+      "company": "Stealth Startup",
+      "date": "Dec 2025 – April 2026",
+      "location": "Remote",
+      "description": "Developing and deploying client projects, implementing CI/CD pipelines, and optimizing application performance across the stack.",
+      "skills": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Docker"
+      ]
+    },
+    {
+      "title": "MERN Stack Intern",
+      "company": "Bestlatech Solutions",
+      "date": "Aug 2025 – Oct 2025",
+      "location": "Remote",
+      "description": "Worked on full-stack projects including social media and e-commerce platforms using Django, React, Node.js, and MongoDB.",
+      "skills": [
+        "React",
+        "Node.js",
+        "Django",
+        "MongoDB",
+        "AWS"
+      ]
+    }
+  ]
+}

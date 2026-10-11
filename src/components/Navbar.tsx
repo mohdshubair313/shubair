@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import MusicToggle from '@/components/MusicToggle'
-import LiveViewers from '@/components/LiveViewers'
  
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -13,7 +12,7 @@ const navLinks = [
  
 export function Navbar() {
   return (
-    <div className="rounded-2xl border border-neutral-200 dark:border-neutral-900 flex items-center justify-between px-5 sm:px-8 py-2.5 sm:py-2">
+    <div className="rounded-2xl border border-neutral-200 dark:border-neutral-900 flex flex-wrap items-center justify-between gap-3 px-5 sm:px-8 py-2.5 sm:py-2">
       <nav className="flex flex-wrap items-center gap-3.5 sm:gap-4 text-[13px] sm:text-sm font-medium">
         {navLinks.map((link) => (
           <Link
@@ -35,12 +34,10 @@ export function Navbar() {
         </Link>
       </nav>
       <div className="flex items-center gap-1.5">
-        <LiveViewers />
         <MusicToggle />
         <ThemeToggle />
       </div>
     </div>
   )
 }
-
 

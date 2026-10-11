@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/build-knowledge.cjs",
+    "prebuild": "node scripts/build-knowledge.cjs",
     "dev": "next dev --turbopack",
     "build": "next build",
     "generate": "npx ts-node ./scripts/generate.ts",
     "start": "next start",
     "lint": "next lint",
-    "test:chat": "node --test scripts/chat.test.cjs",
+    "test:chat": "node --test scripts/portfolio.test.cjs",
     "diagnose:chat": "node scripts/diagnose-chat.cjs"
   },
   "dependencies": {
