@@ -6,51 +6,8 @@ import { mdxComponents } from "@/components/mdx-components";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkGfm from "remark-gfm";
-
-export interface TOCItem {
-  id: string;
-  text: string;
-  level: number;
-}
-
-// Generate ID from text (same as in mdx-components)
-function generateId(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-// Extract table of contents from MDX content
-function extractTOC(content: string): TOCItem[] {
-  const toc: TOCItem[] = [];
-  const lines = content.split("\n");
-  const slugCounts = new Map<string, number>();
-
-  for (const line of lines) {
-    // Match headings (h1, h2, h3)
-    const match = line.match(/^(#{1,3})\s+(.+)$/);
-    if (match) {
-      const level = match[1].length;
-      const text = match[2].trim();
-      let id = generateId(text);
-
-      if (slugCounts.has(id)) {
-        const count = slugCounts.get(id)!;
-        slugCounts.set(id, count + 1);
-        id = `${id}-${count}`;
-      } else {
-        slugCounts.set(id, 1);
-      }
-
-      toc.push({ id, text, level });
-    }
-  }
-
-  return toc;
-}
+import { createBlogMarkupPlugin, type TOCItem } from "@/lib/blog-markup";
+export type { TOCItem } from "@/lib/blog-markup";
 
 // Calculate reading time
 function calculateReadingTime(content: string): string {
@@ -66,8 +23,7 @@ export async function getMdxContent(slug: string) {
   const source = fs.readFileSync(filePath, "utf-8");
   const { content, data } = matter(source);
 
-  // Extract TOC
-  const toc = extractTOC(content);
+  const toc: TOCItem[] = [];
 
   // Calculate reading time
   const readingTime = calculateReadingTime(content);
@@ -80,6 +36,7 @@ export async function getMdxContent(slug: string) {
         remarkPlugins: [remarkGfm],
         rehypePlugins: [
           rehypeSlug,
+          createBlogMarkupPlugin(toc),
           [
             rehypeAutolinkHeadings,
             {
@@ -100,6 +57,7 @@ export async function getMdxContent(slug: string) {
       title: data.title || "Untitled",
       summary: data.summary || "",
       publishedAt: data.publishedAt || new Date().toISOString(),
+      updatedAt: data.updatedAt as string | undefined,
       author: data.author,
       readingTime: data.readingTime || readingTime,
     },

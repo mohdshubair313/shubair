@@ -1,20 +1,20 @@
 [
   {
-    "title": "Attention Is All You Need - The Complete Story",
-    "summary": "A deep dive into the most important paper in AI history. Learn how the Transformer architecture changed everything.",
+    "title": "Attention Is All You Need: From Intuition to Implementation",
+    "summary": "A step-by-step explanation of tokens, queries, keys, values, masking, and the Transformer—with a small attention implementation you can inspect.",
     "url": "https://www.shubair.in/blogs/AOYN_PAPER",
-    "readingTime": "30 minutes"
+    "readingTime": "10 min read"
   },
   {
-    "title": "Harness Engineering: The Secret to Making AI Agents Actually Work",
-    "summary": "The ultimate, end-to-end guide to Harness Engineering. Learn why AI agents fail, how harnesses fix them, and how to build your own — from zero to production.",
+    "title": "Harness Engineering: Building Reliable AI Agents",
+    "summary": "How tools, state, verification, and bounded workflows turn model output into work you can trust—with interactive examples and practical templates.",
     "url": "https://www.shubair.in/blogs/HarnessEngineering",
-    "readingTime": "45 minutes"
+    "readingTime": "11 min read"
   },
   {
-    "title": "LangChain in Real-World Apps",
-    "summary": "How to practically implement LangChain to build intelligent, agent-powered applications.",
+    "title": "LangChain in TypeScript: From Model Calls to Reliable RAG",
+    "summary": "Build a clear mental model of prompts, runnables, retrieval, and stateful workflows—then connect them to a streaming Next.js interface.",
     "url": "https://www.shubair.in/blogs/langchain-guide",
-    "readingTime": "25 minutes"
+    "readingTime": "10 min read"
   }
 ]

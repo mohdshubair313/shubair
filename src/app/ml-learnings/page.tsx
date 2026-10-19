@@ -1,46 +1,25 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-
-import React, { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { HookSidebar } from "@/components/ui/hook-sidebar";
 import Link from "next/link";
 import {
   ArrowLeft,
   ExternalLink,
-  Heart,
-  MessageCircle,
-  Repeat,
-  Globe,
   Plus,
   Minus,
 } from "lucide-react";
 
-// Platform Custom SVG Icons
-const LinkedInIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-  </svg>
-);
-
-const XIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
-
-// Interface for ML Post
 interface Post {
   id: number;
   title: string;
+  summary: string;
   text: string;
-  image?: string;
-  images?: string[];
   url: string;
   date: string;
+  dateTime: string;
   platform: "linkedin" | "x";
-  likes: number;
-  reposts: number;
-  comments: number;
 }
 
 // ----------------------------------------------------
@@ -65,7 +44,7 @@ const MeteoriteMap = () => {
 
   return (
     <div className="relative border border-border/40 rounded-xl bg-neutral-900 dark:bg-neutral-950 p-4 font-mono text-xs overflow-hidden select-none">
-      <div className="flex justify-between items-center mb-3 border-b border-neutral-800 pb-2">
+      <div className="flex flex-wrap justify-between items-center gap-2 mb-3 border-b border-neutral-800 pb-2">
         <span className="text-primary font-bold">📡 NASA Meteorite Impact Mapping</span>
         <span className="text-neutral-500 text-[10px]">Data Coordinates visualization</span>
       </div>
@@ -105,11 +84,11 @@ const MeteoriteMap = () => {
 
       {/* Selected details */}
       <div className="mt-3 p-3 rounded bg-neutral-800 dark:bg-neutral-900 border border-neutral-700/50">
-        <div className="flex justify-between items-center font-bold text-neutral-100">
+        <div className="flex flex-wrap justify-between items-center gap-2 font-bold text-neutral-100">
           <span>{active.name} Meteorite</span>
           <span className="text-primary">{active.mass}</span>
         </div>
-        <div className="flex gap-4 text-[10px] text-neutral-400 mt-1">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-neutral-400 mt-1">
           <span>Year: {active.year}</span>
           <span>Lat: {active.lat}°</span>
           <span>Lng: {active.lng}°</span>
@@ -129,6 +108,11 @@ const SpeedBenchmark = () => {
   const [running, setRunning] = useState(false);
   const [seqTime, setSeqTime] = useState(0);
   const [threadTime, setThreadTime] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => () => {
+    if (timerRef.current !== null) clearInterval(timerRef.current);
+  }, []);
 
   const runSimulation = () => {
     if (running) return;
@@ -137,7 +121,7 @@ const SpeedBenchmark = () => {
     setThreadTime(0);
 
     const startTime = Date.now();
-    const interval = setInterval(() => {
+    timerRef.current = setInterval(() => {
       const elapsed = (Date.now() - startTime) / 1000;
 
       if (elapsed <= 1.33) {
@@ -151,7 +135,8 @@ const SpeedBenchmark = () => {
       } else {
         setSeqTime(6.23);
         setRunning(false);
-        clearInterval(interval);
+        if (timerRef.current !== null) clearInterval(timerRef.current);
+        timerRef.current = null;
       }
     }, 30);
   };
@@ -161,7 +146,7 @@ const SpeedBenchmark = () => {
 
   return (
     <div className="border border-border/40 rounded-xl bg-neutral-900 dark:bg-neutral-950 p-4 font-mono text-xs overflow-hidden">
-      <div className="flex justify-between items-center mb-4 border-b border-neutral-800 pb-2">
+      <div className="flex flex-wrap justify-between items-center gap-3 mb-4 border-b border-neutral-800 pb-2">
         <span className="text-primary font-bold">⚡ ML Data Pipeline Speedup</span>
         <button
           onClick={runSimulation}
@@ -179,7 +164,7 @@ const SpeedBenchmark = () => {
       <div className="space-y-4">
         {/* Sequential */}
         <div>
-          <div className="flex justify-between text-neutral-400 mb-1 text-[11px]">
+          <div className="flex flex-wrap justify-between gap-2 text-neutral-400 mb-1 text-[11px]">
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-red-500" />
               Sequential Ingestion
@@ -196,7 +181,7 @@ const SpeedBenchmark = () => {
 
         {/* Multithreaded */}
         <div>
-          <div className="flex justify-between text-neutral-400 mb-1 text-[11px]">
+          <div className="flex flex-wrap justify-between gap-2 text-neutral-400 mb-1 text-[11px]">
             <span className="flex items-center gap-1.5">
               <span className={`w-2 h-2 rounded-full bg-emerald-500 ${running && threadTime < 1.33 ? "animate-ping" : ""}`} />
               Multithreaded Pipeline
@@ -213,7 +198,7 @@ const SpeedBenchmark = () => {
       </div>
 
       {/* speedup stats */}
-      <div className="mt-4 pt-3 border-t border-neutral-800/80 flex items-center justify-between text-[11px]">
+      <div className="mt-4 pt-3 border-t border-neutral-800/80 flex flex-wrap gap-2 items-center justify-between text-[11px]">
         <span className="text-neutral-500">Pipeline Performance Gain:</span>
         <span className={`px-2.5 py-0.5 rounded-full font-bold ${threadTime >= 1.33 ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" : "bg-neutral-900 text-neutral-500"}`}>
           🚀 4.7x Speedup (Non-blocking I/O)
@@ -268,7 +253,7 @@ const WorkflowChecklist = () => {
               onChange={() => toggleTask(t.id)}
               className="mt-0.5 accent-primary border-neutral-800 rounded bg-neutral-950 focus:ring-0 cursor-pointer"
             />
-            <span className={t.checked ? "line-through text-neutral-500 transition-all duration-200" : "transition-all duration-200"}>
+            <span className={`min-w-0 [overflow-wrap:anywhere] transition-all duration-200 ${t.checked ? "line-through text-neutral-500" : ""}`}>
               {t.text}
             </span>
           </label>
@@ -306,20 +291,20 @@ const NotionNestingDemo = () => {
 
   return (
     <div className="border border-border/40 rounded-xl bg-neutral-900 dark:bg-neutral-950 p-4 font-mono text-xs overflow-hidden">
-      <div className="flex justify-between items-center mb-3 border-b border-neutral-800 pb-2">
-        <span className="text-primary font-bold">🧱 Notion Infinite Nesting Demo</span>
-        <div className="flex gap-2">
+      <div className="flex flex-wrap justify-between items-center gap-3 mb-3 border-b border-neutral-800 pb-2">
+        <span className="text-primary font-bold">🧱 Notion Nesting Demo</span>
+        <div className="flex shrink-0 gap-2">
           <button
             onClick={removeLevel}
             disabled={levels.length <= 1}
-            className="px-2.5 py-0.5 rounded bg-neutral-800 border border-neutral-700 text-neutral-400 hover:text-neutral-100 disabled:opacity-30 cursor-pointer text-[9px]"
+            className="min-h-8 whitespace-nowrap px-2.5 py-1 rounded bg-neutral-800 border border-neutral-700 text-neutral-400 hover:text-neutral-100 disabled:opacity-30 cursor-pointer text-[10px]"
           >
             <Minus className="w-2.5 h-2.5 inline mr-1" /> Remove
           </button>
           <button
             onClick={addLevel}
             disabled={levels.length >= 7}
-            className="px-2.5 py-0.5 rounded bg-primary text-black font-semibold hover:bg-primary/95 disabled:opacity-30 cursor-pointer text-[9px]"
+            className="min-h-8 whitespace-nowrap px-2.5 py-1 rounded bg-primary text-black font-semibold hover:bg-primary/95 disabled:opacity-30 cursor-pointer text-[10px]"
           >
             <Plus className="w-2.5 h-2.5 inline mr-1" /> Nest /page
           </button>
@@ -356,7 +341,7 @@ const NotionNestingDemo = () => {
           </div>
         ) : (
           <div className="text-primary text-[10px] text-center mt-3 pt-2.5 border-t border-neutral-900/60 leading-relaxed font-sans">
-            🎉 Maximum demo depth reached! Adjacency List + Path Indices allow Notion to resolve queries in O(1) fetch time.
+            Maximum demo depth reached. This example uses parent-child links to illustrate the idea.
           </div>
         )}
       </div>
@@ -377,210 +362,17 @@ const NotionNestingDemo = () => {
 };
 
 // ----------------------------------------------------
-// Post Card Component
-// ----------------------------------------------------
-const PostCard = ({ post }: { post: Post }) => {
-  const [liked, setLiked] = useState(false);
-  const [reposted, setReposted] = useState(false);
-  const [likeCount, setLikeCount] = useState(post.likes);
-  const [repostCount, setRepostCount] = useState(post.reposts);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showDemo, setShowDemo] = useState(true);
-
-  const handleLike = () => {
-    if (liked) {
-      setLiked(false);
-      setLikeCount(prev => prev - 1);
-    } else {
-      setLiked(true);
-      setLikeCount(prev => prev + 1);
-    }
-  };
-
-  const handleRepost = () => {
-    if (reposted) {
-      setReposted(false);
-      setRepostCount(prev => prev - 1);
-    } else {
-      setReposted(true);
-      setRepostCount(prev => prev + 1);
-    }
-  };
-
-  // Truncation limit for long text
-  const limit = 220;
-  const shouldTruncate = post.text.length > limit;
-  const displayText = shouldTruncate && !isExpanded
-    ? post.text.slice(0, limit) + "..."
-    : post.text;
-
-  return (
-    <div className="flex flex-col border border-border/40 dark:border-border/20 rounded-2xl bg-neutral-100/50 dark:bg-[#0c0c0e]/30 p-5 shadow-sm hover:shadow-md hover:border-primary/20 transition-all duration-300 relative group">
-      {/* Profile Info */}
-      <div className="flex justify-between items-start mb-4">
-        <div className="flex gap-3">
-          {/* Circular profile avatar */}
-          <div className="w-11 h-11 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center font-heading text-neutral-600 dark:text-neutral-300 font-bold text-sm shadow-sm flex-shrink-0 select-none">
-            MS
-          </div>
-          <div>
-            <div className="font-heading font-semibold text-neutral-900 dark:text-neutral-100 text-sm sm:text-base leading-snug">
-              Mohd Shubair
-            </div>
-            <div className="text-[11px] sm:text-xs text-muted-foreground leading-normal">
-              {post.platform === "linkedin" ? "AI/ML Learner & Full-Stack Developer" : "@Shubair313"}
-            </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground mt-0.5">
-              <span>{post.date}</span>
-              <span>•</span>
-              <span className="flex items-center gap-0.5">
-                {post.platform === "linkedin" ? <Globe className="w-3 h-3 text-neutral-400" /> : null}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Brand Icon */}
-        <div className="text-muted-foreground/60 group-hover:text-primary transition-colors duration-300">
-          {post.platform === "linkedin" ? (
-            <LinkedInIcon className="w-5 h-5" />
-          ) : (
-            <XIcon className="w-4 h-4" />
-          )}
-        </div>
-      </div>
-
-      {/* Post Text */}
-      <div className="text-neutral-800 dark:text-neutral-200 text-sm leading-relaxed mb-4 whitespace-pre-line font-sans">
-        {displayText}
-        {shouldTruncate && (
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-primary font-semibold ml-1.5 hover:underline focus:outline-none text-xs inline-block"
-          >
-            {isExpanded ? "Show less" : "Show more"}
-          </button>
-        )}
-      </div>
-
-      {/* Media & Interactive Attachments Container */}
-      <div className="mb-4">
-        <div className="flex justify-end gap-1.5 mb-2.5">
-          <button
-            onClick={() => setShowDemo(true)}
-            className={`px-3 py-1 rounded-full text-[10px] font-semibold transition-all cursor-pointer ${
-              showDemo
-                ? "bg-primary text-black shadow-sm font-bold"
-                : "bg-neutral-200 dark:bg-neutral-800 text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Interactive Demo
-          </button>
-          <button
-            onClick={() => setShowDemo(false)}
-            className={`px-3 py-1 rounded-full text-[10px] font-semibold transition-all cursor-pointer ${
-              !showDemo
-                ? "bg-primary text-black shadow-sm font-bold"
-                : "bg-neutral-200 dark:bg-neutral-800 text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Original Post Media
-          </button>
-        </div>
-
-        <div className="rounded-xl overflow-hidden border border-border/40 dark:border-border/20 bg-neutral-200/50 dark:bg-neutral-950/20">
-          {showDemo ? (
-            <div className="p-3 sm:p-4">
-              {post.id === 1 && <MeteoriteMap />}
-              {post.id === 2 && <SpeedBenchmark />}
-              {post.id === 3 && <WorkflowChecklist />}
-              {post.id === 4 && <NotionNestingDemo />}
-            </div>
-          ) : (
-            <div className="relative w-full overflow-hidden bg-neutral-900/40">
-              {post.id === 3 && post.images ? (
-                <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-neutral-900/60">
-                  <img
-                    src={post.images[0]}
-                    alt="NASA Meteorite Landings Map Visual"
-                    className="w-full aspect-[4/3] object-cover hover:scale-[1.015] transition-transform duration-300"
-                    loading="lazy"
-                  />
-                  <img
-                    src={post.images[1]}
-                    alt="NASA Meteorite Landings Statistics"
-                    className="w-full aspect-[4/3] object-cover hover:scale-[1.015] transition-transform duration-300"
-                    loading="lazy"
-                  />
-                </div>
-              ) : (
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full max-h-[380px] object-cover hover:scale-[1.01] transition-transform duration-300 mx-auto block"
-                  loading="lazy"
-                />
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Footer / Engagement Bar */}
-      <div className="flex justify-between items-center pt-3.5 border-t border-border/20 mt-auto text-xs text-muted-foreground select-none">
-        <div className="flex items-center gap-4 sm:gap-6">
-          <button
-            onClick={handleLike}
-            className={`flex items-center gap-1.5 transition-colors p-1.5 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer ${
-              liked ? "text-red-500 font-semibold" : "hover:text-foreground"
-            }`}
-          >
-            <Heart className={`w-4 h-4 ${liked ? "fill-red-500 stroke-red-500" : ""}`} />
-            <span>{likeCount}</span>
-          </button>
-
-          <div className="flex items-center gap-1.5 p-1.5 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-800">
-            <MessageCircle className="w-4 h-4" />
-            <span>{post.comments}</span>
-          </div>
-
-          <button
-            onClick={handleRepost}
-            className={`flex items-center gap-1.5 transition-colors p-1.5 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer ${
-              reposted ? "text-green-500 font-semibold" : "hover:text-foreground"
-            }`}
-          >
-            <Repeat className="w-4 h-4" />
-            <span>{repostCount}</span>
-          </button>
-        </div>
-
-        <Link
-          href={post.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border/50 bg-neutral-200/60 dark:bg-neutral-800/80 text-[11px] font-semibold text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600 transition-all cursor-pointer"
-        >
-          <span>View on {post.platform === "linkedin" ? "LinkedIn" : "X"}</span>
-          <ExternalLink className="w-3.5 h-3.5 text-neutral-500 dark:text-neutral-400" />
-        </Link>
-      </div>
-    </div>
-  );
-};
-
-// ----------------------------------------------------
 // Main ML Learnings Page
 // ----------------------------------------------------
 export default function MLLearningsPage() {
-  const [filter, setFilter] = useState<"all" | "linkedin" | "x">("all");
-
   const posts: Post[] = [
     {
       id: 1,
       title: "NASA Meteorite Data Science Project",
+      summary: "Applied my machine learning coursework to NASA's Meteorite Landings dataset: cleaned missing values, mapped coordinates, and explored meteorite mass distributions and reporting bias.",
       platform: "linkedin",
       date: "Feb 14, 2026",
+      dateTime: "2026-02-14",
       text: `I have always wanted to merge space science with data analytics.. and today I did just that! 
 
 After building a strong conceptual foundation from Krish Naik amazing course lectures about Machine learning, so after completing I decided to test my skills on NASA's raw Meteorite Landings dataset.
@@ -592,17 +384,15 @@ In this project, I executed the following data engineering & ML steps:
 • Identified reporting biases in historical logs where massive falls in uninhabited regions go undetected.
 
 It is absolutely fascinating to see how raw coordinate listings transform into visual insights of cosmic impacts.`,
-      image: "https://media.licdn.com/dms/image/v2/D5622AQERd3p4Md6HVw/feedshare-shrink_800/B56Z6SCTXuJoAc-/0/1780566537972?e=2147483647&v=beta&t=q2etPaxYDkI4a0_MpAncJzpaiKylHLjsKh-lU5afcWc",
       url: "https://www.linkedin.com/posts/mohd-shubair-b1a454250_datascience-machinelearning-python-ugcPost-7468237360691044353-sMLn/",
-      likes: 42,
-      reposts: 5,
-      comments: 8,
     },
     {
       id: 2,
       title: "Multithreading in ML Pipelines",
+      summary: "Explored Python multithreading for I/O-bound data preparation, including network downloads and disk operations. The simulation below compares sequential and concurrent workers using the timings from my learning note.",
       platform: "linkedin",
       date: "Mar 3, 2026",
+      dateTime: "2026-03-03",
       text: `Next phase of machine learning ---------- Stop running your Python scripts sequentially. You are wasting computing power.
 
 Currently learning Machine Learning, and just realized how crucial *Multithreading* is for building efficient ML Data Pipelines.
@@ -615,17 +405,15 @@ By swapping to multithreaded workers:
 • Speedup: ~4.7x speed improvement! 🚀
 
 If your data pipeline bottlenecks during fetching or write phases, utilizing Python's concurrent.futures ThreadPoolExecutor will save you tons of idle computing hours.`,
-      image: "https://media.licdn.com/dms/image/sync/v2/D5627AQE0Bk_0_8biRg/articleshare-shrink_800/B56Z7BBaeiHEAc-/0/1781354834342?e=2147483647&v=beta&t=Y4flOAiX52rLTbNwopVcQ2jQlxTLu-feSEjlf1dZEDE",
       url: "https://www.linkedin.com/posts/mohd-shubair-b1a454250_machinelearning-multithreading-multiprocessing-share-7471544124979195906-i6aD/",
-      likes: 88,
-      reposts: 14,
-      comments: 12,
     },
     {
       id: 3,
       title: "Building NASA Meteorite Project",
+      summary: "Documented the workflow behind my NASA meteorite project: load the CSV, inspect its columns, clean missing values, then plot latitude and longitude to explore landing patterns.",
       platform: "x",
       date: "Feb 15, 2026",
+      dateTime: "2026-02-15",
       text: `building a fun scientist like project📡 hahaha....
 
 - download the csv file of meteorites_landing on @NASA website
@@ -633,20 +421,15 @@ If your data pipeline bottlenecks during fetching or write phases, utilizing Pyt
 - first see how many and which columns are there
 - clean the data wherever null showing by dropna()
 - map latitude and longitude coordinates to visually inspect landing distributions! 🌍`,
-      images: [
-        "https://pbs.twimg.com/media/HJ9GC-oa0AE_jWp.jpg",
-        "https://pbs.twimg.com/media/HJ9GELpbYAAdhY5.jpg"
-      ],
       url: "https://x.com/Shubair313/status/2062466568244842727?s=20",
-      likes: 24,
-      reposts: 7,
-      comments: 4,
     },
     {
       id: 4,
       title: "Infinite Nesting in Notion",
+      summary: "Explored how nested pages can be modeled with parent IDs, path enumeration, and nested sets. The demo turns that system design question into an interactive tree and a recursive SQL example.",
       platform: "linkedin",
       date: "Jan 25, 2026",
+      dateTime: "2026-01-25",
       text: `I have a crazy engineering question about Notion! 🤯
 
 While setting up my timetable today, a random realization hit me:
@@ -663,25 +446,23 @@ Here are the primary models for solving this tree traversal at scale:
 Notion uses block-based JSON records with parent-relations stored in highly distributed key-value/document stores, resolving hierarchy paths lazily in client render engines. 
 
 How would you structure this? Let's discuss in the comments!`,
-      image: "https://media.licdn.com/dms/image/v2/D5622AQGW_woTzJmYmQ/feedshare-shrink_800/B56Z4wa6LiIsAc-/0/1778928821324?e=2147483647&v=beta&t=ibquEPs3n_WUWPRXsIrsodbER89nA70u1bTLxI2vdOY",
       url: "https://www.linkedin.com/posts/mohd-shubair-b1a454250_systemdesign-softwareengineering-notion-share-7461368273679462400-1Mdd/",
-      likes: 112,
-      reposts: 23,
-      comments: 19,
     }
   ];
 
-  const filteredPosts = posts.filter(post => {
-    if (filter === "all") return true;
-    return post.platform === filter;
-  });
+  const timelinePosts = [...posts].sort(
+    (a, b) => a.dateTime.localeCompare(b.dateTime),
+  );
+  const [activeStep, setActiveStep] = useState(0);
+  const reducedMotion = useReducedMotion();
+  const activePost = timelinePosts[activeStep];
 
   return (
     <div className="min-h-screen w-full relative bg-background pt-24 pb-16">
       {/* Subtle top ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-neutral-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[300px] bg-neutral-500/5 rounded-full blur-[100px] pointer-events-none -z-10" />
 
-      <div className="mx-auto w-full max-w-3xl px-4 py-4 sm:px-0">
+      <div className="mx-auto w-full max-w-5xl px-4 py-4 sm:px-6">
         {/* Back Button outside card */}
         <div className="mb-4">
           <Link
@@ -694,12 +475,12 @@ How would you structure this? Let's discuss in the comments!`,
         </div>
 
         {/* Page Content wrapped in elegant section-card */}
-        <div className="section-card flex flex-col bg-card border border-border/50 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
+        <div className="flex flex-col bg-card border border-border/50 rounded-3xl p-4 sm:p-8 relative">
           
           {/* Header */}
           <div className="mb-8 border-b border-border/30 pb-6 relative">
             {/* Corner ambient Sparkle Badge */}
-            <div className="absolute top-0 right-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[10px] font-semibold text-neutral-500 dark:text-neutral-400 select-none uppercase tracking-wider font-mono">
+            <div className="mb-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[10px] font-semibold text-neutral-500 dark:text-neutral-400 select-none uppercase tracking-wider font-mono">
               Proof of Work
             </div>
 
@@ -707,56 +488,82 @@ How would you structure this? Let's discuss in the comments!`,
               My ML Learnings
             </h1>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-              A repository of machine learning foundations, deep learning concepts, and distributed systems engineering proof of works built during my learning journey.
+              Notes, experiments, and small projects as I learn machine learning and the systems behind it.
             </p>
           </div>
 
-          {/* Social Feed Filter Tabs */}
-          <div className="flex gap-1.5 mb-8 bg-neutral-200/50 dark:bg-neutral-900/50 p-1.5 rounded-xl border border-border/40 w-fit select-none">
-            <button
-              onClick={() => setFilter("all")}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold font-heading transition-all cursor-pointer ${
-                filter === "all"
-                  ? "bg-neutral-900 text-white dark:bg-white dark:text-black shadow-sm font-bold"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              All Posts
-            </button>
-            <button
-              onClick={() => setFilter("linkedin")}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold font-heading transition-all cursor-pointer ${
-                filter === "linkedin"
-                  ? "bg-neutral-900 text-white dark:bg-white dark:text-black shadow-sm font-bold"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              LinkedIn
-            </button>
-            <button
-              onClick={() => setFilter("x")}
-              className={`px-4 py-1.5 rounded-lg text-xs font-semibold font-heading transition-all cursor-pointer ${
-                filter === "x"
-                  ? "bg-neutral-900 text-white dark:bg-white dark:text-black shadow-sm font-bold"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              X / Twitter
-            </button>
-          </div>
+          {/* Date-led learning journey */}
+          <section aria-label="Machine learning journey">
+            <div className="mb-5 flex items-end justify-between gap-3">
+              <div>
+                <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">2026 · Learning log</p>
+                <h2 className="font-serif text-2xl text-foreground sm:text-3xl">The journey so far</h2>
+              </div>
+              <span className="shrink-0 rounded-full border border-border/60 px-3 py-1 font-mono text-[10px] text-muted-foreground">{timelinePosts.length} milestones</span>
+            </div>
 
-          {/* Feed List */}
-          {filteredPosts.length > 0 ? (
-            <div className="flex flex-col gap-8">
-              {filteredPosts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
+            <div className="grid items-start gap-6 md:grid-cols-[230px_minmax(0,1fr)] md:gap-8">
+              <div className="self-start rounded-2xl bg-background/60 p-3 sm:p-4 md:sticky md:top-24">
+                <HookSidebar
+                  label="Choose a date"
+                  items={timelinePosts.map((post) => ({ label: post.date + "\n" + post.title }))}
+                  value={activeStep}
+                  onChange={setActiveStep}
+                  color="#50B1FD"
+                  dashed
+                  className="[&_button]:w-full [&_button]:whitespace-pre-line [&_button]:py-3 [&_button]:leading-5 [&_button]:focus-visible:outline-2 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-sky-500"
+                />
+                <p className="mt-5 border-t border-border/50 pt-4 text-xs leading-relaxed text-muted-foreground">Each entry opens the work and interactive demo from that date.</p>
+              </div>
+
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.article
+                  key={activePost.id}
+                  initial={{ opacity: 0, y: reducedMotion ? 0 : 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: reducedMotion ? 0 : -8 }}
+                  transition={{ duration: reducedMotion ? 0 : 0.22 }}
+                  aria-labelledby="learning-entry-title"
+                  className="min-w-0 overflow-hidden rounded-2xl border border-border/50 bg-background/70 shadow-sm"
+                >
+                  <div className="border-b border-border/50 px-5 py-4 sm:px-6">
+                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                      <time dateTime={activePost.dateTime} className="font-mono text-xs font-medium text-sky-600 dark:text-sky-400">{activePost.date}</time>
+                      <span aria-hidden="true" className="text-muted-foreground">·</span>
+                      <span className="rounded-full bg-muted px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">{activePost.platform === "linkedin" ? "LinkedIn" : "X / Twitter"}</span>
+                      <span className="ml-auto font-mono text-[10px] text-muted-foreground">{String(activeStep + 1).padStart(2, "0")} / {String(timelinePosts.length).padStart(2, "0")}</span>
+                    </div>
+                    <h3 id="learning-entry-title" className="font-serif text-xl leading-snug text-foreground sm:text-2xl">{activePost.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{activePost.summary}</p>
+                    <details className="mt-4 text-sm">
+                      <summary className="w-fit cursor-pointer text-foreground underline decoration-border underline-offset-4">Read learning note</summary>
+                      <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">{activePost.text}</p>
+                    </details>
+                    <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                      <Link href={activePost.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-sky-600 dark:hover:text-sky-400">
+                        Read original post <ExternalLink className="h-3.5 w-3.5" />
+                      </Link>
+                    </div>
+                  </div>
+
+                  <div className="bg-muted/20 p-3 sm:p-5">
+                    <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Interactive concept demo</p>
+                    <div className="min-w-0 overflow-hidden rounded-xl bg-neutral-950">
+                      {activePost.id === 1 && <MeteoriteMap />}
+                      {activePost.id === 2 && <SpeedBenchmark />}
+                      {activePost.id === 3 && <WorkflowChecklist />}
+                      {activePost.id === 4 && <NotionNestingDemo />}
+                    </div>
+                  </div>
+                </motion.article>
+              </AnimatePresence>
             </div>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground text-sm font-mono border border-dashed border-border/40 rounded-2xl">
-              No posts found for the selected category.
+
+            <div className="mt-5 flex flex-wrap justify-between gap-2 text-[11px] text-muted-foreground">
+              <p>Dates from my learning log. Exact times weren’t recorded.</p>
+              <p>Hook Sidebar by <a href="https://www.rareui.com/components/hooksidebar" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-foreground">Rare UI · Swami Malode</a></p>
             </div>
-          )}
+          </section>
         </div>
       </div>
     </div>

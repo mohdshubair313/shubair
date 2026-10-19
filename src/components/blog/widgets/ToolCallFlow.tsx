@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, RotateCcw, Brain, Cog, Database } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { CodeBlock } from "@/components/blog/CodeBlock";
 
 interface Step {
   id: string;
@@ -190,9 +191,7 @@ export function ToolCallFlow() {
                     &quot;{step.text}&quot;
                   </p>
                   {step.payload && (
-                    <pre className="mt-2 px-3 py-2 rounded-md bg-slate-900 text-fuchsia-200 font-mono text-[11px] overflow-x-auto">
-                      {step.payload}
-                    </pre>
+                    <CodeBlock code={step.payload} language="json" />
                   )}
                 </motion.div>
               )}
@@ -238,9 +237,7 @@ export function ToolCallFlow() {
                     &quot;{step.text}&quot;
                   </p>
                   {step.payload && (
-                    <pre className="mt-2 px-3 py-2 rounded-md bg-slate-900 text-cyan-200 font-mono text-[11px] overflow-x-auto">
-                      {step.payload}
-                    </pre>
+                    <CodeBlock code={step.payload} language="json" />
                   )}
                 </motion.div>
               )}

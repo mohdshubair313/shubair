@@ -22,18 +22,19 @@ export async function generateMetadata({
   try {
     const { frontMatter } = await getMdxContent(slug);
     return {
-      title: `${frontMatter.title} | Mohd Shubair`,
+      title: frontMatter.title,
       description: frontMatter.summary,
       openGraph: {
         title: frontMatter.title,
         description: frontMatter.summary,
         type: "article",
         publishedTime: frontMatter.publishedAt,
+        modifiedTime: frontMatter.updatedAt,
       },
     };
   } catch {
     return {
-      title: "Blog Post | Mohd Shubair",
+      title: "Blog Post",
       description: "Read this blog post",
     };
   }
@@ -50,6 +51,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
         title={frontMatter.title}
         summary={frontMatter.summary}
         publishedAt={frontMatter.publishedAt}
+        updatedAt={frontMatter.updatedAt}
         readingTime={frontMatter.readingTime}
         author={frontMatter.author || "Mohd Shubair"}
         tocItems={toc}

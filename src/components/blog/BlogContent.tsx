@@ -15,6 +15,7 @@ interface BlogContentProps {
   title: string;
   summary: string;
   publishedAt: string;
+  updatedAt?: string;
   readingTime: string;
   author?: string;
   children: ReactNode;
@@ -26,6 +27,7 @@ function formatDate(dateStr: string) {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   });
 }
 
@@ -33,13 +35,14 @@ export function BlogContent({
   title,
   summary,
   publishedAt,
+  updatedAt,
   readingTime,
   author = "Mohd Shubair",
   children,
   tocItems,
 }: BlogContentProps) {
   const handleShare = (platform: "twitter" | "linkedin") => {
-    const url = `https://shubair.vercel.app/blogs/${encodeURIComponent(title.toLowerCase().replace(/\s+/g, "-"))}`;
+    const url = new URL(window.location.pathname, window.location.origin).href;
     const text =
       platform === "twitter"
         ? `Found this article by @shubair313: ${title}`
@@ -50,11 +53,11 @@ export function BlogContent({
         ? `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`
         : `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
 
-    window.open(shareUrl, "_blank");
+    window.open(shareUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-4 sm:px-0 page-enter">
+    <div className={`mx-auto w-full px-4 pt-4 pb-24 lg:px-6 lg:pb-8 ${tocItems.length ? "max-w-6xl" : "max-w-3xl"}`}>
       <div className="mb-4">
         <Link
           href="/blogs"
@@ -65,12 +68,14 @@ export function BlogContent({
         </Link>
       </div>
 
-      <article className="section-card flex flex-col">
-        <header className="border-b border-dotted border-neutral-200 dark:border-neutral-800 pb-5 sm:pb-6 mb-5 sm:mb-6">
-          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl tracking-wide text-neutral-900 dark:text-white mb-3 leading-tight break-words">
+      <div className={tocItems.length ? "grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_250px]" : ""}>
+      <article className="flex min-w-0 flex-col rounded-2xl border border-border bg-card p-4 sm:p-8">
+        <header className="border-b border-border pb-7 mb-8 sm:pb-8 sm:mb-10">
+          <p className="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-sky-700 dark:text-sky-400">Engineering notes</p>
+          <h1 className="mb-4 max-w-[26ch] break-words font-serif text-3xl font-normal leading-[1.12] tracking-tight text-foreground sm:text-4xl lg:text-[2.75rem]">
             {title}
           </h1>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-4 break-words">
+          <p className="mb-6 max-w-[65ch] break-words text-[15px] leading-7 text-neutral-600 dark:text-neutral-400 sm:text-base">
             {summary}
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] sm:text-xs text-neutral-500 dark:text-neutral-500 font-mono">
@@ -87,11 +92,10 @@ export function BlogContent({
               {readingTime}
             </span>
           </div>
+          {updatedAt && <p className="mt-3 font-mono text-[11px] text-muted-foreground">Updated <time dateTime={updatedAt}>{formatDate(updatedAt)}</time></p>}
         </header>
 
-        <TableOfContents items={tocItems} />
-
-        <div className="min-w-0 break-words overflow-x-hidden">
+        <div className="blog-prose mx-auto w-full min-w-0 max-w-[72ch] break-words">
           {children}
         </div>
 
@@ -118,8 +122,11 @@ export function BlogContent({
               LinkedIn
             </button>
           </div>
+          <p className="mt-6 text-[11px] text-muted-foreground">Code blocks and navigation by <a href="https://www.rareui.com" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-foreground">Rare UI</a>.</p>
         </footer>
       </article>
+      <TableOfContents items={tocItems} />
+      </div>
     </div>
   );
 }

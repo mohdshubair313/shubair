@@ -16,7 +16,10 @@ type ListProps = ComponentPropsWithoutRef<"ul">;
 type ListItemProps = ComponentPropsWithoutRef<"li">;
 type AnchorProps = ComponentPropsWithoutRef<"a">;
 type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">;
-type PreProps = ComponentPropsWithoutRef<"pre">;
+type PreProps = ComponentPropsWithoutRef<"pre"> & {
+  "data-code"?: string;
+  "data-language"?: string;
+};
 type CodeProps = ComponentPropsWithoutRef<"code">;
 
 function generateId(text: string): string {
@@ -183,7 +186,10 @@ export const mdxComponents = {
   ),
   img: MDXImage,
   Image: MDXImage,
-  pre: ({ children, className }: PreProps) => {
+  pre: ({ children, className, "data-code": source, "data-language": language }: PreProps) => {
+    if (source !== undefined) {
+      return <CodeBlock code={source} language={language || "text"} />;
+    }
     const lang = className?.replace("language-", "") || undefined;
     const codeChild = Array.isArray(children) ? children[0] : children;
     if (codeChild && typeof codeChild === "object" && "props" in codeChild) {
@@ -199,13 +205,11 @@ export const mdxComponents = {
         );
       }
     }
-    return <div className="my-6">{children}</div>;
+    return <pre className="my-7 overflow-x-auto rounded-xl border border-border bg-muted p-4 font-mono text-sm">{children}</pre>;
   },
   code: ({ children, className, ...props }: CodeProps) => {
     const isCodeBlock = className?.includes("language-");
-    if (isCodeBlock) {
-      return null;
-    }
+    if (isCodeBlock) return <code className={className} {...props}>{children}</code>;
     return (
       <code
         className={`px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-[0.85em] font-mono ${className || ""}`}
